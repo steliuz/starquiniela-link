@@ -1,0 +1,26 @@
+// app global css in SCSS form
+$font-sizes: (
+  font12: 12px,
+  font16: 16px,
+  font18: 18px,
+  font20: 20px,
+  font24: 24px,
+);
+
+$font-weight: (
+  w400: 400,
+  w500: 500,
+  w700: 700,
+  wbold: bold,
+);
+
+.form_login_no_cuenta {
+  font-size: map-get($font-sizes, font20);
+  font-weight: map-get($font-weight, w400);
+}
+// SIZE FONT
+p.label-input {
+  margin: 8px 0px 0px 8px;
+  font-weight: 400;
+  line-height: 1.8;
+}
