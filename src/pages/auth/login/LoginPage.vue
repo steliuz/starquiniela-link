@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+// import { ref } from 'vue';
 import formLogin from 'pages/auth/login/components/FormLogin.vue';
 import videoComponent from 'pages/auth/login/components/VideoComponent.vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from 'stores/user';
 import { login } from 'src/services/auth/login';
 import { dataLogin } from 'src/interfaces/DataLogin';
+import { loginAuth } from 'src/interfaces/auth';
+import SecureLS from 'secure-ls';
 
+let ls = new SecureLS({ isCompression: false, encodingType: 'aes' });
 const router = useRouter();
 // const userFlash = ref('');
 const store = useUserStore();
 
-const postLogin = async (value: any) => {
-  console.log('value: ', value);
-  store.handlebarLoading(store.barLoading);
+const postLogin = async (value: loginAuth) => {
+  store.handlebarLoading(true);
 
   try {
     await login(value).then((data: dataLogin) => {
       store.userAuth(data.user_data);
-
+      saveData(value);
       setTimeout(() => {
         router.push('/dashboard');
       }, 800);
@@ -26,7 +28,26 @@ const postLogin = async (value: any) => {
   } catch (error) {
     console.log(error);
   } finally {
-    store.handlebarLoading(store.barLoading);
+    store.handlebarLoading(false);
+  }
+};
+
+const saveData = (formLogin: loginAuth) => {
+  let rmb = formLogin.remember;
+  if (rmb == true) {
+    // let dataUser = JSON.parse(localStorage.getItem('user')) || [];
+    ls.set('user-quiniela', {
+      email: formLogin.email,
+      password: formLogin.password,
+      remember: formLogin.remember,
+    });
+  } else {
+    formLogin = {
+      email: '',
+      password: '',
+      remember: false,
+    };
+    ls.remove('user-quiniela');
   }
 };
 </script>

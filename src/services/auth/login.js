@@ -1,5 +1,4 @@
 import { api } from 'boot/axios';
-
 import { handleMessages } from '../notifys';
 
 export const login = async (value) => {
@@ -15,6 +14,7 @@ export const login = async (value) => {
 
     return data;
   } catch (error) {
+    localStorage.removeItem('access_token');
     let msg = 'Oops :( , Los datos no son correctos';
     if (error.status == 402)
       msg = 'Usuario Inactivo, por favor comuniquese con el administrador';

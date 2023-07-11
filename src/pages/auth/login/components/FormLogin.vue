@@ -3,14 +3,14 @@ import { ref, onMounted } from 'vue';
 import SecureLS from 'secure-ls';
 import type { Ref } from 'vue';
 import logoLogin from 'pages/auth/login/components/LogoComponent.vue';
-import { login } from 'src/interfaces/auth';
+import { loginAuth } from 'src/interfaces/auth';
 
 let ls = new SecureLS({ isCompression: false, encodingType: 'aes' });
 const emit = defineEmits(['loginData']);
 
 const isPwd = ref(false);
 
-const formLogin: Ref<login> = ref({
+const formLogin: Ref<loginAuth> = ref({
   email: 'admin@admin.com',
   password: 'asdasd',
   remember: false,
@@ -26,34 +26,12 @@ const onSubmit = () => {
     password: formLogin.value.password,
   };
   emit('loginData', user);
-  setTimeout(() => {
-    saveData();
-  }, 1000);
 };
 
 const getDataLocal = () => {
   let form = ls.get('user-quiniela');
   if (form) {
     formLogin.value = form;
-  }
-};
-
-const saveData = () => {
-  let rmb = formLogin.value.remember;
-  if (rmb == true) {
-    // let dataUser = JSON.parse(localStorage.getItem('user')) || [];
-    ls.set('user-quiniela', {
-      email: formLogin.value.email,
-      password: formLogin.value.password,
-      remember: formLogin.value.remember,
-    });
-  } else {
-    formLogin.value = {
-      email: '',
-      password: '',
-      remember: false,
-    };
-    ls.remove('user-quiniela');
   }
 };
 
