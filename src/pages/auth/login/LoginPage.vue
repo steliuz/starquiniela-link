@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import formLogin from 'pages/auth/login/components/FormLogin.vue';
 import videoComponent from 'pages/auth/login/components/VideoComponent.vue';
 import { useRouter } from 'vue-router';
@@ -8,7 +7,7 @@ import { login } from 'src/services/auth/login';
 import { dataLogin } from 'src/interfaces/DataLogin';
 
 const router = useRouter();
-// const userFlash = ref('');
+
 const store = useUserStore();
 
 const postLogin = async (value: any) => {
