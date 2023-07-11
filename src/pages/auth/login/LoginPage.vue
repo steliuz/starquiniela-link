@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { ref } from 'vue';
 import formLogin from 'pages/auth/login/components/FormLogin.vue';
 import videoComponent from 'pages/auth/login/components/VideoComponent.vue';
 import { useRouter } from 'vue-router';
@@ -11,7 +10,7 @@ import SecureLS from 'secure-ls';
 
 let ls = new SecureLS({ isCompression: false, encodingType: 'aes' });
 const router = useRouter();
-// const userFlash = ref('');
+
 const store = useUserStore();
 
 const postLogin = async (value: loginAuth) => {

@@ -6,14 +6,19 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/landing/LandingPage.vue'),
   },
   {
-    path: '/dashboard',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
-  },
-
-  {
     path: '/login',
     component: () => import('pages/auth/login/LoginPage.vue'),
+  },
+  {
+    path: '/dashboard',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/IndexPage.vue') },
+      {
+        path: '/userspage',
+        component: () => import('pages/users/UsersPage.vue'),
+      },
+    ],
   },
 
   // Always leave this as last one,
