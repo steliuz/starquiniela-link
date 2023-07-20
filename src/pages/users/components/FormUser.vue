@@ -3,12 +3,29 @@ import { ref } from 'vue';
 import type { Ref } from 'vue';
 
 import { user } from 'src/interfaces/user';
+import BaseInput from 'src/components/BaseInput.vue';
+import OptionGroup from 'src/components/OptionGroup.vue';
 
 const emit = defineEmits(['postUser', 'editUser']);
 
 const type_disabled: Ref<boolean> = ref(true);
 
 const isPwd = ref(false);
+
+const optionsData = [
+  {
+    label: 'Manager',
+    value: 1,
+  },
+  {
+    label: 'Reseller',
+    value: 2,
+  },
+  {
+    label: 'Organizer',
+    value: 3,
+  },
+];
 
 const formUser: Ref<user> = ref({
   prefix: '@gmail.com',
@@ -54,12 +71,9 @@ const onSubmit = () => {
             </p>
           </div>
           <div>
-            <p class="label-input">Subfijo correo</p>
-            <q-input
-              type="text"
+            <BaseInput
+              label="Subfijo correo"
               :disable="type_disabled"
-              dense
-              filled
               v-model="formUser.prefix"
               hint="Crea un subfijo para tus correos"
               bottom-slots
@@ -67,17 +81,20 @@ const onSubmit = () => {
               <template v-slot:before>
                 <q-checkbox left-label v-model="type_disabled" />
               </template>
-            </q-input>
+            </BaseInput>
           </div>
           <div>
-            <p class="label-input">Dato de correo</p>
-            <q-input dense filled v-model="formUser.email" type="email">
+            <BaseInput
+              label="Dato de correo"
+              v-model="formUser.email"
+              type="email"
+            >
               <template v-slot:after>
                 <span class="hint_email">
                   {{ formUser.prefix }}
                 </span>
               </template>
-            </q-input>
+            </BaseInput>
           </div>
           <div class="title">
             <p class="q-mb-none text-h6 text-grey-7">
@@ -86,21 +103,18 @@ const onSubmit = () => {
             </p>
           </div>
           <div>
-            <p class="label-input">Nombre</p>
-            <q-input dense filled v-model="formUser.name" type="text" />
+            <BaseInput label="Nombre" v-model="formUser.name" type="text" />
           </div>
           <div>
-            <p class="label-input">
-              Teléfono
-              <span class="text-caption text-secondary">(opcional)</span>
-            </p>
-            <q-input dense filled v-model="formUser.phone" type="text" />
+            <BaseInput label="Teléfono" v-model="formUser.phone" type="text">
+              <template v-slot:span>
+                <span class="text-caption text-secondary">(opcional)</span>
+              </template>
+            </BaseInput>
           </div>
           <div>
-            <p class="label-input">Contraseña</p>
-            <q-input
-              dense
-              filled
+            <BaseInput
+              label="Contraseña"
               v-model="formUser.password"
               :type="!isPwd ? 'password' : 'text'"
             >
@@ -111,13 +125,11 @@ const onSubmit = () => {
                   @click="isPwd = !isPwd"
                 />
               </template>
-            </q-input>
+            </BaseInput>
           </div>
           <div>
-            <p class="label-input">Repetir Contraseña</p>
-            <q-input
-              dense
-              filled
+            <BaseInput
+              label="Repetir Contraseña"
               v-model="formUser.confirm_password"
               :type="!isPwd ? 'password' : 'text'"
             >
@@ -128,7 +140,7 @@ const onSubmit = () => {
                   @click="isPwd = !isPwd"
                 />
               </template>
-            </q-input>
+            </BaseInput>
           </div>
           <div class="title">
             <p class="q-mb-none text-h6">
@@ -136,9 +148,13 @@ const onSubmit = () => {
               Rol del usuario
             </p>
             <div class="q-gutter-sm">
-              <q-radio
-                color="primary"
+              <OptionGroup
                 v-model="formUser.role_id"
+                :optionsData="optionsData"
+                inline
+              ></OptionGroup>
+              <!-- <q-radio
+                color="primary"
                 :val="1"
                 label="Manager"
               />
@@ -153,7 +169,7 @@ const onSubmit = () => {
                 v-model="formUser.role_id"
                 :val="3"
                 label="Organizer"
-              />
+              />-->
             </div>
           </div>
         </q-form>

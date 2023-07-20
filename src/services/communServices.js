@@ -46,20 +46,20 @@ export const postData = async (
   }
 };
 
-export const getDataById = async (path) => {
-  try {
-    const { data } = await api.get(path);
-    return data;
-  } catch (error) {
-    handleMessages({
-      message:
-        'Oops, hubo un problema durante el proceso, por favor intente mas tarde',
-      color: 'negative',
-      icon: 'cancel',
-    });
-    throw error.response;
-  }
-};
+// export const getDataById = async (path) => {
+//   try {
+//     const { data } = await api.get(path);
+//     return data;
+//   } catch (error) {
+//     handleMessages({
+//       message:
+//         'Oops, hubo un problema durante el proceso, por favor intente mas tarde',
+//       color: 'negative',
+//       icon: 'cancel',
+//     });
+//     throw error.response;
+//   }
+// };
 
 export const putData = async (path, payload, headers) => {
   try {
@@ -101,16 +101,16 @@ export const deleteData = async (path) => {
   }
 };
 
-export const searchData = async (path, payload) => {
-  try {
-    const { data } = await api.post(path, payload);
-    return data;
-  } catch (error) {
-    handleMessages({
-      message: error.response.data.message,
-      color: 'negative',
-      icon: 'cancel',
-    });
-    throw error.response;
-  }
-};
+// export const searchData = async (path, payload) => {
+//   try {
+//     const { data } = await api.post(path, payload);
+//     return data;
+//   } catch (error) {
+//     handleMessages({
+//       message: error.response.data.message,
+//       color: 'negative',
+//       icon: 'cancel',
+//     });
+//     throw error.response;
+//   }
+// };
