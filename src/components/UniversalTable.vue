@@ -82,7 +82,6 @@ const handlerPaginate = (value: object) => {
   emit('paginateData', value);
 };
 const onRequest: QTable['onRequest'] = ({ pagination }) => {
-  console.log('🚀 ~ file: UniversalTable.vue:85 ~ pagination:', pagination);
   if (pagination.sortBy) {
     if (
       paginations.value.sortBy == pagination.sortBy &&

@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
 
-import { user } from 'src/interfaces/user';
+import { User } from 'src/interfaces/user';
 import BaseInput from 'src/components/BaseInput.vue';
 import OptionGroup from 'src/components/OptionGroup.vue';
 
 const emit = defineEmits(['postUser', 'editUser']);
-
+const props = defineProps(['user']);
 const type_disabled: Ref<boolean> = ref(true);
-
 const isPwd = ref(false);
-
 const optionsData = [
   {
     label: 'Manager',
@@ -26,28 +24,21 @@ const optionsData = [
     value: 3,
   },
 ];
-
-const formUser: Ref<user> = ref({
-  prefix: '@gmail.com',
-  email: 'jesus',
-  name: 'jesus rosales',
-  password: 'asdasd',
-  confirm_password: 'asdasd',
-  phone: '04145342922',
-  role_id: 3,
-  subscribe_id: null,
-  referral_id: '',
-});
-
-const onReset = () => {
-  console.log('onReset');
-};
-
+const formUser: Ref<User> = ref(props.user);
+const form = ref();
 const onSubmit = () => {
-  console.log('onSubmit: ');
-  console.log('formUser.value: ', formUser.value);
   emit('postUser', formUser.value);
 };
+
+watch(
+  () => props.user,
+  (val) => {
+    formUser.value = val;
+    let email = val.email.split('@');
+    formUser.value.emailUser = email[0];
+    formUser.value.prefix = '@' + email[1];
+  }
+);
 </script>
 <template>
   <q-dialog persistent>
@@ -57,7 +48,11 @@ const onSubmit = () => {
       style="width: 80%; max-width: 900px"
     >
       <q-card-section style="max-height: 60vh" class="scroll q-mb-md">
-        <q-form @reset="onReset" class="user_dialog_form full-width">
+        <q-form
+          class="user_dialog_form full-width"
+          ref="form"
+          @submit="onSubmit"
+        >
           <div class="title">
             <p class="text-h5 text-grey-7">
               <i class="fa-solid fa-user-plus q-mr-xs text-primary"></i>
@@ -77,6 +72,7 @@ const onSubmit = () => {
               v-model="formUser.prefix"
               hint="Crea un subfijo para tus correos"
               bottom-slots
+              required
             >
               <template v-slot:before>
                 <q-checkbox left-label v-model="type_disabled" />
@@ -86,8 +82,9 @@ const onSubmit = () => {
           <div>
             <BaseInput
               label="Dato de correo"
-              v-model="formUser.email"
-              type="email"
+              v-model="formUser.emailUser"
+              type="text"
+              required
             >
               <template v-slot:after>
                 <span class="hint_email">
@@ -103,7 +100,12 @@ const onSubmit = () => {
             </p>
           </div>
           <div>
-            <BaseInput label="Nombre" v-model="formUser.name" type="text" />
+            <BaseInput
+              label="Nombre"
+              v-model="formUser.name"
+              type="text"
+              required
+            />
           </div>
           <div>
             <BaseInput label="Teléfono" v-model="formUser.phone" type="text">
@@ -117,6 +119,7 @@ const onSubmit = () => {
               label="Contraseña"
               v-model="formUser.password"
               :type="!isPwd ? 'password' : 'text'"
+              required
             >
               <template v-slot:append>
                 <q-icon
@@ -130,8 +133,9 @@ const onSubmit = () => {
           <div>
             <BaseInput
               label="Repetir Contraseña"
-              v-model="formUser.confirm_password"
+              v-model="formUser.password_confirmation"
               :type="!isPwd ? 'password' : 'text'"
+              required
             >
               <template v-slot:append>
                 <q-icon
@@ -172,24 +176,22 @@ const onSubmit = () => {
               />-->
             </div>
           </div>
+          <q-btn
+            class="q-mx-xs"
+            flat
+            label="cancelar"
+            color="red-5"
+            v-close-popup
+          />
+          <q-btn
+            class="q-mx-xs"
+            label="Registrar"
+            color="primary"
+            type="submit"
+          />
         </q-form>
       </q-card-section>
-      <q-card-actions class="user_form_buttons">
-        <q-btn
-          class="q-mx-xs"
-          flat
-          label="cancelar"
-          color="red-5"
-          v-close-popup
-        />
-        <q-btn
-          @click="onSubmit"
-          class="q-mx-xs"
-          label="Registrar"
-          color="primary"
-          v-close-popup
-        />
-      </q-card-actions>
+      <q-card-actions class="user_form_buttons"> </q-card-actions>
     </q-card>
   </q-dialog>
 </template>

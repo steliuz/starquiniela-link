@@ -1,38 +1,12 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue';
 import FormUser from './components/FormUser.vue';
-import { user } from 'src/interfaces/user';
 import UniversalTable from 'src/components/UniversalTable.vue';
 import { nameColumn, optColumn, emailColumn } from 'src/helpers/columns';
-import { getData } from 'src/services/communServices';
+import { useUser } from 'src/composables/useUser';
 
-const dialogUser = ref(false);
+const { getUser, respData, postUser, loading, editUser, user, dialog } =
+  useUser();
 const columns = [nameColumn, emailColumn, optColumn];
-const respData = ref({
-  data: [],
-  page: 1,
-  rowsPerPage: 20,
-});
-const loading = ref(false);
-
-const postUser = (value: user) => {
-  console.log('value: ', value);
-};
-const onclick = (value: object) => {
-  console.log(value);
-};
-
-const getUser = async (value: object) => {
-  loading.value = true;
-  await getData('user/all', value).then((resp) => {
-    respData.value = resp.users;
-    loading.value = false;
-  });
-};
-
-onBeforeMount(() => {
-  getUser(respData.value);
-});
 </script>
 <template>
   <section class="q-ma-sm">
@@ -44,10 +18,10 @@ onBeforeMount(() => {
           unelevated
           square
           label="Registrar usuario"
-          @click="dialogUser = !dialogUser"
+          @click="dialog = !dialog"
         />
       </div>
-      <FormUser v-model="dialogUser" :postUser="postUser" />
+      <FormUser v-model="dialog" @postUser="postUser" :user="user" />
       <UniversalTable
         :respData="respData"
         :columns="columns"
@@ -62,7 +36,7 @@ onBeforeMount(() => {
               flat
               color="red-5"
               icon="note"
-              @click="onclick(props.row)"
+              @click="editUser(props.row)"
             />
           </q-td>
         </template>

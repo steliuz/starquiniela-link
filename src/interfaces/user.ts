@@ -1,11 +1,15 @@
-export interface user {
+export interface User {
   prefix: string;
-  email: string;
+  email?: string;
   name: string;
-  password: string;
-  confirm_password: string;
-  phone: string | null;
+  password?: string;
+  password_confirmation?: string;
+  phone?: string | null;
   role_id: number | null;
   subscribe_id: number | null;
-  referral_id: string;
+  referral_id?: number | string;
+  id?: number;
+  credits?: number;
+  status?: boolean;
+  emailUser: string
 }
