@@ -1,23 +1,25 @@
+import { QTableProps } from 'quasar';
+
 interface Row {
-  id: number,
-  name: string,
-  email: string,
-  phone: string,
-  status: [string, boolean],
-  quantity: [number],
-  role: Role
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  status: [string, boolean];
+  quantity: [number];
+  role: Role;
 }
 
 interface Role {
-  name: string
+  name: string;
 }
 
 interface Custom {
-  name: string,
-  required: boolean,
-  align: string,
-  label: string,
-  sortable: boolean,
+  name: string;
+  required: boolean;
+  align: string;
+  label: string;
+  sortable: boolean;
 }
 
 const idColumn = {
@@ -99,7 +101,7 @@ const optColumn = {
   sortable: false,
 };
 
-const customColumn = (custom: Custom, options: object) => {
+const customColumn = (custom: Custom, options: QTableProps['columns']) => {
   return {
     name: custom.name ?? 'custom',
     required: custom.required ?? false,

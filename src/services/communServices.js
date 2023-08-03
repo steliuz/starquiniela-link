@@ -1,11 +1,11 @@
 import { api } from 'boot/axios';
 import { handleMessages } from './notifys';
 
-export const getData = async (path, params, responseType) => {
+export const getData = async (path, params, options) => {
   try {
     const { data } = await api.get(path, {
       params: params,
-      responseType: responseType,
+      ...options,
     });
     return data;
   } catch (error) {
@@ -61,14 +61,21 @@ export const postData = async (
 //   }
 // };
 
-export const putData = async (path, payload, headers) => {
+export const putData = async (
+  path,
+  payload,
+  headers,
+  msg = 'Se ha actualizado exitosamente!'
+) => {
   try {
     const { data } = await api.put(path, payload, headers);
-    handleMessages({
-      message: 'Se ha actualizado exitosamente!',
-      color: 'positive',
-      icon: 'check',
-    });
+    if (msg) {
+      handleMessages({
+        message: msg,
+        color: 'positive',
+        icon: 'check',
+      });
+    }
     return data;
   } catch (error) {
     handleMessages({
@@ -81,14 +88,19 @@ export const putData = async (path, payload, headers) => {
   }
 };
 
-export const deleteData = async (path) => {
+export const deleteData = async (
+  path,
+  msg = 'Se ha eliminado exitosamente!'
+) => {
   try {
     const { data } = await api.delete(path);
-    handleMessages({
-      message: 'Se ha eliminado exitosamente!',
-      color: 'positive',
-      icon: 'check',
-    });
+    if (msg) {
+      handleMessages({
+        message: msg,
+        color: 'positive',
+        icon: 'check',
+      });
+    }
     return data;
   } catch (error) {
     handleMessages({

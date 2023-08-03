@@ -17,7 +17,7 @@ const api = axios.create({
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'http://localhost:9000',
     Accept: 'application/json',
     Authorization: `Bearer ${token}`,
   },
@@ -36,11 +36,12 @@ const api = axios.create({
 //   }
 // );
 
-// const file_url = production ? process.env.FILE_URL_PROD : process.env.FILE_URL;
+const file_url = production ? process.env.FILE_URL_PROD : process.env.FILE_URL;
 // const vue_url = production ? 'https://atcreando.com' : 'http://localhost:9000';
 export default boot(({ app }) => {
   app.config.globalProperties.$axios = axios;
-  app.config.globalProperties.$axios = api;
+  app.config.globalProperties.$api = api;
+  app.config.globalProperties.$file_url = file_url;
 });
 
-export { api };
+export { api, file_url };

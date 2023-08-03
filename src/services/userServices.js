@@ -37,7 +37,7 @@ export const getUsers = async (params) => {
 
 export const deleteUser = async (id) => {
   try {
-    await api.delete(`/users/${id}`);
+    await api.delete(`/user/${id}`);
     handleMessages({
       message: 'Empleado eliminado',
       color: 'green-5',
@@ -55,7 +55,7 @@ export const deleteUser = async (id) => {
 
 export const updateUser = async (value) => {
   try {
-    await api.put('/users/' + value.id, value);
+    await api.put('/users/update', value);
     handleMessages({
       message: 'Empleado, editado con éxito',
       color: 'green-5',

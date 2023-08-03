@@ -4,8 +4,17 @@ import UniversalTable from 'src/components/UniversalTable.vue';
 import { nameColumn, optColumn, emailColumn } from 'src/helpers/columns';
 import { useUser } from 'src/composables/useUser';
 
-const { getUser, respData, postUser, loading, editUser, user, dialog } =
-  useUser();
+const {
+  getUser,
+  users,
+  postUser,
+  loading,
+  editUser,
+  user,
+  dialog,
+  putUser,
+  deleteUser,
+} = useUser();
 const columns = [nameColumn, emailColumn, optColumn];
 </script>
 <template>
@@ -21,25 +30,21 @@ const columns = [nameColumn, emailColumn, optColumn];
           @click="dialog = !dialog"
         />
       </div>
-      <FormUser v-model="dialog" @postUser="postUser" :user="user" />
+      <FormUser
+        v-model="dialog"
+        @postUser="postUser"
+        @putUser="putUser"
+        :user="user"
+      />
       <UniversalTable
-        :respData="respData"
+        :respData="users"
         :columns="columns"
         @paginateData="getUser"
         :loading="loading"
+        @editData="editUser"
+        title="Usuario"
+        @deleteData="deleteUser"
       >
-        <template v-slot:opt="{ props }">
-          <q-td style="width: 12%" :props="props" class="no-wrap text-center">
-            <q-btn
-              unelevated
-              padding="10px"
-              flat
-              color="red-5"
-              icon="note"
-              @click="editUser(props.row)"
-            />
-          </q-td>
-        </template>
       </UniversalTable>
     </div>
   </section>

@@ -50,38 +50,102 @@
       </div>
     </template>
     <template #body-cell-opt="props">
+      <q-td style="width: 12%" :props="props" class="no-wrap text-center">
+        <q-btn
+          v-if="!editBtnHidden"
+          unelevated
+          padding="10px"
+          flat
+          color="red-5"
+          icon="edit"
+          @click="emit('editData', props.row)"
+        />
+
+        <q-btn
+          v-if="!delBtnHidden"
+          unelevated
+          padding="10px"
+          flat
+          color="red-5"
+          icon="delete"
+          @click="openDialogConfirm(props.row)"
+        />
+      </q-td>
       <slot name="opt" :props="props"></slot>
     </template>
   </q-table>
+  <DialogConfirm
+    v-model="confirmDialog"
+    :id="sendId"
+    :title="
+      '¿Está seguro de que desea eliminar este ' + title?.toLowerCase() + '?'
+    "
+    @emitConfirm="sendConfirm"
+  ></DialogConfirm>
 </template>
 <script setup lang="ts">
-import { QTable } from 'quasar';
-import { ref, watch, onMounted } from 'vue';
+import { QTable, QTableProps } from 'quasar';
+import { ref, watch, onMounted, PropType } from 'vue';
+import DialogConfirm from './DialogConfirm.vue';
 
-const props = defineProps(['columns', 'respData', 'title', 'loading']);
-const emit = defineEmits(['paginateData', 'editData']);
-const paginations = ref({
+interface ResponseData {
+  data: Array<object>;
+  current_page: number;
+  last_page: number;
+  total: number;
+  per_page: number;
+}
+type keyable = {
+  [key: string]: string | number;
+  id: number;
+};
+
+const props = defineProps({
+  columns: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    type: Array as PropType<QTableProps['columns'] | any>,
+  },
+  respData: {
+    type: Object,
+  },
+  title: {
+    type: String,
+  },
+  loading: {
+    type: Boolean,
+  },
+  editBtnHidden: {
+    type: Boolean,
+  },
+  delBtnHidden: {
+    type: Boolean,
+  },
+});
+
+const emit = defineEmits(['paginateData', 'editData', 'deleteData']);
+let paginations = ref({
   page: 1,
   rowsPerPage: 20,
   countPage: 1,
   rowsNumber: 1,
-  sortBy: '',
-  descending: false,
+  sortBy: 'id',
+  descending: true,
   search: '',
 });
-const filter = ref('');
-
-const data = ref(props.respData?.data);
+let filter = ref('');
+let confirmDialog = ref(false);
+let data = ref(props.respData?.data);
 
 const resetFilter = () => {
   filter.value = '';
 };
-
+let sendId = ref();
 const table = ref();
 const handlerPaginate = (value: object) => {
   emit('paginateData', value);
 };
-const onRequest: QTable['onRequest'] = ({ pagination }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const onRequest: (any: any) => void = ({ pagination }) => {
   if (pagination.sortBy) {
     if (
       paginations.value.sortBy == pagination.sortBy &&
@@ -101,10 +165,16 @@ const onRequest: QTable['onRequest'] = ({ pagination }) => {
 
   handlerPaginate(paginations.value);
 };
-
+const sendConfirm = (id: number) => {
+  emit('deleteData', id);
+};
+const openDialogConfirm = (row: keyable) => {
+  sendId.value = row.id;
+  confirmDialog.value = true;
+};
 watch(
-  () => props.respData,
-  (newVal) => {
+  () => props.respData as ResponseData,
+  (newVal: ResponseData) => {
     data.value = newVal.data;
     paginations.value.page = newVal.current_page;
     paginations.value.countPage = newVal.last_page;
@@ -114,6 +184,7 @@ watch(
 );
 onMounted(() => {
   // get initial data from server (1st page)
-  table.value.requestServerInteraction();
+  // table.value.requestServerInteraction();
+  handlerPaginate(paginations.value);
 });
 </script>

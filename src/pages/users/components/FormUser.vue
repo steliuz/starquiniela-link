@@ -6,7 +6,7 @@ import { User } from 'src/interfaces/user';
 import BaseInput from 'src/components/BaseInput.vue';
 import OptionGroup from 'src/components/OptionGroup.vue';
 
-const emit = defineEmits(['postUser', 'editUser']);
+const emit = defineEmits(['postUser', 'editUser', 'putUser']);
 const props = defineProps(['user']);
 const type_disabled: Ref<boolean> = ref(true);
 const isPwd = ref(false);
@@ -25,9 +25,12 @@ const optionsData = [
   },
 ];
 const formUser: Ref<User> = ref(props.user);
-const form = ref();
 const onSubmit = () => {
-  emit('postUser', formUser.value);
+  if (formUser.value.id) {
+    emit('putUser', formUser.value);
+  } else {
+    emit('postUser', formUser.value);
+  }
 };
 
 watch(
@@ -48,11 +51,7 @@ watch(
       style="width: 80%; max-width: 900px"
     >
       <q-card-section style="max-height: 60vh" class="scroll q-mb-md">
-        <q-form
-          class="user_dialog_form full-width"
-          ref="form"
-          @submit="onSubmit"
-        >
+        <q-form class="user_dialog_form full-width" @submit="onSubmit">
           <div class="title">
             <p class="text-h5 text-grey-7">
               <i class="fa-solid fa-user-plus q-mr-xs text-primary"></i>
@@ -119,7 +118,7 @@ watch(
               label="Contraseña"
               v-model="formUser.password"
               :type="!isPwd ? 'password' : 'text'"
-              required
+              :required="formUser.id ? false : true"
             >
               <template v-slot:append>
                 <q-icon
@@ -135,7 +134,7 @@ watch(
               label="Repetir Contraseña"
               v-model="formUser.password_confirmation"
               :type="!isPwd ? 'password' : 'text'"
-              required
+              :required="formUser.id ? false : true"
             >
               <template v-slot:append>
                 <q-icon
@@ -157,23 +156,6 @@ watch(
                 :optionsData="optionsData"
                 inline
               ></OptionGroup>
-              <!-- <q-radio
-                color="primary"
-                :val="1"
-                label="Manager"
-              />
-              <q-radio
-                color="secondary"
-                v-model="formUser.role_id"
-                :val="2"
-                label="Reseller"
-              />
-              <q-radio
-                color="negative"
-                v-model="formUser.role_id"
-                :val="3"
-                label="Organizer"
-              />-->
             </div>
           </div>
           <q-btn
@@ -185,13 +167,12 @@ watch(
           />
           <q-btn
             class="q-mx-xs"
-            label="Registrar"
+            :label="formUser.id ? 'Editar' : 'Registrar'"
             color="primary"
             type="submit"
           />
         </q-form>
       </q-card-section>
-      <q-card-actions class="user_form_buttons"> </q-card-actions>
     </q-card>
   </q-dialog>
 </template>

@@ -187,31 +187,31 @@ const essentialLinks: EssentialLinkProps[] = [
     title: 'Usuarios',
     caption: 'github.com/quasarframework',
     icon: 'person',
-    link: '/userspage',
+    link: '/users',
   },
   {
     title: 'Equipos',
     caption: 'chat.quasar.dev',
     icon: 'local_police',
-    link: 'https://chat.quasar.dev',
+    link: '/teams',
   },
   {
     title: 'Publicidad',
     caption: 'forum.quasar.dev',
     icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
+    link: '/advertises',
   },
   {
     title: 'Quiniela',
     caption: '@quasarframework',
     icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
+    link: '/rooms',
   },
   {
     title: 'Categorías',
     caption: '@QuasarFramework',
     icon: 'public',
-    link: 'https://facebook.quasar.dev',
+    link: '/categories',
   },
 ];
 
