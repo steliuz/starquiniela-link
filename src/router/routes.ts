@@ -23,16 +23,16 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/teams/TeamsPage.vue'),
       },
       {
+        path: '/advertises',
+        component: () => import('pages/advertises/AdvertisesPage.vue'),
+      },
+      {
         path: '/rooms',
-        component: () => import('pages/users/UsersPage.vue'),
+        component: () => import('pages/rooms/RoomsPage.vue'),
       },
       {
         path: '/categories',
-        component: () => import('pages/users/UsersPage.vue'),
-      },
-      {
-        path: '/advertises',
-        component: () => import('pages/advertises/AdvertisesPage.vue'),
+        component: () => import('pages/category/CategoryPage.vue'),
       },
     ],
   },

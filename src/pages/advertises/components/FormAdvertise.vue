@@ -72,36 +72,22 @@ watch(
 );
 </script>
 <template>
-  <q-card square class="relative-position" style="width: 80%; max-width: 900px">
-    <q-card-section style="max-height: 60vh" class="scroll q-mb-md">
-      <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-        <p>Imagen</p>
-        <CropperImage :img="img" @onCropper="onCropper"></CropperImage>
-        <BaseInput
-          label="Nombre"
-          v-model="formAdvertise.name"
-          type="text"
-          required
-        />
-        <BaseInput
-          label="Cliente"
-          v-model="formAdvertise.client"
-          type="text"
-          required
-        />
-        <div>
-          <q-btn class="q-mx-xs" label="Submit" type="submit" color="primary" />
-          <q-btn
-            label="Limpiar"
-            type="reset"
-            color="red-5"
-            flat
-            class="q-mx-xs"
-          />
-        </div>
-      </q-form>
-    </q-card-section>
-  </q-card>
+  <q-dialog persistent>
+    <q-card square class="relative-position" style="width: 80%; max-width: 900px; height:65%;">
+      <q-card-section class=" ">
+        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+          <p>Imagen</p>
+          <CropperImage :img="img" @onCropper="onCropper"></CropperImage>
+          <BaseInput label="Nombre" v-model="formAdvertise.name" type="text" required />
+          <BaseInput label="Cliente" v-model="formAdvertise.client" type="text" required />
+          <div>
+            <q-btn class="q-mx-xs" label="Submit" type="submit" color="primary" />
+            <q-btn label="Limpiar" type="reset" color="red-5" flat class="q-mx-xs" />
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <style lang="scss" scoped>
@@ -113,7 +99,7 @@ watch(
   grid-gap: 15px;
   justify-content: center;
 
-  & > .title {
+  &>.title {
     grid-column: span 2;
   }
 }
@@ -122,6 +108,7 @@ watch(
   display: grid;
   grid-template-columns: 50% 50%;
 }
+
 @media screen and (max-width: 1023.99px) {
   .advertise_dialog_form {
     display: grid;
@@ -130,7 +117,7 @@ watch(
     grid-gap: 15px;
     justify-content: center;
 
-    & > .title {
+    &>.title {
       grid-column: span 2;
     }
   }
@@ -144,7 +131,7 @@ watch(
     grid-gap: 15px;
     justify-content: center;
 
-    & > .title {
+    &>.title {
       grid-column: 1 / -1;
     }
   }

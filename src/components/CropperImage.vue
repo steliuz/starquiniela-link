@@ -1,46 +1,32 @@
 <template>
-  <div>
-    <div class="flex">
-      <Cropper
-        v-if="circle"
-        ref="cropper"
-        class="cropper"
-        @change="change"
-        :src="image.src"
-        :debounce="false"
-        defaultBoundaries="fit"
-        :stencil-component="CircleStencil"
-      />
-      <Cropper
-        v-else
-        model-value="modelValue"
-        ref="cropper"
-        class="cropper"
-        @change="change"
-        :src="image.src"
-        :debounce="false"
-        defaultBoundaries="fit"
-      />
-      <Preview
-        v-if="image.src"
-        :width="120"
-        :height="120"
-        :image="result.image"
-        :coordinates="result.coordinates"
-      />
+  <div class="row">
+    <div class="col-6 flex justify-center" style="position: relative;">
+      <Cropper v-if="circle" ref="cropper" class="cropper full-width" @change="change" :src="image.src" :debounce="false"
+        defaultBoundaries="fit" :stencil-component="CircleStencil" />
+      <Cropper v-else model-value="modelValue" ref="cropper" class="cropper" @change="change" :src="image.src"
+        :debounce="false" defaultBoundaries="fit" />
+      <div class="button-wrapper">
+        <button class="button" type="button" @click="file.click()">
+          <input type="file" ref="file" @change="uploadImage($event)" accept="image/*" hidden />
+          <i class="fa-solid fa-image text-secondary"></i>
+        </button>
+        <!-- <button class="button" @click="cropImage()">Crop image</button> -->
+      </div>
     </div>
-    <div class="button-wrapper">
-      <button class="button" type="button" @click="file.click()">
-        <input
-          type="file"
-          ref="file"
-          @change="uploadImage($event)"
-          accept="image/*"
-          hidden
-        />
-        Upload image
-      </button>
-      <!-- <button class="button" @click="cropImage()">Crop image</button> -->
+    <div class="col-6 q-px-md">
+      <div class="title">
+      </div>
+      <div class="flex justify-center">
+        <Preview class="preview-team" v-if="image.src" :image="result.image" :coordinates="result.coordinates" />
+        <div class="circle-previuw" v-else></div>
+      </div>
+      <div class="q-px-md">
+        <BaseInput label="" class="q-mt-md" placeholder="Nombre de equipo" type="text" required />
+        <div class="q-mt-sm">
+          <q-btn unelevated class="full-width" label="crear" type="submit" color="primary" />
+          <q-btn unelevated label="Cancelar" type="reset" color="red-5" flat class="full-width q-mt-sm" v-close-popup />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -48,7 +34,9 @@
 <script setup lang="ts">
 import { onUnmounted, ref, watch } from 'vue';
 import { Cropper, CircleStencil, Preview } from 'vue-advanced-cropper';
+import BaseInput from 'src/components/BaseInput.vue';
 import 'vue-advanced-cropper/dist/style.css';
+
 
 const props = defineProps(['circle', 'img']);
 const emit = defineEmits(['onCropper']);
@@ -104,6 +92,24 @@ watch(
 </script>
 
 <style>
+.preview-team {
+  background-color: #ddd;
+  outline: 2px solid #5c00be;
+  outline-offset: 4px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.circle-previuw {
+  background-color: #ddd;
+  outline: 2px solid #5c00be;
+  outline-offset: 4px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
 .cropper {
   height: 300px;
   width: 300px;
@@ -113,24 +119,30 @@ watch(
 .button-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 17px;
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
 }
 
 .button {
   color: white;
-  font-size: 16px;
-  padding: 10px 20px;
-  width: 100%;
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   background: #151515;
   cursor: pointer;
   transition: background 0.5s;
   border: none;
+
   &:not(:last-of-type) {
     margin-right: 10px;
   }
+
   &:hover {
     background: #2f2f2f;
   }
+
   input {
     display: none;
   }

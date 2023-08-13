@@ -3,6 +3,8 @@ import { QTableProps } from 'quasar';
 interface Row {
   id: number;
   name: string;
+  user: string;
+  type: string;
   email: string;
   phone: string;
   status: [string, boolean];
@@ -41,6 +43,33 @@ const nameColumn = {
   field: (row: Row) => row.name,
   sortable: true,
 };
+const userColumn = {
+  name: 'user',
+  required: true,
+  label: 'Usuario',
+  style: 'width: 50px',
+  align: 'left',
+  field: (row: Row) => row.user,
+  sortable: true,
+};
+const typeColumn = {
+  name: 'type',
+  required: true,
+  label: 'Tipo',
+  style: 'width: 50px',
+  align: 'left',
+  field: (row: Row) => row.type,
+  sortable: true,
+};
+const priceColumn = {
+  name: 'price',
+  required: true,
+  label: 'Precio',
+  style: 'width: 50px',
+  align: 'left',
+  field: (row: Row) => row.type,
+  sortable: true,
+};
 
 const emailColumn = {
   name: 'email',
@@ -55,11 +84,11 @@ const emailColumn = {
 const phoneColumn = {
   name: 'phone',
   required: true,
-  label: 'Telefono',
+  label: 'Teléfono',
   style: 'width: 50px',
   align: 'left',
   field: (row: Row) => row.phone,
-  sortable: true,
+  sortable: false,
 };
 
 const statusColumn = {
@@ -85,11 +114,11 @@ const qunatityColumn = {
 const roleColumn = {
   name: 'role',
   required: true,
-  label: 'Cantidad',
+  label: 'Rol',
   style: 'width: 50px',
   align: 'left',
   field: (row: Row) => row.role?.name,
-  sortable: true,
+  sortable: false,
 };
 
 const optColumn = {
@@ -122,4 +151,7 @@ export {
   qunatityColumn,
   roleColumn,
   customColumn,
+  userColumn,
+  typeColumn,
+  priceColumn
 };

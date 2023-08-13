@@ -11,6 +11,7 @@ const {
   loading,
   editTeam,
   team,
+  dialog,
   putTeam,
   deleteTeam,
   onReset,
@@ -20,21 +21,12 @@ const columns = [nameColumn, optColumn];
 <template>
   <section class="q-ma-sm">
     <div class="row">
-      <FormTeam
-        @postTeam="postTeam"
-        @putTeam="putTeam"
-        :team="team"
-        @onReset="onReset"
-      />
-      <UniversalTable
-        :respData="teams"
-        :columns="columns"
-        @paginateData="getTeam"
-        :loading="loading"
-        @editData="editTeam"
-        title="Equipos"
-        @deleteData="deleteTeam"
-      >
+      <div class="col-12 flex justify-end q-my-md">
+        <q-btn class="q-mr-lg" color="secondary" unelevated square label="Registrar equipo" @click="dialog = !dialog" />
+      </div>
+      <FormTeam v-model="dialog" @postTeam="postTeam" @putTeam="putTeam" :team="team" @onReset="onReset" />
+      <UniversalTable :respData="teams" :columns="columns" @paginateData="getTeam" :loading="loading" @editData="editTeam"
+        title="Equipos" @deleteData="deleteTeam">
       </UniversalTable>
     </div>
   </section>
