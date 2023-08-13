@@ -34,6 +34,10 @@ const routes: RouteRecordRaw[] = [
         path: '/categories',
         component: () => import('pages/category/CategoryPage.vue'),
       },
+      {
+        path: '/matchs',
+        component: () => import('pages/rooms/RoomMatchs.vue'),
+      },
     ],
   },
 

@@ -49,3 +49,9 @@ p.label-input {
   background-color: $grey-13;
   // border-radius: 500px;
 }
+
+.hide-number-arrows ::-webkit-inner-spin-button,
+.hide-number-arrows ::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

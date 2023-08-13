@@ -6,18 +6,17 @@
         Precio de Quinielas
       </p>
     </div>
-    <br />
     <section class="flex justify-center">
       <div class="w-section">
         <div class="row" v-for="subscribe in subscribes" :key="subscribe.id">
           <div class="col-12">
-            <h5 class="text-center bg-secondary text-white text-uppercase py-1">
+            <p class="text-center bg-secondary text-white text-uppercase q-my-1">
               organizador {{ subscribe.name }}
-            </h5>
+            </p>
           </div>
-          <div class="col-12 col-md-4 column content-center" v-for="credit in subscribe.credits" :key="credit.id">
-            <p class="pt-3 mb-2 text-bold">{{ credit.name }}</p>
-            <q-input class="text-center mb-0 pb-2 input-w" input-class="text-center text-bold" outlined dense bottom-slots
+          <div class="col-12 col-md-4 column content-center" v-for="credit in subscribe.credits" :key="credit.name">
+            <p class="text-bold q-mb-none">{{ credit.name }}</p>
+            <q-input class="text-center pb-2 input-w" input-class="text-center text-bold" outlined dense bottom-slots
               v-model="credit.price" label="" type="number" maxlength="4">
               <template v-slot:after>
                 <q-btn size="sm" color="secondary" round dense flat icon="check">
