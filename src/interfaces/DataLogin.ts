@@ -5,7 +5,7 @@ export interface dataLogin {
   userRole: string;
   user_data: dataUser;
 }
-interface dataUser {
+export interface dataUser {
   contact_email: string;
   created_at: string;
   credits: number;
@@ -17,7 +17,8 @@ interface dataUser {
   prefix: string;
   referral_id: number;
   role_id: number;
-  status: number;
+  status?: number;
   subscribe_id: number;
   update_at: string;
+  emailUser?: string;
 }

@@ -73,17 +73,45 @@ watch(
 </script>
 <template>
   <q-dialog persistent>
-    <q-card square class="relative-position" style="width: 80%; max-width: 900px; height:65%;">
+    <q-card
+      square
+      class="relative-position"
+      style="width: 80%; max-width: 900px; height: 65%"
+    >
       <q-card-section class=" ">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <p>Imagen</p>
-          <CropperImage :img="img" @onCropper="onCropper"></CropperImage>
-          <BaseInput label="Nombre" v-model="formAdvertise.name" type="text" required />
-          <BaseInput label="Cliente" v-model="formAdvertise.client" type="text" required />
-          <div>
-            <q-btn class="q-mx-xs" label="Submit" type="submit" color="primary" />
-            <q-btn label="Limpiar" type="reset" color="red-5" flat class="q-mx-xs" />
-          </div>
+          <CropperImage class="q-mt-sm" :img="img" @onCropper="onCropper">
+            <template v-slot:form>
+              <BaseInput
+                label="Nombre"
+                v-model="formAdvertise.name"
+                type="text"
+                required
+              />
+              <BaseInput
+                label="Cliente"
+                v-model="formAdvertise.client"
+                type="text"
+                required
+              />
+              <div class="q-mt-sm">
+                <q-btn
+                  class="q-mx-xs"
+                  label="Submit"
+                  type="submit"
+                  color="primary"
+                />
+                <q-btn
+                  label="Cancelar"
+                  type="reset"
+                  color="red-5"
+                  flat
+                  class="q-mx-xs"
+                />
+              </div>
+            </template>
+          </CropperImage>
         </q-form>
       </q-card-section>
     </q-card>
@@ -99,7 +127,7 @@ watch(
   grid-gap: 15px;
   justify-content: center;
 
-  &>.title {
+  & > .title {
     grid-column: span 2;
   }
 }
@@ -117,7 +145,7 @@ watch(
     grid-gap: 15px;
     justify-content: center;
 
-    &>.title {
+    & > .title {
       grid-column: span 2;
     }
   }
@@ -131,7 +159,7 @@ watch(
     grid-gap: 15px;
     justify-content: center;
 
-    &>.title {
+    & > .title {
       grid-column: 1 / -1;
     }
   }

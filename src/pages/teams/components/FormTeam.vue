@@ -69,7 +69,11 @@ watch(
 </script>
 <template>
   <q-dialog persistent>
-    <q-card square class="relative-position" style="width: 80%; max-width: 900px; height:65%;">
+    <q-card
+      square
+      class="relative-position"
+      style="width: 80%; max-width: 900px; height: 65%"
+    >
       <q-card-section class=" ">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <div class="row">
@@ -80,12 +84,48 @@ watch(
               </p>
               <div class="title">
                 <p class="q-mb-none text-h6 text-grey-7">
-                  <i class="fa-solid fa-shield-halved q-mr-xs text-secondary"></i>
+                  <i
+                    class="fa-solid fa-shield-halved q-mr-xs text-secondary"
+                  ></i>
                   Imagen / Nombre de equipo
                 </p>
               </div>
               <!-- <p class="q-px-md">Imagen de equipo</p> -->
-              <CropperImage class="q-mt-sm" :circle="true" :img="img" @onCropper="onCropper"></CropperImage>
+              <CropperImage
+                class="q-mt-sm"
+                :circle="true"
+                :img="img"
+                @onCropper="onCropper"
+              >
+                <template v-slot:form>
+                  <BaseInput
+                    v-model="formTeam.name"
+                    label=""
+                    class="q-mt-md"
+                    placeholder="Nombre de equipo"
+                    type="text"
+                    required
+                  />
+                  <div class="q-mt-sm">
+                    <q-btn
+                      unelevated
+                      class="full-width"
+                      label="crear"
+                      type="submit"
+                      color="primary"
+                    />
+                    <q-btn
+                      unelevated
+                      label="Cancelar"
+                      type="reset"
+                      color="red-5"
+                      flat
+                      class="full-width q-mt-sm"
+                      v-close-popup
+                    />
+                  </div>
+                </template>
+              </CropperImage>
             </div>
             <!-- <div class="col-6">
             <BaseInput label="Nombre" v-model="formTeam.name" type="text" required />
@@ -94,8 +134,6 @@ watch(
             <q-btn label="Limpiar" type="reset" color="red-5" flat class="q-mx-xs" />
           </div> -->
           </div>
-
-
         </q-form>
       </q-card-section>
     </q-card>
@@ -111,7 +149,7 @@ watch(
   grid-gap: 15px;
   justify-content: center;
 
-  &>.title {
+  & > .title {
     grid-column: span 2;
   }
 }
@@ -129,7 +167,7 @@ watch(
     grid-gap: 15px;
     justify-content: center;
 
-    &>.title {
+    & > .title {
       grid-column: span 2;
     }
   }
@@ -143,7 +181,7 @@ watch(
     grid-gap: 15px;
     justify-content: center;
 
-    &>.title {
+    & > .title {
       grid-column: 1 / -1;
     }
   }

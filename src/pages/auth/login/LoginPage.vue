@@ -18,10 +18,10 @@ const postLogin = async (value: loginAuth) => {
 
   try {
     await login(value).then((data: dataLogin) => {
-      store.userAuth(data.user_data);
+      store.userAuth(data);
       saveData(value);
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push('/admin/dashboard');
       }, 800);
     });
   } catch (error) {

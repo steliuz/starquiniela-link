@@ -3,17 +3,18 @@ import { QTableProps } from 'quasar';
 interface Row {
   id: number;
   name: string;
-  user: string;
+  user?: Relation;
   type: string;
   email: string;
   phone: string;
   status: [string, boolean];
   quantity: [number];
-  role: Role;
+  role?: Relation;
+  price: number;
 }
 
-interface Role {
-  name: string;
+interface Relation {
+  name?: string;
 }
 
 interface Custom {
@@ -49,17 +50,21 @@ const userColumn = {
   label: 'Usuario',
   style: 'width: 50px',
   align: 'left',
-  field: (row: Row) => row.user,
-  sortable: true,
+  field: (row: Row) => row.user?.name,
+  sortable: false,
 };
-const typeColumn = {
-  name: 'type',
-  required: true,
-  label: 'Tipo',
-  style: 'width: 50px',
-  align: 'left',
-  field: (row: Row) => row.type,
-  sortable: true,
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const typeColumn = (options: any) => {
+  return {
+    name: 'type',
+    required: true,
+    label: 'Tipo',
+    style: 'width: 50px',
+    align: 'left',
+    field: (row: Row) => row.type,
+    sortable: true,
+    ...options,
+  };
 };
 const priceColumn = {
   name: 'price',
@@ -67,7 +72,7 @@ const priceColumn = {
   label: 'Precio',
   style: 'width: 50px',
   align: 'left',
-  field: (row: Row) => row.type,
+  field: (row: Row) => row.price,
   sortable: true,
 };
 
@@ -100,8 +105,17 @@ const statusColumn = {
   field: (row: Row) => row.status,
   sortable: true,
 };
+const statusToogleColumn = {
+  name: 'statusToogle',
+  required: true,
+  label: 'Estado',
+  style: 'width: 50px',
+  align: 'center',
+  field: (row: Row) => row.status,
+  sortable: true,
+};
 
-const qunatityColumn = {
+const quantityColumn = {
   name: 'quantity',
   required: true,
   label: 'Cantidad',
@@ -148,10 +162,11 @@ export {
   phoneColumn,
   statusColumn,
   optColumn,
-  qunatityColumn,
+  quantityColumn,
   roleColumn,
   customColumn,
   userColumn,
   typeColumn,
-  priceColumn
+  priceColumn,
+  statusToogleColumn,
 };

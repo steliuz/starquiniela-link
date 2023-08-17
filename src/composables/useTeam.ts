@@ -20,6 +20,7 @@ export function useTeam() {
     name: '',
     image: '',
   });
+  const optionsTeams = ref([]);
 
   const postTeam = async (value: Team) => {
     await postData('teams', value).then(() => {
@@ -56,6 +57,14 @@ export function useTeam() {
     });
   };
 
+  const selectTeams = async () => {
+    loading.value = true;
+    await getData('teams/select').then((resp) => {
+      optionsTeams.value = resp;
+      loading.value = false;
+    });
+  };
+
   const onReset = () => {
     team.value = {
       name: '',
@@ -75,5 +84,7 @@ export function useTeam() {
     team,
     dialog,
     onReset,
+    selectTeams,
+    optionsTeams,
   };
 }

@@ -2,7 +2,14 @@
   <q-layout view="lHh Lpr lFf">
     <q-header>
       <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="toggleLeftDrawer"
+        />
 
         <q-toolbar-title> Quasar App </q-toolbar-title>
 
@@ -149,7 +156,11 @@
       <q-list>
         <q-item-label header> Essential Links </q-item-label>
 
-        <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
+        <EssentialLink
+          v-for="link in essentialLinks"
+          :key="link.title"
+          v-bind="link"
+        />
       </q-list>
     </q-drawer>
 
@@ -170,37 +181,37 @@ const essentialLinks: EssentialLinkProps[] = [
     title: 'Inicio',
     caption: 'quasar.dev',
     icon: 'home',
-    link: '/dashboard',
+    link: '/admin/dashboard',
   },
   {
     title: 'Usuarios',
     caption: 'github.com/quasarframework',
     icon: 'person',
-    link: '/users',
+    link: '/admin/users',
   },
   {
     title: 'Equipos',
     caption: 'chat.quasar.dev',
     icon: 'local_police',
-    link: '/teams',
+    link: '/admin/teams',
   },
   {
     title: 'Publicidad',
     caption: 'forum.quasar.dev',
     icon: 'record_voice_over',
-    link: '/advertises',
+    link: '/admin/advertises',
   },
   {
     title: 'Quiniela',
     caption: '@quasarframework',
     icon: 'rss_feed',
-    link: '/rooms',
+    link: '/admin/rooms',
   },
   {
     title: 'Categorías',
     caption: '@QuasarFramework',
     icon: 'public',
-    link: '/categories',
+    link: '/admin/categories',
   },
 ];
 

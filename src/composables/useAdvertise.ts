@@ -66,6 +66,7 @@ export function useAdvertise() {
       client: '',
       status: true,
     };
+    dialog.value = false;
   };
 
   return {

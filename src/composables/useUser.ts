@@ -80,6 +80,7 @@ export function useUser() {
       subscribe_id: null,
       referral_id: auth.value.id,
     };
+    dialog.value = false;
   };
 
   return {
@@ -92,5 +93,6 @@ export function useUser() {
     loading,
     user,
     dialog,
+    onReset,
   };
 }

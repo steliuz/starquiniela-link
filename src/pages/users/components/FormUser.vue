@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import type { Ref } from 'vue';
-
+import { ref, watch, Ref, readonly } from 'vue';
 import { User } from 'src/interfaces/user';
 import BaseInput from 'src/components/BaseInput.vue';
 import OptionGroup from 'src/components/OptionGroup.vue';
 
-const emit = defineEmits(['postUser', 'editUser', 'putUser']);
+const emit = defineEmits(['postUser', 'editUser', 'putUser', 'onReset']);
 const props = defineProps(['user']);
 const type_disabled: Ref<boolean> = ref(true);
 const isPwd = ref(false);
@@ -25,6 +23,7 @@ const optionsData = [
   },
 ];
 const formUser: Ref<User> = ref(props.user);
+let tempUser = Object.assign({}, props.user);
 const onSubmit = () => {
   if (formUser.value.id) {
     emit('putUser', formUser.value);
@@ -33,21 +32,37 @@ const onSubmit = () => {
   }
 };
 
+const onReset = () => {
+  formUser.value = tempUser;
+  emit('onReset');
+};
+
 watch(
   () => props.user,
   (val) => {
     formUser.value = val;
-    let email = val.email.split('@');
-    formUser.value.emailUser = email[0];
-    formUser.value.prefix = '@' + email[1];
+    tempUser = Object.assign({}, val);
+    if (val.email) {
+      let email = val.email.split('@');
+      formUser.value.emailUser = email[0];
+      formUser.value.prefix = '@' + email[1];
+    }
   }
 );
 </script>
 <template>
   <q-dialog persistent>
-    <q-card square class="relative-position" style="width: 80%; max-width: 900px; height: 85%;">
+    <q-card
+      square
+      class="relative-position"
+      style="width: 80%; max-width: 900px; height: 85%"
+    >
       <q-card-section class=" ">
-        <q-form class="user_dialog_form full-width" @submit="onSubmit">
+        <q-form
+          class="user_dialog_form full-width"
+          @submit="onSubmit"
+          @reset="onReset"
+        >
           <div class="title">
             <p class="text-h5 text-grey-7">
               <i class="fa-solid fa-user-plus q-mr-xs text-primary"></i>
@@ -61,15 +76,26 @@ watch(
             </p>
           </div>
           <div>
-            <BaseInput label="Subfijo correo" :disable="type_disabled" v-model="formUser.prefix"
-              hint="Crea un subfijo para tus correos" bottom-slots required>
+            <BaseInput
+              label="Subfijo correo"
+              :disable="type_disabled"
+              v-model="formUser.prefix"
+              hint="Crea un subfijo para tus correos"
+              bottom-slots
+              required
+            >
               <template v-slot:before>
                 <q-checkbox left-label v-model="type_disabled" />
               </template>
             </BaseInput>
           </div>
           <div>
-            <BaseInput label="Dato de correo" v-model="formUser.emailUser" type="text" required>
+            <BaseInput
+              label="Dato de correo"
+              v-model="formUser.emailUser"
+              type="text"
+              required
+            >
               <template v-slot:after>
                 <span class="hint_email">
                   {{ formUser.prefix }}
@@ -84,7 +110,12 @@ watch(
             </p>
           </div>
           <div>
-            <BaseInput label="Nombre" v-model="formUser.name" type="text" required />
+            <BaseInput
+              label="Nombre"
+              v-model="formUser.name"
+              type="text"
+              required
+            />
           </div>
           <div>
             <BaseInput label="Teléfono" v-model="formUser.phone" type="text">
@@ -94,18 +125,34 @@ watch(
             </BaseInput>
           </div>
           <div>
-            <BaseInput label="Contraseña" v-model="formUser.password" :type="!isPwd ? 'password' : 'text'"
-              :required="formUser.id ? false : true">
+            <BaseInput
+              label="Contraseña"
+              v-model="formUser.password"
+              :type="!isPwd ? 'password' : 'text'"
+              :required="formUser.id ? false : true"
+            >
               <template v-slot:append>
-                <q-icon class="cursor-pointer" :name="!isPwd ? 'visibility' : 'visibility_off'" @click="isPwd = !isPwd" />
+                <q-icon
+                  class="cursor-pointer"
+                  :name="!isPwd ? 'visibility' : 'visibility_off'"
+                  @click="isPwd = !isPwd"
+                />
               </template>
             </BaseInput>
           </div>
           <div>
-            <BaseInput label="Repetir Contraseña" v-model="formUser.password_confirmation"
-              :type="!isPwd ? 'password' : 'text'" :required="formUser.id ? false : true">
+            <BaseInput
+              label="Repetir Contraseña"
+              v-model="formUser.password_confirmation"
+              :type="!isPwd ? 'password' : 'text'"
+              :required="formUser.id ? false : true"
+            >
               <template v-slot:append>
-                <q-icon class="cursor-pointer" :name="!isPwd ? 'visibility' : 'visibility_off'" @click="isPwd = !isPwd" />
+                <q-icon
+                  class="cursor-pointer"
+                  :name="!isPwd ? 'visibility' : 'visibility_off'"
+                  @click="isPwd = !isPwd"
+                />
               </template>
             </BaseInput>
           </div>
@@ -115,11 +162,26 @@ watch(
               Rol del usuario
             </p>
             <div class="q-gutter-sm">
-              <OptionGroup v-model="formUser.role_id" :optionsData="optionsData" inline></OptionGroup>
+              <OptionGroup
+                v-model="formUser.role_id"
+                :optionsData="optionsData"
+                inline
+              ></OptionGroup>
             </div>
           </div>
-          <q-btn class="q-mx-xs" flat label="cancelar" color="red-5" v-close-popup />
-          <q-btn class="q-mx-xs" :label="formUser.id ? 'Editar' : 'Registrar'" color="primary" type="submit" />
+          <q-btn
+            class="q-mx-xs"
+            flat
+            label="cancelar"
+            color="red-5"
+            type="reset"
+          />
+          <q-btn
+            class="q-mx-xs"
+            :label="formUser.id ? 'Editar' : 'Registrar'"
+            color="primary"
+            type="submit"
+          />
         </q-form>
       </q-card-section>
     </q-card>
@@ -135,7 +197,7 @@ watch(
   grid-gap: 15px;
   justify-content: center;
 
-  &>.title {
+  & > .title {
     grid-column: span 2;
   }
 }
@@ -153,7 +215,7 @@ watch(
     grid-gap: 15px;
     justify-content: center;
 
-    &>.title {
+    & > .title {
       grid-column: span 2;
     }
   }
@@ -167,7 +229,7 @@ watch(
     grid-gap: 15px;
     justify-content: center;
 
-    &>.title {
+    & > .title {
       grid-column: 1 / -1;
     }
   }

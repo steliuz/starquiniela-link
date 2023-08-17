@@ -1,8 +1,23 @@
 <template>
-  <q-table class="font-table full-width" tableHeaderClass="bg-primary text-white" separator="cell" flat bordered dense
-    :title="title" :rows="data" :columns="columns" row-key="id" ref="table" binary-state-sort
-    rowsPerPageLabel="Registros por página" v-model:pagination="paginations" @request="onRequest" :loading="loading"
-    :filter="filter">
+  <q-table
+    class="font-table full-width"
+    tableHeaderClass="bg-primary text-white"
+    separator="cell"
+    flat
+    bordered
+    dense
+    :title="title"
+    :rows="data"
+    :columns="columns"
+    row-key="id"
+    ref="table"
+    binary-state-sort
+    rowsPerPageLabel="Registros por página"
+    v-model:pagination="paginations"
+    @request="onRequest"
+    :loading="loading"
+    :filter="filter"
+  >
     <template v-slot:header-cell-opt>
       <q-th>
         <q-icon name="settings" size="1.5em" />
@@ -15,9 +30,23 @@
     </template>
     <template v-slot:top-right>
       <div class="column">
-        <q-input class="" borderless dense v-model="filter" filled placeholder="Filtrar por código..." debounce="1000">
+        <q-input
+          class=""
+          borderless
+          dense
+          v-model="filter"
+          filled
+          placeholder="Filtrar por código..."
+          debounce="1000"
+        >
           <template v-slot:append>
-            <q-icon v-if="filter != ''" class="cursor-pointer q-px-none" name="clear" @click="resetFilter" size="xs" />
+            <q-icon
+              v-if="filter != ''"
+              class="cursor-pointer q-px-none"
+              name="clear"
+              @click="resetFilter"
+              size="xs"
+            />
             <q-btn v-else color="primary" round size="xs">
               <q-icon class="cursor-pointer" name="search" />
             </q-btn>
@@ -25,12 +54,30 @@
         </q-input>
       </div>
     </template>
+    <template #body-cell-statusToogle="props">
+      <td class="text-center">
+        <q-toggle
+          unchecked-icon="clear"
+          checked-icon="check"
+          color="green"
+          :false-value="0"
+          :true-value="1"
+          v-model="props.row.status"
+          @update:model-value="updateStatus(props.row)"
+        />
+      </td>
+    </template>
     <template #body-cell-opt="props">
       <q-td style="width: 10%" :props="props" class="no-wrap text-center">
         <q-btn class="q-pa-sm" color="primary" flat icon="more_vert">
           <q-menu>
             <q-list style="min-width: 140px">
-              <q-item clickable v-close-popup v-if="!editBtnHidden" @click="emit('editData', props.row)">
+              <q-item
+                clickable
+                v-close-popup
+                v-if="!editBtnHidden"
+                @click="emit('editData', props.row)"
+              >
                 <q-item-section>
                   <div class="flex">
                     <i class="q-mr-md fa-solid fa-edit text-secondary"></i>
@@ -38,7 +85,12 @@
                   </div>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup v-if="!delBtnHidden" @click="openDialogConfirm(props.row)">
+              <q-item
+                clickable
+                v-close-popup
+                v-if="!delBtnHidden"
+                @click="openDialogConfirm(props.row)"
+              >
                 <q-item-section>
                   <div class="flex">
                     <i class="q-mr-md fa-solid fa-trash text-red-5"></i>
@@ -46,38 +98,42 @@
                   </div>
                 </q-item-section>
               </q-item>
+              <slot name="opt" :props="props"></slot>
             </q-list>
           </q-menu>
         </q-btn>
-        <!-- <q-btn v-if="!editBtnHidden" unelevated padding="10px" flat color="red-5" icon="edit" size="md"
-          @click="emit('editData', props.row)" />
-
-        <q-btn v-if="!delBtnHidden" unelevated padding="10px" flat color="red-5" icon="delete" size="md"
-          @click="openDialogConfirm(props.row)" /> -->
       </q-td>
-      <slot name="opt" :props="props"></slot>
     </template>
     <template #body-cell-role="props">
-      <q-td style="width: 10%" :props="props" class="no-wrap ">
+      <q-td style="width: 10%" :props="props" class="no-wrap">
         <div class="text-center">
-          <q-badge class="q-pa-sm" rounded :class="`bg-${getRol(props.row.role.id).bg}`" text-color="white">
+          <q-badge
+            class="q-pa-sm"
+            rounded
+            :class="`bg-${getRol(props.row.role.id).bg}`"
+            text-color="white"
+          >
             <i :class="getRol(props.row.role.id).icon" class="q-mr-sm"></i>
             <span class="text-bold">{{ getRol(props.row.role.id).name }}</span>
           </q-badge>
         </div>
       </q-td>
-      <slot name="opt" :props="props"></slot>
     </template>
   </q-table>
-  <DialogConfirm v-model="confirmDialog" :id="sendId" :title="'¿Está seguro de que desea eliminar este ' + title?.toLowerCase() + '?'
-    " @emitConfirm="sendConfirm"></DialogConfirm>
+  <DialogConfirm
+    v-model="confirmDialog"
+    :id="sendId"
+    :title="
+      '¿Está seguro de que desea eliminar este ' + title?.toLowerCase() + '?'
+    "
+    @emitConfirm="sendConfirm"
+  ></DialogConfirm>
 </template>
 <script setup lang="ts">
 import { QTable, QTableProps } from 'quasar';
 import { ref, watch, onMounted, PropType } from 'vue';
 import DialogConfirm from './DialogConfirm.vue';
 import { getRol } from 'src/helpers/role';
-
 
 interface ResponseData {
   data: Array<object>;
@@ -88,7 +144,7 @@ interface ResponseData {
 }
 type keyable = {
   [key: string]: string | number;
-  id: number;
+  // id: number;
 };
 
 const props = defineProps({
@@ -113,7 +169,12 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['paginateData', 'editData', 'deleteData']);
+const emit = defineEmits([
+  'paginateData',
+  'editData',
+  'deleteData',
+  'statusData',
+]);
 let paginations = ref({
   page: 1,
   rowsPerPage: 20,
@@ -163,6 +224,10 @@ const openDialogConfirm = (row: keyable) => {
   sendId.value = row.id;
   confirmDialog.value = true;
 };
+
+function updateStatus(row: object) {
+  emit('statusData', row);
+}
 watch(
   () => props.respData as ResponseData,
   (newVal: ResponseData) => {

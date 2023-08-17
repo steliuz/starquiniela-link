@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
-import { Room } from 'src/interfaces/room.ts';
+import { Room } from 'src/interfaces/room';
 import BaseInput from 'src/components/BaseInput.vue';
-
+import OptionGroup from 'src/components/OptionGroup.vue';
 
 const emit = defineEmits(['postRoom', 'editUser', 'putRoom']);
 const props = defineProps(['room']);
@@ -11,14 +11,16 @@ const props = defineProps(['room']);
 const formRooms: Ref<Room> = ref(props.room);
 
 const optionsRules = ref([
-  'Normal', 'Avanzada', 'LEV'
-])
+  { label: 'Normal', value: 1 },
+  { label: 'Avanzada', value: 2 },
+  { label: 'LEV', value: 3 },
+]);
 const optionsCategory = ref([
-  'Tabla General', 'Perzonalizado 1', 'Perzonalizado 2'
-])
-const optionsType = ref([
-  'Global', 'Fases',
-])
+  { label: 'Tabla General', value: 1 },
+  { label: 'Perzonalizado 1', value: 2 },
+  { label: 'Perzonalizado 2', value: 3 },
+]);
+// const optionsType = ref(['Global', 'Fases']);
 
 const onSubmit = () => {
   if (formRooms.value.id) {
@@ -34,12 +36,14 @@ watch(
     formRooms.value = val;
   }
 );
-
-
 </script>
 <template>
   <q-dialog persistent>
-    <q-card square class="relative-position q-pa-lg" style="width: 80%; max-width: 900px; height: auto">
+    <q-card
+      square
+      class="relative-position q-pa-lg"
+      style="width: 80%; max-width: 900px; height: auto"
+    >
       <q-card-section class=" ">
         <q-form class="room_dialog_form full-width" @submit="onSubmit">
           <div class="title">
@@ -65,38 +69,68 @@ watch(
             </p>
           </div>
           <div>
-            <p class="label-input">
-              Regla de puntos
-            </p>
-            <q-select dense filled v-model="formRooms.rule" :options="optionsRules" behavior="menu" />
+            <p class="label-input">Regla de puntos</p>
+            <OptionGroup
+              v-model="formRooms.type"
+              :optionsData="optionsRules"
+            ></OptionGroup>
+            <!-- <q-select
+              dense
+              filled
+              v-model="formRooms.type"
+              :options="optionsRules"
+              behavior="menu"
+            /> -->
           </div>
           <div>
-            <p class="label-input">
-              Categoría
-            </p>
-            <q-select dense filled v-model="formRooms.rule" :options="optionsCategory" behavior="menu" />
+            <p class="label-input">Categoría</p>
+            <OptionGroup
+              v-model="formRooms.category_room_id"
+              :optionsData="optionsCategory"
+            ></OptionGroup>
+            <!-- <q-select
+              dense
+              filled
+              v-model="formRooms.category_room_id"
+              :options="optionsCategory"
+              behavior="menu"
+              map-options
+            /> -->
           </div>
-          <div class="">
-            <p class="label-input">
-              Tipo de quinielas
-            </p>
-            <q-select dense filled v-model="formRooms.rule" :options="optionsType" behavior="menu" />
-          </div>
-          <div class="">
+          <!-- <div class="">
+            <p class="label-input">Tipo de quinielas</p>
+            <q-select
+              dense
+              filled
+              v-model="formRooms.type"
+              :options="optionsType"
+              behavior="menu"
+            />
+          </div> -->
+          <!-- <div class="">
             <BaseInput label="Precio" v-model="formRooms.price" required>
             </BaseInput>
-          </div>
+          </div> -->
           <div class="user_form_buttons q-mt-md">
-            <q-btn class="q-mx-xs" flat label="cancelar" color="red-5" v-close-popup />
-            <q-btn class="q-mx-xs" :label="formRooms.id ? 'Editar' : 'Registrar'" color="secondary" type="submit" />
-
+            <q-btn
+              class="q-mx-xs"
+              flat
+              label="cancelar"
+              color="red-5"
+              v-close-popup
+            />
+            <q-btn
+              class="q-mx-xs"
+              :label="formRooms.id ? 'Editar' : 'Registrar'"
+              color="secondary"
+              type="submit"
+            />
           </div>
         </q-form>
       </q-card-section>
     </q-card>
   </q-dialog>
 </template>
-
 
 <style lang="scss" scoped>
 .room_dialog_form {
@@ -107,17 +141,16 @@ watch(
   grid-gap: 15px;
   justify-content: center;
 
-  &>.mid-width {
+  & > .mid-width {
     max-width: 50%;
   }
 
-  &>div:nth-of-type(3),
-  &>div:nth-of-type(9) {
+  & > div:nth-of-type(3),
+  & > div:nth-of-type(9) {
     grid-column: span 2;
-
   }
 
-  &>.title {
+  & > .title {
     grid-column: span 2;
   }
 }
@@ -135,7 +168,7 @@ watch(
     grid-gap: 15px;
     justify-content: center;
 
-    &>.title {
+    & > .title {
       grid-column: span 2;
     }
   }
@@ -149,7 +182,7 @@ watch(
     grid-gap: 15px;
     justify-content: center;
 
-    &>.title {
+    & > .title {
       grid-column: 1 / -1;
     }
   }
