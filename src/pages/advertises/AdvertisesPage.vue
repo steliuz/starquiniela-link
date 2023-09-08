@@ -38,16 +38,18 @@ const columns = [nameColumn, optColumn];
         :advertise="advertise"
         @onReset="onReset"
       />
-      <UniversalTable
-        :respData="advertises"
-        :columns="columns"
-        @paginateData="getAdvertise"
-        :loading="loading"
-        @editData="editAdvertise"
-        title="Publicidad registrada"
-        @deleteData="deleteAdvertise"
-      >
-      </UniversalTable>
+      <div class="col-12 flex justify-center q-my-md">
+        <UniversalTable
+          :respData="advertises"
+          :columns="columns"
+          @paginateData="getAdvertise"
+          :loading="loading"
+          @editData="editAdvertise"
+          title="Publicidad registrada"
+          @deleteData="deleteAdvertise"
+        >
+        </UniversalTable>
+      </div>
     </div>
   </section>
 </template>

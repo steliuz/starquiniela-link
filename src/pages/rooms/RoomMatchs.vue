@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useTeam } from 'src/composables/useTeam';
 import { useRooms } from 'src/composables/useRooms';
 import { Team } from 'src/interfaces/team';
@@ -7,6 +7,7 @@ import { useMatch } from 'src/composables/useMatch';
 import { file_url } from 'src/boot/axios';
 import { Match } from 'src/interfaces/match';
 import { useUserStore } from 'src/stores/user';
+import cardMatchsComponents from './components/CardMatchs.vue';
 
 const { room_id: roomID } = useUserStore();
 const { room, getRoomById } = useRooms();
@@ -16,7 +17,6 @@ const formMatch = ref({
 });
 const { selectTeams, optionsTeams, loading } = useTeam();
 const { postMatch, deleteMatch, statusMatch, resultMatch } = useMatch(roomID);
-const showInputsResult: Ref<null | number> = ref(null);
 
 onMounted(async () => {
   await selectTeams();
@@ -56,21 +56,10 @@ const onSubmit = async () => {
     };
   });
 };
-// const onResult = (index: number) => {
-//   showInputsPredict.value = index;
-// };
-const onResult = (index: number) => {
-  showInputsResult.value = index;
-};
 
 async function onSave(match: Match) {
   await resultMatch(match);
-  showInputsResult.value = null;
   await getRoomById(roomID);
-}
-function onCancel() {
-  showInputsResult.value = null;
-  // showInputsPredict.value = null;
 }
 async function onStatus(match: Match) {
   await statusMatch(match);
@@ -100,6 +89,7 @@ async function onDelete(id: number | null | undefined | string) {
             <div class="col-6 col-md-5 q-px-sm">
               <q-select
                 dense
+                dark
                 filled
                 v-model="formMatch.team1"
                 :options="options"
@@ -141,6 +131,7 @@ async function onDelete(id: number | null | undefined | string) {
             </div>
             <div class="col-6 col-md-5 q-px-sm">
               <q-select
+                dark
                 dense
                 filled
                 v-model="formMatch.team2"
@@ -183,18 +174,17 @@ async function onDelete(id: number | null | undefined | string) {
             </div>
             <div class="col-12 col-md-2 flex justify-center">
               <q-btn
-                label="Add"
-                class="q-my-sm"
+                label="Agregar"
+                class="q-mt-md q-mt-md-none"
                 type="submit"
-                color="primary"
+                color="secondary"
               />
             </div>
           </div>
         </q-form>
       </div>
     </div>
-
-    <div class="row">
+    <div class="row q-mt-xl">
       <div class="col-12 col-md-6 offset-md-1 q-px-md-md">
         <div class="name-quiniela">
           <p class="q-mb-none text-body2 text-weight-bold ellipsis">
@@ -209,7 +199,9 @@ async function onDelete(id: number | null | undefined | string) {
             <i class="fa-solid fa-trophy text-orange-5 fa-xl"></i>
           </q-btn>
         </div>
-        <q-card class="card-matchs">
+        <cardMatchsComponents :dataMatch="room.matches" @emitSave="onSave" />
+
+        <!-- <q-card class="card-matchs">
           <q-card-section>
             <div class="box-matchs">
               <div class="index-number"></div>
@@ -221,78 +213,40 @@ async function onDelete(id: number | null | undefined | string) {
               <div></div>
             </div>
 
-            <div
-              class="box-matchs"
-              v-for="(match, index) in room.matches"
-              :key="match.id ?? 0"
-            >
+            <div class="box-matchs" v-for="(match, index) in room.matches" :key="match.id ?? 0">
               <div class="index-number">{{ index + 1 }}</div>
               <div class="box-team">
                 <div>
-                  <img
-                    class="img-team"
-                    :src="
-                      match.team1 && match.team1.image
-                        ? file_url + match.team1.image
-                        : '/src/assets/team1.jpg'
-                    "
-                    alt="team1"
-                  />
+                  <img class="img-team" :src="match.team1 && match.team1.image
+                    ? file_url + match.team1.image
+                    : '/src/assets/team1.jpg'
+                    " alt="team1" />
                   <p>{{ match.team1?.name }}</p>
                 </div>
                 <div>
-                  <img
-                    class="img-team"
-                    :src="
-                      match.team2 && match.team2.image
-                        ? file_url + match.team2.image
-                        : '/src/assets/team2.jpg'
-                    "
-                    alt="team1"
-                  />
+                  <img class="img-team" :src="match.team2 && match.team2.image
+                    ? file_url + match.team2.image
+                    : '/src/assets/team2.jpg'
+                    " alt="team1" />
                   <p>{{ match.team2?.name }}</p>
                 </div>
               </div>
               <div class="box-result">
                 <div class="" v-if="showInputsResult == index">
-                  <q-input
-                    v-model="match.goalsTeam1"
-                    type="number"
-                    style="max-width: 40px"
-                    dense
-                    filled
-                    class="q-pb-xs hide-number-arrows"
-                  />
-                  <q-input
-                    v-model="match.goalsTeam2"
-                    type="number"
-                    style="max-width: 40px"
-                    dense
-                    filled
-                    class="hide-number-arrows"
-                  />
+                  <q-input v-model="match.goalsTeam1" type="number" style="max-width: 40px" dense filled
+                    class="q-pb-xs hide-number-arrows" />
+                  <q-input v-model="match.goalsTeam2" type="number" style="max-width: 40px" dense filled
+                    class="hide-number-arrows" />
                 </div>
                 <div v-else>
                   <p>{{ match.goalsTeam1 }}</p>
                   <p>{{ match.goalsTeam2 }}</p>
                 </div>
                 <div class="" v-if="showInputsResult == index">
-                  <q-input
-                    v-model="match.penaltyTeam1"
-                    type="number"
-                    style="max-width: 40px"
-                    dense
-                    filled
-                    class="q-pb-xs hide-number-arrows"
-                  />
-                  <q-input
-                    v-model="match.penaltyTeam2"
-                    type="number"
-                    style="max-width: 40px"
-                    dense
-                    filled
-                    class="hide-number-arrows"
-                  />
+                  <q-input v-model="match.penaltyTeam1" type="number" style="max-width: 40px" dense filled
+                    class="q-pb-xs hide-number-arrows" />
+                  <q-input v-model="match.penaltyTeam2" type="number" style="max-width: 40px" dense filled
+                    class="hide-number-arrows" />
                 </div>
                 <div v-else>
                   <p class="text-red-5" v-if="match.penaltyTeam1 != null">
@@ -305,57 +259,28 @@ async function onDelete(id: number | null | undefined | string) {
               </div>
               <div class="box-options">
                 <div v-if="showInputsResult == index">
-                  <q-btn
-                    padding="8px"
-                    flat
-                    color="primary"
-                    icon="check"
-                    @click="onSave(match)"
-                  />
-                  <q-btn
-                    padding="8px"
-                    flat
-                    color="red"
-                    icon="cancel"
-                    @click="onCancel"
-                  />
+                  <q-btn padding="8px" flat color="primary" icon="check" @click="onSave(match)" />
+                  <q-btn padding="8px" flat color="red" icon="cancel" @click="onCancel" />
                 </div>
                 <div v-else>
-                  <!-- <q-btn
-                    padding="8px"
-                    flat
-                    color="primary"
-                    @click="showPredict(index)"
-                  >
+                  <q-btn padding="8px" flat color="primary" @click="showPredict(index)">
                     <i class="fa-solid fa-futbol text-primary fa-xl"></i>
-                  </q-btn> -->
+                  </q-btn>
                   <q-btn class="q-pa-xs" color="dark" flat icon="more_vert">
                     <q-menu>
                       <q-list style="min-width: 140px">
-                        <q-item
-                          clickable
-                          v-close-popup
-                          @click="onResult(index)"
-                        >
+                        <q-item clickable v-close-popup @click="onResult(index)">
                           <q-item-section>
                             <div class="flex">
-                              <i
-                                class="q-mr-md fa-solid fa-futbol text-primary"
-                              ></i>
+                              <i class="q-mr-md fa-solid fa-futbol text-primary"></i>
                               <span>Resultados</span>
                             </div>
                           </q-item-section>
                         </q-item>
-                        <q-item
-                          clickable
-                          @click="onDelete(match.id)"
-                          v-close-popup
-                        >
+                        <q-item clickable @click="onDelete(match.id)" v-close-popup>
                           <q-item-section>
                             <div class="flex">
-                              <i
-                                class="q-mr-md fa-solid fa-trash text-red-5"
-                              ></i>
+                              <i class="q-mr-md fa-solid fa-trash text-red-5"></i>
                               <span>Eliminar</span>
                             </div>
                           </q-item-section>
@@ -365,13 +290,8 @@ async function onDelete(id: number | null | undefined | string) {
                           <q-item-section>
                             <p class="q-mb-none">Activo / Inactivo</p>
                             <div class="flex">
-                              <q-toggle
-                                v-model="match.status"
-                                color="secondary"
-                                :true-value="1"
-                                :false-value="0"
-                                @click="onStatus(match)"
-                              />
+                              <q-toggle v-model="match.status" color="secondary" :true-value="1" :false-value="0"
+                                @click="onStatus(match)" />
                             </div>
                           </q-item-section>
                         </q-item>
@@ -382,7 +302,7 @@ async function onDelete(id: number | null | undefined | string) {
               </div>
             </div>
           </q-card-section>
-        </q-card>
+        </q-card> -->
       </div>
       <div class="col-12 col-md-4 q-px-md">
         <div class="name-quiniela">
@@ -395,13 +315,15 @@ async function onDelete(id: number | null | undefined | string) {
             <q-item>
               <q-item-section>
                 <q-item-label>
-                  <a href="">{{ player.name }}</a>
+                  <a href="" class="text-white nameCustom">{{ player.name }}</a>
                   <i
                     class="fa-solid fa-circle-check text-secondary fa-xl q-mt-md q-ml-sm"
                   ></i>
                 </q-item-label>
-                <q-item-label caption lines="2">
-                  {{ player.email }}
+                <q-item-label class="text-white q-pl-sm" caption lines="2">
+                  <div class="q-pt-sm">
+                    {{ player.email }}
+                  </div>
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -419,13 +341,23 @@ async function onDelete(id: number | null | undefined | string) {
   margin: 0 auto;
 }
 
+.nameCustom {
+  margin-bottom: 0;
+  font-size: 16px;
+  padding-left: 5px;
+  font-weight: bold;
+  text-transform: capitalize;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .name-quiniela {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 700px;
   margin: 10px auto;
-  color: #646464;
+  color: #fff;
 }
 
 .card-matchs {

@@ -1,7 +1,8 @@
 <template>
   <q-table
-    class="font-table full-width"
+    class="font-table bg-table text-white full-width"
     tableHeaderClass="bg-primary text-white"
+    dark
     separator="cell"
     flat
     bordered
@@ -17,6 +18,8 @@
     @request="onRequest"
     :loading="loading"
     :filter="filter"
+    behavior="menu"
+    style="max-width: 800px"
   >
     <template v-slot:header-cell-opt>
       <q-th>
@@ -28,9 +31,13 @@
         <q-inner-loading showing color="primary" />
       </div>
     </template>
+    <template v-if="$slots.customName" v-slot:body-cell-name="props">
+      <slot name="customName" :props="props"> </slot>
+    </template>
     <template v-slot:top-right>
       <div class="column">
         <q-input
+          dark
           class=""
           borderless
           dense
@@ -55,7 +62,7 @@
       </div>
     </template>
     <template #body-cell-statusToogle="props">
-      <td class="text-center">
+      <td class="text-center" style="width: 150px">
         <q-toggle
           unchecked-icon="clear"
           checked-icon="check"
@@ -69,8 +76,8 @@
     </template>
     <template #body-cell-opt="props">
       <q-td style="width: 10%" :props="props" class="no-wrap text-center">
-        <q-btn class="q-pa-sm" color="primary" flat icon="more_vert">
-          <q-menu>
+        <q-btn class="q-pa-sm" color="white" flat icon="more_vert">
+          <q-menu class="bg-header-dark">
             <q-list style="min-width: 140px">
               <q-item
                 clickable
@@ -106,9 +113,9 @@
     </template>
     <template #body-cell-role="props">
       <q-td style="width: 10%" :props="props" class="no-wrap">
-        <div class="text-center">
+        <div class="q-px-sm">
           <q-badge
-            class="q-pa-sm"
+            class="q-pa-sm full-width flex justify-center"
             rounded
             :class="`bg-${getRol(props.row.role.id).bg}`"
             text-color="white"

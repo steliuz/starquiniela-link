@@ -3,13 +3,8 @@
     {{ label }}
     <slot name="span"></slot>
   </p>
-  <q-input
-    dense
-    filled
-    v-bind="$attrs"
-    :model-value="modelValue"
-    @update:model-value="(val) => emit('update:modelValue', val)"
-  >
+  <q-input dense filled dark v-bind="$attrs" :model-value="modelValue"
+    @update:model-value="(val) => emit('update:modelValue', val)">
     <template v-slot:before>
       <slot name="before"></slot>
     </template>

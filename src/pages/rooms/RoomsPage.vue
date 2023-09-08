@@ -16,11 +16,10 @@ const { setRoom } = useUserStore();
 
 const columns = [
   nameColumn,
-  userColumn,
-  typeColumn({
-    format: (val: string | number) =>
-      val == 1 ? 'normal' : val == 2 ? 'avanzada' : 'LEV',
-  }),
+  // typeColumn({
+  //   format: (val: string | number) =>
+  //     val == 1 ? 'Normal' : val == 2 ? 'avanzada' : 'LEV',
+  // }),
   statusToogleColumn,
   optColumn,
 ];
@@ -38,8 +37,13 @@ const {
   statusRoom,
 } = useRooms();
 
+setTimeout(() => {
+  console.log('teams: ', rooms.value);
+}, 2000);
+
 const router = useRouter();
 const goToMatch = (roomID: number) => {
+  console.log('click');
   setRoom(roomID);
   setTimeout(() => {
     router.push({ path: '/admin/rooms/matchs' });
@@ -66,36 +70,80 @@ const goToMatch = (roomID: number) => {
         @putRoom="putRoom"
         :room="room"
       />
-
-      <UniversalTable
-        :respData="rooms"
-        :columns="columns"
-        @paginateData="getRoom"
-        :loading="loading"
-        @editData="editRoom"
-        title="Quinielas registradas"
-        @deleteData="deleteRoom"
-        @statusData="statusRoom"
-      >
-        <template v-slot:opt="scope">
-          <q-item
-            clickable
-            v-close-popup
-            @click="goToMatch(scope.props.row.id)"
-          >
-            <q-item-section>
-              <div class="flex">
-                <i class="q-mr-md fa-solid fa-shield text-red-5"></i>
-                <span>Enfrentamientos</span>
+      <div class="col-12 flex justify-center q-my-md">
+        <UniversalTable
+          :respData="rooms"
+          :columns="columns"
+          @paginateData="getRoom"
+          :loading="loading"
+          @editData="editRoom"
+          title="Quinielas registradas"
+          @deleteData="deleteRoom"
+          @statusData="statusRoom"
+        >
+          <template v-slot:customName="scope">
+            <td>
+              <div>
+                <p
+                  class="nameCustom q-mb-sm"
+                  @click="goToMatch(scope.props.row.id)"
+                >
+                  {{ scope.props.row.name }}
+                </p>
+                <p class="q-mb-none">
+                  <span class="text-custom-subtitle">
+                    {{ scope.props.row.room_user.user.name }} /
+                  </span>
+                  <span>
+                    <i class="fa-regular fa-flag q-mx-xs"></i>
+                    {{
+                      scope.props.row.type == 1
+                        ? 'Normal'
+                        : scope.props.row.type == 2
+                        ? 'avanzada'
+                        : 'LEV'
+                    }}
+                  </span>
+                </p>
               </div>
-            </q-item-section>
-          </q-item>
-        </template>
-      </UniversalTable>
+            </td>
+          </template>
+          <template v-slot:opt="scope">
+            <q-item
+              clickable
+              v-close-popup
+              @click="goToMatch(scope.props.row.id)"
+            >
+              <q-item-section>
+                <div class="flex">
+                  <i class="q-mr-md fa-solid fa-shield text-red-5"></i>
+                  <span>Enfrentamientos</span>
+                </div>
+              </q-item-section>
+            </q-item>
+          </template>
+        </UniversalTable>
+      </div>
     </div>
   </section>
 </template>
 
-<style scoped></style>
-{ options: { format: (val: string | number) => val == 1 ? 'normal' : val == 2 ?
-'avanzada' : 'LEV', } }
+<style lang="scss" scoped>
+.nameCustom {
+  margin-bottom: 0;
+  font-size: 16px;
+  padding-left: 5px;
+  font-weight: bold;
+  text-transform: capitalize;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.text-custom-subtitle {
+  color: $secondary;
+  margin-bottom: 0;
+  font-size: 12px;
+  padding-left: 5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+</style>

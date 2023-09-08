@@ -29,7 +29,7 @@ export const login = async (value) => {
 
 export const logout = async () => {
   try {
-    await api.post('signout');
+    await api.post('logout');
     localStorage.removeItem('access_token');
     // localStorage.removeItem("user");
     handleMessages({

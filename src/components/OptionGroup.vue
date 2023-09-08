@@ -1,11 +1,6 @@
 <template>
-  <q-option-group
-    color="primary"
-    :options="optionsData"
-    v-bind="$attrs"
-    :model-value="modelValue"
-    @update:model-value="(val) => emit('update:modelValue', val)"
-  >
+  <q-option-group color="secondary" dark :options="optionsData" v-bind="$attrs" :model-value="modelValue"
+    @update:model-value="(val) => emit('update:modelValue', val)">
     <slot name="opt" :opt="opt"></slot>
   </q-option-group>
 </template>

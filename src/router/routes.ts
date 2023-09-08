@@ -12,6 +12,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('pages/auth/login/LoginPage.vue'),
   },
   {
+    name: 'roomMatch',
+    path: '/roomMatch',
+    component: () => import('pages/rooms/player/RoomPlayer.vue'),
+  },
+  {
     path: '/admin',
     name: 'admin',
     redirect: '/admin/dashboard',

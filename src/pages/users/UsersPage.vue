@@ -44,16 +44,18 @@ const columns = [nameColumn, emailColumn, roleColumn, phoneColumn, optColumn];
         :user="user"
         @onReset="onReset"
       />
-      <UniversalTable
-        :respData="users"
-        :columns="columns"
-        @paginateData="getUser"
-        :loading="loading"
-        @editData="editUser"
-        title="Usuarios Registrados"
-        @deleteData="deleteUser"
-      >
-      </UniversalTable>
+      <div class="col-12 flex justify-center q-my-md">
+        <UniversalTable
+          :respData="users"
+          :columns="columns"
+          @paginateData="getUser"
+          :loading="loading"
+          @editData="editUser"
+          title="Usuarios Registrados"
+          @deleteData="deleteUser"
+        >
+        </UniversalTable>
+      </div>
     </div>
   </section>
 </template>

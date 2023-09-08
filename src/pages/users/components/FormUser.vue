@@ -54,7 +54,7 @@ watch(
   <q-dialog persistent>
     <q-card
       square
-      class="relative-position"
+      class="bg-header-dark relative-position bg-new-dark"
       style="width: 80%; max-width: 900px; height: 85%"
     >
       <q-card-section class=" ">
@@ -64,13 +64,13 @@ watch(
           @reset="onReset"
         >
           <div class="title">
-            <p class="text-h5 text-grey-7">
-              <i class="fa-solid fa-user-plus q-mr-xs text-primary"></i>
+            <p class="text-h5 text-white">
+              <!-- <i class="fa-solid fa-user-plus q-mr-xs text-white"></i> -->
               Crear nuevo usuario
             </p>
           </div>
-          <div class="title">
-            <p class="q-mb-none text-h6 text-grey-7">
+          <div class="title q-pl-sm">
+            <p class="q-mb-none text-h6 text-white">
               <i class="fa-solid fa-envelope q-mr-xs text-secondary"></i>
               Correo
             </p>
@@ -85,7 +85,11 @@ watch(
               required
             >
               <template v-slot:before>
-                <q-checkbox left-label v-model="type_disabled" />
+                <q-checkbox
+                  color="secondary"
+                  left-label
+                  v-model="type_disabled"
+                />
               </template>
             </BaseInput>
           </div>
@@ -103,8 +107,8 @@ watch(
               </template>
             </BaseInput>
           </div>
-          <div class="title">
-            <p class="q-mb-none text-h6 text-grey-7">
+          <div class="title q-pl-sm">
+            <p class="q-mb-none text-h6 text-white">
               <i class="fa-solid fa-user q-mr-xs text-secondary"></i>
               Datos
             </p>
@@ -156,7 +160,7 @@ watch(
               </template>
             </BaseInput>
           </div>
-          <div class="title">
+          <div class="title q-pl-sm">
             <p class="q-mb-none text-h6">
               <i class="fa-solid fa-user-tag q-mr-xs text-secondary"></i>
               Rol del usuario
@@ -170,16 +174,16 @@ watch(
             </div>
           </div>
           <q-btn
+            outline
             class="q-mx-xs"
-            flat
             label="cancelar"
-            color="red-5"
+            color="negative"
             type="reset"
           />
           <q-btn
             class="q-mx-xs"
             :label="formUser.id ? 'Editar' : 'Registrar'"
-            color="primary"
+            color="secondary"
             type="submit"
           />
         </q-form>

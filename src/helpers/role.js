@@ -9,7 +9,7 @@ const getRol = (value) => {
     2: () => {
       condition = {
         name: 'Revendedor',
-        bg: 'blue-grey-4',
+        bg: 'secondary',
         icon: 'fa-solid fa-coins',
       };
     },
@@ -23,7 +23,7 @@ const getRol = (value) => {
     4: () => {
       condition = {
         name: 'Jugador',
-        bg: 'secondary',
+        bg: 'negative',
         icon: 'fa-solid fa-user',
       };
     },
