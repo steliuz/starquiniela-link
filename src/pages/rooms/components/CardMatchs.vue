@@ -279,9 +279,11 @@ const showPredict = (value: any) => {
         p {
           line-height: 18px;
           padding-left: 10px;
+          font-size: 14px;
+          margin-bottom: 0;
           padding-top: 2px;
           padding-bottom: 2px;
-          text-transform: uppercase;
+          text-transform: capitalize;
         }
 
         img.img-team {
