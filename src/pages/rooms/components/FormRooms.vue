@@ -41,7 +41,7 @@ watch(
   <q-dialog persistent>
     <q-card
       square
-      class="relative-position q-pa-lg"
+      class="bg-header-dark relative-position bg-new-dark"
       style="width: 80%; max-width: 900px; height: auto"
     >
       <q-card-section class=" ">
@@ -111,21 +111,19 @@ watch(
             <BaseInput label="Precio" v-model="formRooms.price" required>
             </BaseInput>
           </div> -->
-          <div class="user_form_buttons q-mt-md">
-            <q-btn
-              class="q-mx-xs"
-              flat
-              label="cancelar"
-              color="red-5"
-              v-close-popup
-            />
-            <q-btn
-              class="q-mx-xs"
-              :label="formRooms.id ? 'Editar' : 'Registrar'"
-              color="secondary"
-              type="submit"
-            />
-          </div>
+          <q-btn
+            class="q-mx-xs"
+            outline
+            label="cancelar"
+            color="negative"
+            v-close-popup
+          />
+          <q-btn
+            class="q-mx-xs"
+            :label="formRooms.id ? 'Editar' : 'Registrar'"
+            color="secondary"
+            type="submit"
+          />
         </q-form>
       </q-card-section>
     </q-card>

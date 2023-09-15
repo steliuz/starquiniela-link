@@ -103,6 +103,7 @@ const change = ({ coordinates, canvas, image }: any) => {
     image: image,
   };
 };
+console.log('result: ', result.value);
 
 watch(
   () => props.img,
@@ -114,7 +115,7 @@ watch(
 
 <style>
 .preview-cicle {
-  background-color: #ddd;
+  background-color: #00141e;
   outline: 2px solid #5c00be;
   outline-offset: 4px;
   width: 150px;
@@ -123,7 +124,7 @@ watch(
 }
 
 .preview-normal {
-  background-color: #ddd;
+  background-color: #00141e;
   outline: 2px solid #5c00be;
   outline-offset: 4px;
   width: 150px;
@@ -131,7 +132,7 @@ watch(
 }
 
 .circle-previuw {
-  background-color: #ddd;
+  background-color: #00141e;
   outline: 2px solid #5c00be;
   outline-offset: 4px;
   width: 150px;
@@ -142,7 +143,7 @@ watch(
 .cropper {
   height: 300px;
   width: 300px;
-  background: #ddd;
+  background: #00141e;
 }
 
 .button-wrapper {

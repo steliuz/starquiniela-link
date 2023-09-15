@@ -75,7 +75,7 @@ watch(
   <q-dialog persistent>
     <q-card
       square
-      class="relative-position"
+      class="bg-header-dark relative-position bg-new-dark"
       style="width: 80%; max-width: 900px; height: 65%"
     >
       <q-card-section class=" ">
@@ -97,17 +97,17 @@ watch(
               />
               <div class="q-mt-sm">
                 <q-btn
-                  class="q-mx-xs"
-                  label="Submit"
+                  class="full-width"
+                  label="Guardar"
                   type="submit"
                   color="primary"
                 />
                 <q-btn
                   label="Cancelar"
                   type="reset"
-                  color="red-5"
-                  flat
-                  class="q-mx-xs"
+                  color="negative"
+                  outline
+                  class="q-ma-xs full-width"
                 />
               </div>
             </template>

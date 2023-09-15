@@ -71,7 +71,7 @@ watch(
   <q-dialog persistent>
     <q-card
       square
-      class="relative-position"
+      class="bg-header-dark relative-position bg-new-dark"
       style="width: 80%; max-width: 900px; height: 65%"
     >
       <q-card-section class=" ">
@@ -119,7 +119,7 @@ watch(
                       label="Cancelar"
                       type="reset"
                       color="red-5"
-                      flat
+                      outline
                       class="full-width q-mt-sm"
                       v-close-popup
                     />
