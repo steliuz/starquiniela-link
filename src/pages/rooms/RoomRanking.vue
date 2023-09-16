@@ -41,7 +41,7 @@
                     {{ index + 1 }}
                   </div>
                 </th>
-                <th class="text-center th-custom">
+                <th v-if="typeRoom" class="text-center th-custom">
                   <div class="m-0 q-pa-none text-center">
                     <q-avatar size="30px">
                       <img :src="team.teamAvatar1" />
@@ -56,7 +56,7 @@
                     </div>
                   </div>
                 </th>
-                <th class="text-center th-custom2">
+                <th v-if="typeRoom" class="text-center th-custom2">
                   <div class="m-0 q-pa-none text-center">
                     <q-avatar size="30px">
                       <img :src="team.teamAvatar2" />
@@ -71,11 +71,41 @@
                     </div>
                   </div>
                 </th>
+                <th v-if="!typeRoom">
+                  <div class="flex justify-center" style="width: 80px">
+                    <div class="q-mx-xs">
+                      <q-avatar size="30px">
+                        <img :src="team.teamAvatar1" />
+                        <q-tooltip>
+                          <span class="text-capitalize">
+                            {{ team.teamName1 }}</span
+                          >
+                        </q-tooltip>
+                      </q-avatar>
+                      <div class="text-center flex justify-center">
+                        <p class="gols">{{ team.teamGol1 }}</p>
+                      </div>
+                    </div>
+                    <div class="q-mx-xs">
+                      <q-avatar size="30px">
+                        <img :src="team.teamAvatar2" />
+                        <q-tooltip>
+                          <span class="text-capitalize">
+                            {{ team.teamName2 }}
+                          </span>
+                        </q-tooltip>
+                      </q-avatar>
+                      <div class="text-center flex justify-center">
+                        <p class="gols">{{ team.teamGol2 }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </th>
               </template>
               <!-- <th v-for="(header, index) in headers" :key="index"></th> -->
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="typeRoom">
             <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
               <td class="name1">
                 <div class="text-name-player">Lester Douglas</div>
@@ -83,28 +113,32 @@
               <td class="name2 bg-orange-6 text-black text-bold">
                 <div class="flex flex-center">9</div>
               </td>
-              <td
-                v-for="(result, index) in teams.length * 2 + 2"
-                :key="index"
-              ></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
 
-              <!-- <td v-for="(item, cellIndex) in row" :key="cellIndex">
-                {{ item }}
-              </td> -->
+              <template v-for="(result, index) in teams.length" :key="index">
+                <td class="roomNormal">50</td>
+                <td class="roomNormal">
+                  <p class="q-mb-none text-bold text-center">2</p>
+                </td>
+                <td class="roomNormal">
+                  <p class="q-mb-none text-bold text-center">1</p>
+                </td>
+              </template>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+              <td class="name1">
+                <div class="text-name-player">Lester Douglas</div>
+              </td>
+              <td class="name2 bg-orange-6 text-black text-bold">
+                <div class="flex flex-center">9</div>
+              </td>
+              <template v-for="(result, index) in teams.length" :key="index">
+                <td class="lev">50</td>
+                <td class="lev">
+                  <p class="q-mb-none text-bold text-center">L</p>
+                </td>
+              </template>
             </tr>
           </tbody>
         </table>
@@ -119,6 +153,8 @@
 import { ref } from 'vue';
 
 const containerTable = ref<HTMLElement | null>(null);
+
+const typeRoom = ref(false);
 
 const teams = [
   {
@@ -359,7 +395,13 @@ th:nth-child(3n + 3) {
   color: #fff;
   font-weight: 500;
 }
-td:nth-child(3n + 3) {
+td.roomNormal:nth-child(3n + 3) {
+  background-color: #001e28;
+  color: #fff;
+  font-weight: 500;
+}
+
+td.lev:nth-child(odd) {
   background-color: #001e28;
   color: #fff;
   font-weight: 500;
