@@ -103,7 +103,6 @@ const change = ({ coordinates, canvas, image }: any) => {
     image: image,
   };
 };
-console.log('result: ', result.value);
 
 watch(
   () => props.img,

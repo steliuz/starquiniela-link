@@ -6,10 +6,10 @@ import { Team } from 'src/interfaces/team';
 import { useMatch } from 'src/composables/useMatch';
 import { file_url } from 'src/boot/axios';
 import { Match } from 'src/interfaces/match';
-import { useUserStore } from 'src/stores/user';
+import { useAuthStore } from 'src/stores/auth';
 import cardMatchsComponents from './components/CardMatchs.vue';
 
-const { room_id: roomID } = useUserStore();
+const { room_id: roomID } = useAuthStore();
 const { room, getRoomById } = useRooms();
 const formMatch = ref({
   team1: null,

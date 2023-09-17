@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable tag="a" :href="link">
+  <q-item clickable tag="a" :href="link" v-if="roles.includes(auth.role_id)">
     <q-item-section v-if="icon" avatar>
       <q-icon color="secondary" :name="icon" />
     </q-item-section>
@@ -11,15 +11,22 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from 'src/stores/auth';
+const { auth } = useAuthStore();
 export interface EssentialLinkProps {
   title: string;
   caption?: string;
   link?: string;
   icon?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  roles: any;
 }
 withDefaults(defineProps<EssentialLinkProps>(), {
   caption: '',
   link: '#',
   icon: '',
+  roles: {
+    default: [],
+  },
 });
 </script>

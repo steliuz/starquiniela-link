@@ -3,6 +3,7 @@ import FormTeam from './components/FormTeam.vue';
 import UniversalTable from 'src/components/UniversalTable.vue';
 import { nameColumn, optColumn } from 'src/helpers/columns';
 import { useTeam } from 'src/composables/useTeam';
+import { file_url } from 'src/boot/axios';
 
 const {
   getTeam,
@@ -56,7 +57,7 @@ const columns = [nameColumn, optColumn];
                   <q-avatar>
                     <img
                       spinner-color="white"
-                      src="https://cdn.quasar.dev/img/avatar.png"
+                      :src="file_url + scope.props.row.image"
                     />
                   </q-avatar>
                 </div>

@@ -22,6 +22,14 @@ export function useTeam() {
   });
   const optionsTeams = ref([]);
 
+  const getTeam = async (value: object = teams.value) => {
+    loading.value = true;
+    await getData('teams', value).then((resp) => {
+      teams.value = resp;
+      loading.value = false;
+    });
+  };
+
   const postTeam = async (value: Team) => {
     await postData('teams', value).then(() => {
       dialog.value = false;
@@ -31,20 +39,12 @@ export function useTeam() {
   };
 
   const editTeam = (value: Team = team.value) => {
-    team.value = value;
+    team.value = JSON.parse(JSON.stringify(value));
     dialog.value = true;
   };
 
-  const getTeam = async (value: object = teams.value) => {
-    loading.value = true;
-    await getData('teams', value).then((resp) => {
-      teams.value = resp;
-      loading.value = false;
-    });
-  };
-
-  const putTeam = async (value: Team) => {
-    await putData('teams/' + value.id, value).then(() => {
+  const putTeam = async (value: Team, id: number) => {
+    await putData('teams/' + id, value).then(() => {
       dialog.value = false;
       onReset();
       getTeam();

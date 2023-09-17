@@ -1,4 +1,5 @@
-import { QTableProps } from 'quasar';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// import { QTableProps } from 'quasar';
 
 interface Row {
   id: number;
@@ -19,10 +20,11 @@ interface Relation {
 
 interface Custom {
   name: string;
-  required: boolean;
-  align: string;
+  required?: boolean;
+  align?: string;
   label: string;
-  sortable: boolean;
+  sortable?: boolean;
+  field?: string | any;
 }
 
 const idColumn = {
@@ -90,7 +92,7 @@ const phoneColumn = {
   name: 'phone',
   required: true,
   label: 'Teléfono',
-  style: 'width: 50px',
+  style: 'width: 150px',
   align: 'left',
   field: (row: Row) => row.phone,
   sortable: false,
@@ -144,13 +146,15 @@ const optColumn = {
   sortable: false,
 };
 
-const customColumn = (custom: Custom, options: QTableProps['columns']) => {
+const customColumn = (custom: Custom, options?: any) => {
   return {
     name: custom.name ?? 'custom',
     required: custom.required ?? false,
     align: custom.align ?? 'left',
     label: custom.label ?? 'custom',
     sortable: custom.sortable ?? false,
+    field: custom.field ?? 'custom',
+    style: 'width: 50px',
     ...options,
   };
 };

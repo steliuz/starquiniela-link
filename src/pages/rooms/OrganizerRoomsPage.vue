@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import FormRoom from './components/FormRooms.vue';
 import UniversalTable from 'src/components/UniversalTable.vue';
-import { nameColumn, optColumn, statusToogleColumn } from 'src/helpers/columns';
+import { nameColumn, optColumn } from 'src/helpers/columns';
 import { useRooms } from 'src/composables/useRooms';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'src/stores/auth';
 
 const { setRoom } = useAuthStore();
-const columns = [nameColumn, statusToogleColumn, optColumn];
+const columns = [nameColumn, optColumn];
 const {
   room,
   loading,
@@ -16,14 +16,13 @@ const {
   postRoom,
   putRoom,
   deleteRoom,
-  getRoom,
   editRoom,
   statusRoom,
+  getReferRoom,
 } = useRooms();
 const router = useRouter();
 
 const goToMatch = (roomID: number) => {
-  console.log('click');
   setRoom(roomID);
   setTimeout(() => {
     router.push({ path: '/admin/rooms/matchs' });
@@ -54,7 +53,7 @@ const goToMatch = (roomID: number) => {
         <UniversalTable
           :respData="rooms"
           :columns="columns"
-          @paginateData="getRoom"
+          @paginateData="getReferRoom"
           :loading="loading"
           @editData="editRoom"
           title="Quinielas registradas"

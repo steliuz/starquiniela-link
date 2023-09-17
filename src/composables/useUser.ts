@@ -6,10 +6,10 @@ import {
   deleteData,
 } from 'src/services/communServices';
 import { Ref, ref } from 'vue';
-import { useUserStore } from 'src/stores/user';
+import { useAuthStore } from 'src/stores/auth';
 import { storeToRefs } from 'pinia';
 
-const { user: auth } = storeToRefs(useUserStore());
+const { auth } = storeToRefs(useAuthStore());
 
 export function useUser() {
   const loading = ref(false);
@@ -31,21 +31,6 @@ export function useUser() {
     referral_id: auth.value.id,
   });
 
-  const postUser = async (value: User) => {
-    value.referral_id = auth.value.id;
-    value.email = value.emailUser + value.prefix;
-    await postData('register', value).then(() => {
-      dialog.value = false;
-      getUser();
-      onReset();
-    });
-  };
-
-  const editUser = (value: User = user.value) => {
-    user.value = value;
-    dialog.value = true;
-  };
-
   const getUser = async (value: object = users.value) => {
     loading.value = true;
     await getData('user/all', value).then((resp) => {
@@ -54,7 +39,26 @@ export function useUser() {
     });
   };
 
+  const postUser = async (value: User) => {
+    value.referral_id = auth.value.id;
+    value.email = value.emailUser + value.prefix;
+    if (auth.value.role_id == 3) value.role_id = 4;
+    if (auth.value.role_id == 2) value.role_id = 3;
+    await postData('register', value).then(() => {
+      dialog.value = false;
+      getUser();
+      onReset();
+    });
+  };
+
+  const editUser = (value: User = user.value) => {
+    user.value = JSON.parse(JSON.stringify(value));
+    dialog.value = true;
+  };
+
   const putUser = async (value: User) => {
+    if (auth.value.role_id == 3) value.role_id = 4;
+    if (auth.value.role_id == 2) value.role_id = 3;
     await putData('user/update', value).then(() => {
       dialog.value = false;
       getUser();
@@ -83,6 +87,12 @@ export function useUser() {
     dialog.value = false;
   };
 
+  const statusUser = async (value: User) => {
+    await putData(`user/status/${value.id}`, value).then(() => {
+      getUser();
+    });
+  };
+
   return {
     postUser,
     editUser,
@@ -94,5 +104,6 @@ export function useUser() {
     user,
     dialog,
     onReset,
+    statusUser,
   };
 }

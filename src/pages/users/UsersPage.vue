@@ -7,8 +7,24 @@ import {
   emailColumn,
   roleColumn,
   phoneColumn,
+  customColumn,
+  statusToogleColumn,
 } from 'src/helpers/columns';
 import { useUser } from 'src/composables/useUser';
+// import { ref } from 'vue';
+import DialogCredit from './components/DialogCredit.vue';
+import { useAuthStore } from 'src/stores/auth';
+import { useCredit } from 'src/composables/useCredit';
+import { Credit } from 'src/interfaces/credit';
+
+const { auth } = useAuthStore();
+const {
+  postAdminCredit,
+  postCredit,
+  dialog: dialogCredit,
+  userId,
+  openCredit,
+} = useCredit();
 
 const {
   getUser,
@@ -21,8 +37,38 @@ const {
   putUser,
   deleteUser,
   onReset,
+  statusUser,
 } = useUser();
-const columns = [nameColumn, emailColumn, roleColumn, phoneColumn, optColumn];
+
+const creditColumn = {
+  name: 'credit',
+  label: 'Creditos',
+  field: (row: { credits: number }) => row.credits,
+};
+
+let columns = [
+  nameColumn,
+  emailColumn,
+  roleColumn,
+  phoneColumn,
+  statusToogleColumn,
+  optColumn,
+];
+if (auth.role_id != 3)
+  columns.splice(columns.length - 2, 0, customColumn(creditColumn));
+
+const addCredits = async (credit: number) => {
+  let data: Credit = {
+    user_id: userId.value,
+    credits: credit,
+  };
+  if (auth.role_id == 1) {
+    await postAdminCredit(data);
+  } else {
+    await postCredit(data);
+  }
+  getUser();
+};
 </script>
 <template>
   <section class="q-ma-sm">
@@ -43,6 +89,7 @@ const columns = [nameColumn, emailColumn, roleColumn, phoneColumn, optColumn];
         @putUser="putUser"
         :user="user"
         @onReset="onReset"
+        :admin="auth.role_id === 1"
       />
       <div class="col-12 flex justify-center q-my-md">
         <UniversalTable
@@ -53,10 +100,29 @@ const columns = [nameColumn, emailColumn, roleColumn, phoneColumn, optColumn];
           @editData="editUser"
           title="Usuarios Registrados"
           @deleteData="deleteUser"
+          @statusData="statusUser"
         >
+          <template v-slot:opt="scope" v-if="auth.role_id != 3">
+            <q-item
+              clickable
+              v-close-popup
+              @click="openCredit(scope.props.row.id)"
+            >
+              <q-item-section>
+                <div class="flex">
+                  <i class="q-mr-md fa-solid fa-shield text-red-5"></i>
+                  <span>Creditos</span>
+                </div>
+              </q-item-section>
+            </q-item>
+          </template>
         </UniversalTable>
       </div>
     </div>
+    <DialogCredit
+      v-model="dialogCredit"
+      @addCredits="addCredits"
+    ></DialogCredit>
   </section>
 </template>
 

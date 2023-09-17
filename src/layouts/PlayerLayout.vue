@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
+        <q-toolbar-title> Jugador </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
@@ -47,12 +47,14 @@ const essentialLinks: EssentialLinkProps[] = [
     caption: 'quasar.dev',
     icon: 'home',
     link: '/players/dashboard',
+    roles: [4],
   },
   {
     title: 'Quiniela',
     caption: '@quasarframework',
     icon: 'rss_feed',
     link: '/players/rooms',
+    roles: [4],
   },
 ];
 

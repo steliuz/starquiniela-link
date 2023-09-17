@@ -24,17 +24,12 @@ export function useRooms() {
     rowsPerPage: 20,
   });
 
-  const postRoom = async (value: Room) => {
-    await postData('rooms', value).then(() => {
-      dialog.value = false;
-      onReset();
-      getRoom();
+  const getReferRoom = async (value: object = rooms.value) => {
+    loading.value = true;
+    await getData('referer/rooms', value).then((resp) => {
+      rooms.value = resp;
+      loading.value = false;
     });
-  };
-
-  const editRoom = (value: Room = room.value) => {
-    room.value = value;
-    dialog.value = true;
   };
 
   const getRoom = async (value: object = rooms.value) => {
@@ -45,6 +40,18 @@ export function useRooms() {
     });
   };
 
+  const postRoom = async (value: Room) => {
+    await postData('rooms', value).then(() => {
+      dialog.value = false;
+      onReset();
+      getRoom();
+    });
+  };
+
+  const editRoom = (value: Room = room.value) => {
+    room.value = JSON.parse(JSON.stringify(value));
+    dialog.value = true;
+  };
   const putRoom = async (value: Room) => {
     await putData('rooms/' + value.id, value).then(() => {
       dialog.value = false;
@@ -92,5 +99,6 @@ export function useRooms() {
     onReset,
     statusRoom,
     getRoomById,
+    getReferRoom,
   };
 }

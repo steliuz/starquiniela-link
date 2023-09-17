@@ -23,6 +23,14 @@ export function useAdvertise() {
     status: true,
   });
 
+  const getAdvertise = async (value: object = advertises.value) => {
+    loading.value = true;
+    await getData('advertises', value).then((resp) => {
+      advertises.value = resp;
+      loading.value = false;
+    });
+  };
+
   const postAdvertise = async (value: Advertise) => {
     await postData('advertises', value).then(() => {
       dialog.value = false;
@@ -32,16 +40,8 @@ export function useAdvertise() {
   };
 
   const editAdvertise = (value: Advertise = advertise.value) => {
-    advertise.value = value;
+    advertise.value = JSON.parse(JSON.stringify(value));
     dialog.value = true;
-  };
-
-  const getAdvertise = async (value: object = advertises.value) => {
-    loading.value = true;
-    await getData('advertises', value).then((resp) => {
-      advertises.value = resp;
-      loading.value = false;
-    });
   };
 
   const putAdvertise = async (value: Advertise) => {

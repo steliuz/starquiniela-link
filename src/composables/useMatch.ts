@@ -23,6 +23,14 @@ export function useMatch(roomID: any) {
     status: true,
   });
 
+  const getMatch = async (payload: object = matches.value) => {
+    loading.value = true;
+    await getData('matches', payload).then((resp) => {
+      matches.value = resp;
+      loading.value = false;
+    });
+  };
+
   const postMatch = async (value: MatchForm) => {
     await postData('matches', value).then(() => {
       dialog.value = false;
@@ -32,16 +40,8 @@ export function useMatch(roomID: any) {
   };
 
   const editMatch = (value: Match = match.value) => {
-    match.value = value;
+    match.value = JSON.parse(JSON.stringify(value));
     dialog.value = true;
-  };
-
-  const getMatch = async (payload: object = matches.value) => {
-    loading.value = true;
-    await getData('matches', payload).then((resp) => {
-      matches.value = resp;
-      loading.value = false;
-    });
   };
 
   const putMatch = async (match: Match) => {

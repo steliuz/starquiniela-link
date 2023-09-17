@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
+        <q-toolbar-title> {{ role }} </q-toolbar-title>
 
         <div></div>
       </q-toolbar>
@@ -57,59 +57,79 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { logout } from 'src/services/auth/login';
 import { useRouter } from 'vue-router';
 import EssentialLink, {
   EssentialLinkProps,
 } from 'components/EssentialLink.vue';
+import { useAuthStore } from 'src/stores/auth';
 
 const router = useRouter();
+const { auth } = useAuthStore();
 
 const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'Inicio',
-    caption: 'quasar.dev',
+    caption: '',
     icon: 'home',
     link: '/admin/dashboard',
+    roles: [1, 2, 3],
   },
   {
     title: 'Usuarios',
-    caption: 'github.com/quasarframework',
+    caption: '',
     icon: 'person',
     link: '/admin/users',
+    roles: [1, 2, 3],
   },
   {
     title: 'Equipos',
-    caption: 'chat.quasar.dev',
+    caption: '',
     icon: 'local_police',
     link: '/admin/teams',
+    roles: [1],
   },
   {
     title: 'Publicidad',
-    caption: 'forum.quasar.dev',
+    caption: '',
     icon: 'record_voice_over',
     link: '/admin/advertises',
+    roles: [1],
   },
   {
     title: 'Quiniela',
-    caption: '@quasarframework',
+    caption: '',
     icon: 'rss_feed',
     link: '/admin/rooms',
+    roles: [1],
+  },
+  {
+    title: 'Quiniela',
+    caption: '',
+    icon: 'rss_feed',
+    link: '/admin/organizer/rooms',
+    roles: [3],
   },
   {
     title: 'Categorías',
-    caption: '@QuasarFramework',
+    caption: '',
     icon: 'public',
     link: '/admin/categories',
+    roles: [1],
   },
 ];
-
+const role = computed(() => {
+  let name = 'Admin';
+  if (auth.role_id == 2) name = 'Reseller';
+  if (auth.role_id == 3) name = 'Organizador';
+  return name;
+});
 const leftDrawerOpen = ref(false);
 
 const handleLogout = async () => {
   try {
-    await logout().then(() => {
+    await logout().finally(() => {
       router.push('/');
     });
   } catch (error) {

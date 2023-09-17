@@ -6,11 +6,14 @@ import BaseInput from 'src/components/BaseInput.vue';
 import CropperImage from 'src/components/CropperImage.vue';
 import { file_url } from 'src/boot/axios';
 import { Image } from 'src/interfaces/image';
+import { useImage } from 'src/composables/useImage';
 // import { getData } from 'src/services/communServices';
 
 const emit = defineEmits(['postTeam', 'editTeam', 'putTeam', 'onReset']);
 const props = defineProps(['team']);
 const formTeam: Ref<Team> = ref(props.team);
+const { getImage } = useImage();
+
 const onSubmit = () => {
   let formData = new FormData();
   formData.set('name', formTeam.value.name);
@@ -40,25 +43,13 @@ const onReset = () => {
   emit('onReset');
 };
 
-const fecthData: (url: string) => void = async (url) => {
-  await fetch(url)
-    .then((res) => res.blob())
-    .then((blob) => {
-      // Read the Blob as DataURL using the FileReader API
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        img.value.src = reader.result;
-      };
-      reader.readAsDataURL(blob);
-    });
-};
-
 watch(
   () => props.team,
-  (newVal) => {
+  async (newVal) => {
     formTeam.value = newVal;
     if (newVal.image) {
-      fecthData(file_url + newVal.image);
+      let base64code = await getImage(newVal.image);
+      img.value.src = `${base64code}`;
       // src.value = file_url + newVal.image;
       // img.value.src = file_url + newVal.image;
     } else {

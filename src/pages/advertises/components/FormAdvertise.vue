@@ -6,6 +6,7 @@ import BaseInput from 'src/components/BaseInput.vue';
 import CropperImage from 'src/components/CropperImage.vue';
 import { file_url } from 'src/boot/axios';
 import { Image } from 'src/interfaces/image';
+import { useImage } from 'src/composables/useImage';
 
 const emit = defineEmits([
   'postAdvertise',
@@ -15,6 +16,8 @@ const emit = defineEmits([
 ]);
 const props = defineProps(['advertise']);
 const formAdvertise: Ref<Advertise> = ref(props.advertise);
+const { getImage } = useImage();
+
 const onSubmit = () => {
   let formData = new FormData();
   formData.set('name', formAdvertise.value.name);
@@ -46,25 +49,13 @@ const onReset = () => {
   emit('onReset');
 };
 
-const fecthData: (url: string) => void = (url) => {
-  fetch(url)
-    .then((res) => res.blob())
-    .then((blob) => {
-      // Read the Blob as DataURL using the FileReader API
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        img.value.src = reader.result;
-      };
-      reader.readAsDataURL(blob);
-    });
-};
-
 watch(
   () => props.advertise,
-  (newVal) => {
+  async (newVal) => {
     formAdvertise.value = newVal;
     if (newVal.image) {
-      fecthData(file_url + newVal.image);
+      let base64code = await getImage(newVal.image);
+      img.value.src = `${base64code}`;
     } else {
       img.value.src = '';
     }

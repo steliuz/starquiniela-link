@@ -2,7 +2,7 @@
 import formLogin from 'pages/auth/login/components/FormLogin.vue';
 import videoComponent from 'pages/auth/login/components/VideoComponent.vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from 'stores/user';
+import { useAuthStore } from 'stores/auth';
 import { login } from 'src/services/auth/login';
 import { dataLogin } from 'src/interfaces/DataLogin';
 import { loginAuth } from 'src/interfaces/auth';
@@ -11,7 +11,7 @@ import SecureLS from 'secure-ls';
 let ls = new SecureLS({ isCompression: false, encodingType: 'aes' });
 const router = useRouter();
 
-const store = useUserStore();
+const store = useAuthStore();
 
 const postLogin = async (value: loginAuth) => {
   store.handlebarLoading(true);
@@ -27,6 +27,10 @@ const postLogin = async (value: loginAuth) => {
   } catch (error) {
     console.log(error);
   } finally {
+    console.log(
+      '🚀 ~ file: LoginPage.vue:31 ~ postLogin ~  store.auth:',
+      store.auth
+    );
     store.handlebarLoading(false);
   }
 };

@@ -1,17 +1,16 @@
 import { defineStore } from 'pinia';
 import { dataLogin, dataUser } from 'src/interfaces/DataLogin';
 
-export const useUserStore = defineStore('user', {
+export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: {} as dataUser,
+    auth: {} as dataUser,
     barLoading: false,
     room_id: null as string | null | number,
   }),
   getters: {},
   actions: {
     userAuth(payload: dataLogin) {
-      console.log('payload: ', payload);
-      this.user = payload.user_data;
+      this.auth = payload.user_data;
     },
     handlebarLoading(payload: boolean) {
       this.barLoading = !payload;

@@ -17,7 +17,7 @@ const api = axios.create({
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'http://localhost:9000',
+    'Access-Control-Allow-Origin': '*',
     Accept: 'application/json',
     Authorization: `Bearer ${token}`,
   },

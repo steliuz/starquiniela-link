@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, watch, Ref, readonly } from 'vue';
+import { ref, watch, Ref } from 'vue';
 import { User } from 'src/interfaces/user';
 import BaseInput from 'src/components/BaseInput.vue';
 import OptionGroup from 'src/components/OptionGroup.vue';
 
 const emit = defineEmits(['postUser', 'editUser', 'putUser', 'onReset']);
-const props = defineProps(['user']);
+const props = defineProps(['user', 'admin']);
 const type_disabled: Ref<boolean> = ref(true);
 const isPwd = ref(false);
 const optionsData = [
@@ -160,7 +160,7 @@ watch(
               </template>
             </BaseInput>
           </div>
-          <div class="title q-pl-sm">
+          <div class="title q-pl-sm" v-if="admin">
             <p class="q-mb-none text-h6">
               <i class="fa-solid fa-user-tag q-mr-xs text-secondary"></i>
               Rol del usuario
