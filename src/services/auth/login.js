@@ -39,7 +39,7 @@ export const logout = async () => {
     });
   } catch (error) {
     handleMessages({
-      message: 'Oops, Algo a fallado intenta de nuevo',
+      message: 'Oops, Algo ha fallado intenta de nuevo',
       color: 'negative',
       icon: 'sentiment_dissatisfied',
     });

@@ -6,7 +6,7 @@ import { useRooms } from 'src/composables/useRooms';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'src/stores/auth';
 
-const { setRoom } = useAuthStore();
+const { setRoom, auth } = useAuthStore();
 const columns = [nameColumn, statusToogleColumn, optColumn];
 const {
   room,
@@ -34,7 +34,7 @@ const goToMatch = (roomID: number) => {
 <template>
   <section class="q-ma-sm">
     <div class="row">
-      <div class="col-12 flex justify-end q-my-md">
+      <div class="col-12 flex justify-end q-my-md" v-if="auth.role_id === 1">
         <q-btn
           class="q-mr-lg"
           color="secondary"

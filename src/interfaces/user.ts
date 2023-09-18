@@ -1,3 +1,5 @@
+import { Bet } from './bet';
+
 export interface User {
   prefix: string;
   email?: string;
@@ -11,5 +13,9 @@ export interface User {
   id?: number;
   credits?: number;
   status?: boolean;
-  emailUser: string
+  emailUser: string;
+}
+
+export interface Player extends User {
+  bets?: Bet[];
 }

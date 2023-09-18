@@ -35,7 +35,7 @@
               <th class="name2 text-center bg-header-dark">
                 <div class="q-px-xs">Pts</div>
               </th>
-              <template v-for="(team, index) of teams" :key="index">
+              <template v-for="(team, index) of matches" :key="index">
                 <th>
                   <div class="full-width full-height flex flex-center">
                     {{ index + 1 }}
@@ -44,30 +44,42 @@
                 <th v-if="typeRoom" class="text-center th-custom">
                   <div class="m-0 q-pa-none text-center">
                     <q-avatar size="30px">
-                      <img :src="team.teamAvatar1" />
+                      <img
+                        :src="
+                          team?.team1?.image
+                            ? `${file_url}${team?.team1?.image}`
+                            : ''
+                        "
+                      />
                       <q-tooltip>
                         <span class="text-capitalize">
-                          {{ team.teamName1 }}</span
+                          {{ team?.team1?.name }}</span
                         >
                       </q-tooltip>
                     </q-avatar>
                     <div class="text-center flex justify-center">
-                      <p class="gols">{{ team.teamGol1 }}</p>
+                      <p class="gols">{{ team.goalsTeam1 || '-' }}</p>
                     </div>
                   </div>
                 </th>
                 <th v-if="typeRoom" class="text-center th-custom2">
                   <div class="m-0 q-pa-none text-center">
                     <q-avatar size="30px">
-                      <img :src="team.teamAvatar2" />
+                      <img
+                        :src="
+                          team?.team1?.image
+                            ? `${file_url}${team?.team2?.image}`
+                            : ''
+                        "
+                      />
                       <q-tooltip>
                         <span class="text-capitalize">
-                          {{ team.teamName2 }}
+                          {{ team?.team2?.name }}
                         </span>
                       </q-tooltip>
                     </q-avatar>
                     <div class="text-center flex justify-center">
-                      <p class="gols">{{ team.teamGol2 }}</p>
+                      <p class="gols">{{ team.goalsTeam2 || '-' }}</p>
                     </div>
                   </div>
                 </th>
@@ -75,28 +87,28 @@
                   <div class="flex justify-center" style="width: 80px">
                     <div class="q-mx-xs">
                       <q-avatar size="30px">
-                        <img :src="team.teamAvatar1" />
+                        <img :src="`${file_url}${team?.team1?.image}`" />
                         <q-tooltip>
                           <span class="text-capitalize">
-                            {{ team.teamName1 }}</span
+                            {{ team?.team1?.name }}</span
                           >
                         </q-tooltip>
                       </q-avatar>
                       <div class="text-center flex justify-center">
-                        <p class="gols">{{ team.teamGol1 }}</p>
+                        <p class="gols">{{ team.goalsTeam1 || '-' }}</p>
                       </div>
                     </div>
                     <div class="q-mx-xs">
                       <q-avatar size="30px">
-                        <img :src="team.teamAvatar2" />
+                        <img :src="`${file_url}${team?.team2?.image}`" />
                         <q-tooltip>
                           <span class="text-capitalize">
-                            {{ team.teamName2 }}
+                            {{ team?.team2?.name }}
                           </span>
                         </q-tooltip>
                       </q-avatar>
                       <div class="text-center flex justify-center">
-                        <p class="gols">{{ team.teamGol2 }}</p>
+                        <p class="gols">{{ team.goalsTeam2 || '-' }}</p>
                       </div>
                     </div>
                   </div>
@@ -106,37 +118,45 @@
             </tr>
           </thead>
           <tbody v-if="typeRoom">
-            <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+            <tr v-for="(player, rowIndex) in players" :key="rowIndex">
               <td class="name1">
-                <div class="text-name-player">Lester Douglas</div>
+                <div class="text-name-player">{{ player.name }}</div>
               </td>
               <td class="name2 bg-orange-6 text-black text-bold">
-                <div class="flex flex-center">9</div>
+                <div class="flex flex-center">
+                  {{ getTotalPoint(player.id) }}
+                </div>
               </td>
 
-              <template v-for="(result, index) in teams.length" :key="index">
-                <td class="roomNormal">50</td>
+              <template v-for="match in matches" :key="match.id">
+                <td class="roomNormal">{{ getPoint(match.id, player.id) }}</td>
                 <td class="roomNormal">
-                  <p class="q-mb-none text-bold text-center">2</p>
+                  <p class="q-mb-none text-bold text-center">
+                    {{ getBet(match.id, player.id) }}
+                  </p>
                 </td>
                 <td class="roomNormal">
-                  <p class="q-mb-none text-bold text-center">1</p>
+                  <p class="q-mb-none text-bold text-center">
+                    {{ getBet2(match.id, player.id) }}
+                  </p>
                 </td>
               </template>
             </tr>
           </tbody>
           <tbody v-else>
-            <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+            <tr v-for="(player, rowIndex) in players" :key="rowIndex">
               <td class="name1">
-                <div class="text-name-player">Lester Douglas</div>
+                <div class="text-name-player">{{ player.name }}</div>
               </td>
               <td class="name2 bg-orange-6 text-black text-bold">
                 <div class="flex flex-center">9</div>
               </td>
-              <template v-for="(result, index) in teams.length" :key="index">
-                <td class="lev">50</td>
+              <template v-for="(match, index) in matches" :key="index">
+                <td class="lev">{{ getPoint(match.id, player.id) }}</td>
                 <td class="lev">
-                  <p class="q-mb-none text-bold text-center">L</p>
+                  <p class="q-mb-none text-bold text-center">
+                    {{ getLEV(match.id, player.id) }}
+                  </p>
                 </td>
               </template>
             </tr>
@@ -150,200 +170,107 @@
 <script setup lang="ts">
 // import { PropType } from 'vue';
 // import { QTableProps } from 'quasar';
-import { ref } from 'vue';
+import { useRanking } from 'src/composables/useRanking';
+import { useAuthStore } from 'src/stores/auth';
+import { onMounted, ref } from 'vue';
+import { file_url } from 'src/boot/axios';
+// import { Bet } from 'src/interfaces/bet';
+// import { Match } from 'src/interfaces/match';
 
+const { room_id: roomID } = useAuthStore();
+const { getRanking, room, players, matches } = useRanking(roomID);
 const containerTable = ref<HTMLElement | null>(null);
 
-const typeRoom = ref(false);
+const typeRoom = ref(room.value.type != 3 ? true : false);
 
-const teams = [
-  {
-    teamName1: 'Atlas',
-    teamName2: 'Monterrey',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/CxOLsUWH-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/rojPBGA6-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Puma',
-    teamName2: 'Tigres',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/A9NpRSR0-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/OUbkbhQq-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Puma',
-    teamName2: 'Tigres',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/A9NpRSR0-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/OUbkbhQq-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Puma',
-    teamName2: 'Tigres',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/A9NpRSR0-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/OUbkbhQq-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Puma',
-    teamName2: 'Tigres',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/A9NpRSR0-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/OUbkbhQq-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Toluca',
-    teamName2: 'Pachuca',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/KAF9lqRq-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/UcvERb5k-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Toluca',
-    teamName2: 'Pachuca',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/KAF9lqRq-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/UcvERb5k-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Toluca',
-    teamName2: 'Pachuca',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/KAF9lqRq-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/UcvERb5k-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Toluca',
-    teamName2: 'Pachuca',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/KAF9lqRq-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/UcvERb5k-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Toluca',
-    teamName2: 'Pachuca',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/KAF9lqRq-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/UcvERb5k-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Toluca',
-    teamName2: 'Pachuca',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/KAF9lqRq-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/UcvERb5k-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Toluca',
-    teamName2: 'Pachuca',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/KAF9lqRq-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/UcvERb5k-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Atlas',
-    teamName2: 'Monterrey',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/CxOLsUWH-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/rojPBGA6-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Puma',
-    teamName2: 'Tigres',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/A9NpRSR0-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/OUbkbhQq-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Toluca',
-    teamName2: 'Pachuca',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/KAF9lqRq-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/UcvERb5k-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-  {
-    teamName1: 'Atlas',
-    teamName2: 'Monterrey',
-    teamAvatar1:
-      'https://static.flashscore.com/res/image/data/CxOLsUWH-ltB92yKu.png',
-    teamAvatar2:
-      'https://static.flashscore.com/res/image/data/rojPBGA6-ltB92yKu.png',
-    teamGol1: 1,
-    teamGol2: 2,
-  },
-];
+// const restante = (bets: Bet[]) => {
+//   let count = 0;
+//   count = matches.value.length ?? 0 - (bets.length ? bets.length : 0);
+//   return count;
+// };
 
-const rows = ref<Array<Array<string>>>([]);
-for (let i = 0; i < 15; i++) {
-  rows.value.push([]);
-}
+onMounted(() => {
+  getRanking();
+});
 
-// onMounted(() => {
-//   const content = containerTable.value;
+const getPoint = (
+  matchID: number | undefined,
+  playerID: number | undefined
+) => {
+  let player = players.value.find((player) => {
+    return player.bets?.find((bet) => {
+      return bet.match_id == matchID && playerID == player.id;
+    });
+  }, {});
+  let bet = player?.bets?.find((bet) => {
+    return bet.match_id == matchID;
+  }, {});
+  return bet?.points ? bet.points : 0;
+};
+const getBet = (matchID: number | undefined, playerID: number | undefined) => {
+  let player = players.value.find((player) => {
+    return player.bets?.find((bet) => {
+      return bet.match_id == matchID && playerID == player.id;
+    });
+  }, {});
+  let bet = player?.bets?.find((bet) => {
+    return bet.match_id == matchID;
+  }, {});
+  return bet?.goalsTeam1 ? bet.goalsTeam1 : '';
+};
+const getBet2 = (matchID: number | undefined, playerID: number | undefined) => {
+  let player = players.value.find((player) => {
+    return player.bets?.find((bet) => {
+      return bet.match_id == matchID && playerID == player.id;
+    });
+  }, {});
+  let bet = player?.bets?.find((bet) => {
+    return bet.match_id == matchID;
+  }, {});
+  return bet?.goalsTeam2 ? bet.goalsTeam2 : '';
+};
 
-//   if (content) {
-//     content.addEventListener('wheel', (e) => {
-//       const hasVerticalScroll = content.scrollHeight > content.clientHeight;
+const getLEV = (matchID: number | undefined, playerID: number | undefined) => {
+  let player = players.value.find((player) => {
+    return player.bets?.find((bet) => {
+      return bet.match_id == matchID && playerID == player.id;
+    });
+  }, {});
+  let bet = player?.bets?.find((bet) => {
+    return bet.match_id == matchID;
+  }, {});
 
-//       const hasHorizontalScroll = content.scrollWidth > content.clientWidth;
+  let lev;
+  switch (bet?.goalsTeam1) {
+    case 1:
+      lev = 'L';
+      break;
 
-//       if (hasVerticalScroll && hasHorizontalScroll) {
-//         console.log('1');
-//         return;
-//       } else if (hasHorizontalScroll && e.deltaX !== 0) {
-//         console.log('2');
-//         e.preventDefault();
-//         content.scrollLeft += e.deltaX;
-//       }
-//     });
-//   }
-// });
+    case 2:
+      lev = 'E';
+      break;
+
+    case 3:
+      lev = 'V';
+      break;
+    default:
+      lev = '';
+      break;
+  }
+
+  return lev;
+};
+
+const getTotalPoint = (playerID: number | undefined) => {
+  let player = players.value.find((player) => {
+    return player.id == playerID;
+  }, {});
+
+  let total = player?.bets?.reduce((total, bet) => {
+    return total + bet.points;
+  }, 0);
+  return total;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -361,10 +288,10 @@ aside > div.hg_table {
     height: 6px;
   }
 
-  &::-webkit-scrollbar-track {
-    // box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-    // border-radius: 500px;
-  }
+  // &::-webkit-scrollbar-track {
+  //   // box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  //   // border-radius: 500px;
+  // }
 
   &::-webkit-scrollbar-thumb {
     background-color: $secondary;

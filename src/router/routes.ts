@@ -20,6 +20,7 @@ const routes: RouteRecordRaw[] = [
     path: '/admin',
     name: 'admin',
     redirect: '/admin/dashboard',
+    meta: { requiresAuth: true, roles: [1, 2, 3] },
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
@@ -45,6 +46,7 @@ const routes: RouteRecordRaw[] = [
       {
         name: 'admin-rooms',
         path: 'rooms',
+        meta: { requiresAuth: true, roles: [1] },
         component: () => import('pages/rooms/RoomsPage.vue'),
       },
       {
@@ -73,6 +75,7 @@ const routes: RouteRecordRaw[] = [
     path: '/players',
     name: 'players',
     redirect: '/players/dashboard',
+    meta: { requiresAuth: true, roles: [4] },
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {

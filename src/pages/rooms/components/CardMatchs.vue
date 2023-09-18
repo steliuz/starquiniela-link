@@ -1,17 +1,18 @@
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Ref } from 'vue';
 import { file_url } from 'src/boot/axios';
 
 const showInputsResult: Ref<null | number> = ref(null);
-const props = defineProps(['dataMatch', 'player']);
-const emit = defineEmits(['emitSave', 'emitDelete', ' emitStatus']);
+defineProps(['dataMatch', 'player']);
+const emit = defineEmits(['emitSave', 'emitDelete', 'emitStatus']);
 
 const emitCancel = () => {
   showInputsResult.value = null;
   // showInputsPredict.value = null;
 };
-const emitSave = (match: any) => {
+const emitSave = (match: Math) => {
   emit('emitSave', match);
   showInputsResult.value = null;
 };
@@ -19,15 +20,15 @@ const emitResult = (index: number) => {
   showInputsResult.value = index;
   //   showInputsPredict.value = index;
 };
-const emitDelete = (value: any) => {
-  emit('emitDelete', value);
+const emitDelete = (id: number) => {
+  emit('emitDelete', id);
 };
-const emitStatus = (value: any) => {
-  // emit('emitStatus', value)
+const emitStatus = (value: Math) => {
+  emit('emitStatus', value);
 };
-const showPredict = (value: any) => {
-  console.log('value: ', value);
-};
+// const showPredict = (value: any) => {
+//   console.log('value: ', value);
+// };
 </script>
 
 <template>
@@ -168,7 +169,7 @@ const showPredict = (value: any) => {
                       </div>
                     </q-item-section>
                   </q-item>
-                  <q-item @click="emitDelete(match.id)" v-close-popup>
+                  <q-item @click="emitDelete(match.id)" clickable v-close-popup>
                     <q-item-section>
                       <div class="flex">
                         <i class="q-mr-md fa-solid fa-trash text-red-5"></i>

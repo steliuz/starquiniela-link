@@ -27,10 +27,6 @@ const postLogin = async (value: loginAuth) => {
   } catch (error) {
     console.log(error);
   } finally {
-    console.log(
-      '🚀 ~ file: LoginPage.vue:31 ~ postLogin ~  store.auth:',
-      store.auth
-    );
     store.handlebarLoading(false);
   }
 };

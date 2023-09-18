@@ -1,6 +1,8 @@
 import { api } from 'boot/axios';
 import { handleMessages } from './notifys';
 
+const ERROR_MESSAGE =
+  'Oops, hubo un problema durante el proceso, por favor intente mas tarde';
 export const getData = async (path, params, options) => {
   try {
     const { data } = await api.get(path, {
@@ -9,9 +11,9 @@ export const getData = async (path, params, options) => {
     });
     return data;
   } catch (error) {
+    let msg = error.response.data.error ?? ERROR_MESSAGE;
     handleMessages({
-      message:
-        'Oops, hubo un problema durante el proceso, por favor intente mas tarde',
+      message: msg,
       color: 'negative',
       icon: 'cancel',
     });
@@ -36,30 +38,15 @@ export const postData = async (
     }
     return data;
   } catch (error) {
+    let msg = error.response.data.error ?? ERROR_MESSAGE;
     handleMessages({
-      message:
-        'Oops, hubo un problema durante el proceso, por favor intente mas tarde',
+      message: msg,
       color: 'negative',
       icon: 'cancel',
     });
     throw error.response;
   }
 };
-
-// export const getDataById = async (path) => {
-//   try {
-//     const { data } = await api.get(path);
-//     return data;
-//   } catch (error) {
-//     handleMessages({
-//       message:
-//         'Oops, hubo un problema durante el proceso, por favor intente mas tarde',
-//       color: 'negative',
-//       icon: 'cancel',
-//     });
-//     throw error.response;
-//   }
-// };
 
 export const putData = async (
   path,
@@ -78,9 +65,9 @@ export const putData = async (
     }
     return data;
   } catch (error) {
+    let msg = error.response.data.error ?? ERROR_MESSAGE;
     handleMessages({
-      message:
-        'Oops, hubo un problema durante el proceso, por favor intente mas tarde',
+      message: msg,
       color: 'negative',
       icon: 'cancel',
     });
@@ -103,9 +90,9 @@ export const deleteData = async (
     }
     return data;
   } catch (error) {
+    let msg = error.response.data.error ?? ERROR_MESSAGE;
     handleMessages({
-      message:
-        'Oops, hubo un problema durante el proceso, por favor intente mas tarde',
+      message: msg,
       color: 'negative',
       icon: 'cancel',
     });
@@ -119,7 +106,7 @@ export const deleteData = async (
 //     return data;
 //   } catch (error) {
 //     handleMessages({
-//       message: error.response.data.message,
+//       message: error.response.data.error,
 //       color: 'negative',
 //       icon: 'cancel',
 //     });

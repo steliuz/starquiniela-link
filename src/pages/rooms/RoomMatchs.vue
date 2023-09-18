@@ -9,7 +9,7 @@ import { Match } from 'src/interfaces/match';
 import { useAuthStore } from 'src/stores/auth';
 import cardMatchsComponents from './components/CardMatchs.vue';
 
-const { room_id: roomID } = useAuthStore();
+const { room_id: roomID, auth } = useAuthStore();
 const { room, getRoomById } = useRooms();
 const formMatch = ref({
   team1: null,
@@ -19,7 +19,7 @@ const { selectTeams, optionsTeams, loading } = useTeam();
 const { postMatch, deleteMatch, statusMatch, resultMatch } = useMatch(roomID);
 
 onMounted(async () => {
-  await selectTeams();
+  if (auth.role_id === 1) await selectTeams();
   await getRoomById(roomID);
 });
 
@@ -83,7 +83,7 @@ async function onDelete(id: number | null | undefined | string) {
       />
     </div>
     <div class="row q-mb-md">
-      <div class="col-12 full-width">
+      <div class="col-12 full-width" v-if="auth.role_id === 1">
         <q-form class="box-form" @submit="onSubmit">
           <div class="row">
             <div class="col-6 col-md-5 q-px-sm">
@@ -199,110 +199,12 @@ async function onDelete(id: number | null | undefined | string) {
             <i class="fa-solid fa-trophy text-orange-5 fa-xl"></i>
           </q-btn>
         </div>
-        <cardMatchsComponents :dataMatch="room.matches" @emitSave="onSave" />
-
-        <!-- <q-card class="card-matchs">
-          <q-card-section>
-            <div class="box-matchs">
-              <div class="index-number"></div>
-              <div></div>
-              <div class="box-result">
-                <p class="text-center text-weight-bold q-mb-none q-mr-sm">R</p>
-                <p class="text-center text-weight-bold q-mb-none">P</p>
-              </div>
-              <div></div>
-            </div>
-
-            <div class="box-matchs" v-for="(match, index) in room.matches" :key="match.id ?? 0">
-              <div class="index-number">{{ index + 1 }}</div>
-              <div class="box-team">
-                <div>
-                  <img class="img-team" :src="match.team1 && match.team1.image
-                    ? file_url + match.team1.image
-                    : '/src/assets/team1.jpg'
-                    " alt="team1" />
-                  <p>{{ match.team1?.name }}</p>
-                </div>
-                <div>
-                  <img class="img-team" :src="match.team2 && match.team2.image
-                    ? file_url + match.team2.image
-                    : '/src/assets/team2.jpg'
-                    " alt="team1" />
-                  <p>{{ match.team2?.name }}</p>
-                </div>
-              </div>
-              <div class="box-result">
-                <div class="" v-if="showInputsResult == index">
-                  <q-input v-model="match.goalsTeam1" type="number" style="max-width: 40px" dense filled
-                    class="q-pb-xs hide-number-arrows" />
-                  <q-input v-model="match.goalsTeam2" type="number" style="max-width: 40px" dense filled
-                    class="hide-number-arrows" />
-                </div>
-                <div v-else>
-                  <p>{{ match.goalsTeam1 }}</p>
-                  <p>{{ match.goalsTeam2 }}</p>
-                </div>
-                <div class="" v-if="showInputsResult == index">
-                  <q-input v-model="match.penaltyTeam1" type="number" style="max-width: 40px" dense filled
-                    class="q-pb-xs hide-number-arrows" />
-                  <q-input v-model="match.penaltyTeam2" type="number" style="max-width: 40px" dense filled
-                    class="hide-number-arrows" />
-                </div>
-                <div v-else>
-                  <p class="text-red-5" v-if="match.penaltyTeam1 != null">
-                    ({{ match.penaltyTeam1 }})
-                  </p>
-                  <p class="text-red-5" v-if="match.penaltyTeam2 != null">
-                    ({{ match.penaltyTeam2 }})
-                  </p>
-                </div>
-              </div>
-              <div class="box-options">
-                <div v-if="showInputsResult == index">
-                  <q-btn padding="8px" flat color="primary" icon="check" @click="onSave(match)" />
-                  <q-btn padding="8px" flat color="red" icon="cancel" @click="onCancel" />
-                </div>
-                <div v-else>
-                  <q-btn padding="8px" flat color="primary" @click="showPredict(index)">
-                    <i class="fa-solid fa-futbol text-primary fa-xl"></i>
-                  </q-btn>
-                  <q-btn class="q-pa-xs" color="dark" flat icon="more_vert">
-                    <q-menu>
-                      <q-list style="min-width: 140px">
-                        <q-item clickable v-close-popup @click="onResult(index)">
-                          <q-item-section>
-                            <div class="flex">
-                              <i class="q-mr-md fa-solid fa-futbol text-primary"></i>
-                              <span>Resultados</span>
-                            </div>
-                          </q-item-section>
-                        </q-item>
-                        <q-item clickable @click="onDelete(match.id)" v-close-popup>
-                          <q-item-section>
-                            <div class="flex">
-                              <i class="q-mr-md fa-solid fa-trash text-red-5"></i>
-                              <span>Eliminar</span>
-                            </div>
-                          </q-item-section>
-                        </q-item>
-                        <q-separator spaced inset />
-                        <q-item clickable v-close-popup>
-                          <q-item-section>
-                            <p class="q-mb-none">Activo / Inactivo</p>
-                            <div class="flex">
-                              <q-toggle v-model="match.status" color="secondary" :true-value="1" :false-value="0"
-                                @click="onStatus(match)" />
-                            </div>
-                          </q-item-section>
-                        </q-item>
-                      </q-list>
-                    </q-menu>
-                  </q-btn>
-                </div>
-              </div>
-            </div>
-          </q-card-section>
-        </q-card> -->
+        <cardMatchsComponents
+          :dataMatch="room.matches"
+          @emitSave="onSave"
+          @emitStatus="onStatus"
+          @emitDelete="onDelete"
+        />
       </div>
       <div class="col-12 col-md-4 q-px-md">
         <div class="name-quiniela">

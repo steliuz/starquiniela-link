@@ -11,6 +11,7 @@ import {
 export function useRooms() {
   const loading = ref(false);
   const dialog = ref(false);
+  const tab = ref('1');
   const room: Ref<Room> = ref({
     name: '',
     category_room_id: 1,
@@ -35,6 +36,14 @@ export function useRooms() {
   const getRoom = async (value: object = rooms.value) => {
     loading.value = true;
     await getData('rooms', value).then((resp) => {
+      rooms.value = resp;
+      loading.value = false;
+    });
+  };
+
+  const getRoomActive = async (value: object = rooms.value) => {
+    loading.value = true;
+    await getData('rooms/actives', value).then((resp) => {
       rooms.value = resp;
       loading.value = false;
     });
@@ -86,6 +95,20 @@ export function useRooms() {
       // fase: false,
     };
   };
+  const handlerTab = (value: string) => {
+    tab.value = value;
+    if (value == '1') {
+      getReferRoom();
+    } else {
+      getRoomActive();
+    }
+  };
+
+  const buyRoom = async (id: number) => {
+    await postData(`rooms/${id}/buy`).then(() => {
+      getRoomActive();
+    });
+  };
   return {
     loading,
     dialog,
@@ -100,5 +123,9 @@ export function useRooms() {
     statusRoom,
     getRoomById,
     getReferRoom,
+    tab,
+    handlerTab,
+    getRoomActive,
+    buyRoom,
   };
 }
