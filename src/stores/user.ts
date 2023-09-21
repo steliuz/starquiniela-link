@@ -10,7 +10,6 @@ export const useUserStore = defineStore('user', {
   getters: {},
   actions: {
     userAuth(payload: dataLogin) {
-      console.log('payload: ', payload);
       this.user = payload.user_data;
     },
     handlebarLoading(payload: boolean) {

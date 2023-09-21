@@ -12,3 +12,13 @@ export interface Room {
   matches?: Array<Match> | null;
   players?: Array<User> | null;
 }
+
+export interface RoomUser {
+  room_id: number;
+  user_id: number;
+  room_id_admin?: number | null;
+  credits?: number;
+  vip?: number;
+  status?: number;
+  cod_compartir?: string;
+}

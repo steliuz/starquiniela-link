@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import UniversalTable from 'src/components/UniversalTable.vue';
-import { nameColumn, optColumn } from 'src/helpers/columns';
+import { idColumn, nameColumn, optColumn } from 'src/helpers/columns';
 import { useRooms } from 'src/composables/useRooms';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'src/stores/auth';
@@ -9,7 +9,7 @@ import { copyToClipboard } from 'quasar';
 import { vue_url } from 'src/boot/axios';
 
 const { setRoom } = useAuthStore();
-const columns = [nameColumn, optColumn];
+const columns = [idColumn, nameColumn, optColumn];
 const {
   loading,
   rooms,

@@ -1,4 +1,5 @@
 import { Bet } from './bet';
+import { RoomUser } from './room';
 
 export interface User {
   prefix: string;
@@ -18,4 +19,5 @@ export interface User {
 
 export interface Player extends User {
   bets?: Bet[];
+  rooms?: RoomUser[];
 }

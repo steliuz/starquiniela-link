@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { useTeam } from 'src/composables/useTeam';
 import { useRooms } from 'src/composables/useRooms';
+import { useBet } from 'src/composables/useBet';
 import { Team } from 'src/interfaces/team';
 import { useMatch } from 'src/composables/useMatch';
 import { file_url } from 'src/boot/axios';
@@ -9,12 +10,15 @@ import { Match } from 'src/interfaces/match';
 import { useAuthStore } from 'src/stores/auth';
 import cardMatchsComponents from './components/CardMatchs.vue';
 import dialogTickets from './components/DialogTickets.vue';
+import { Player } from 'src/interfaces/user';
+import { PaidBet } from 'src/interfaces/bet';
 
 const confirmTickets = ref(false);
-const infoPlayer = ref('');
+const infoPlayer = ref();
 
 const { room_id: roomID, auth } = useAuthStore();
 const { room, getRoomById } = useRooms();
+const { statusPaidBet } = useBet();
 const formMatch = ref({
   team1: null,
   team2: null,
@@ -61,8 +65,7 @@ const onSubmit = async () => {
   });
 };
 
-const openTickets = (player: any) => {
-  console.log('player: ', player);
+const openTickets = (player: Player) => {
   infoPlayer.value = player;
   confirmTickets.value = !confirmTickets.value;
 };
@@ -80,6 +83,11 @@ async function onDelete(id: number | null | undefined | string) {
   await deleteMatch(id);
   await getRoomById(roomID);
 }
+
+const statusPaid = async (value: PaidBet) => {
+  value.room_id = roomID;
+  await statusPaidBet(value);
+};
 </script>
 <template>
   <section class="q-mt-md q-px-sm">
@@ -221,8 +229,11 @@ async function onDelete(id: number | null | undefined | string) {
           <p class="q-mb-none q-pl-md text-body2 text-weight-bold ellipsis">
             Lista de jugadores
           </p>
-          <q-btn color="primary" icon="check" label="OK" @click="openTickets" />
-          <dialogTickets v-model="confirmTickets" :infoPlayer="infoPlayer" />
+          <dialogTickets
+            v-model="confirmTickets"
+            :infoPlayer="infoPlayer"
+            @on-paid="statusPaid"
+          />
         </div>
         <q-list>
           <div v-for="player in room.players" :key="player.id">

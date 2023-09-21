@@ -36,14 +36,20 @@
           </div>
           <div class="col-6">
             <q-list dark bordered>
-              <template v-for="item in 10" :key="item">
+              <template v-for="item in infoPlayer.bets" :key="item">
                 <q-item v-ripple>
                   <q-item-section class="text-h6">
-                    {{ `30-13${item}` }}
+                    {{ `${item.ticket_factura}` }}
                   </q-item-section>
                   <q-separator spaced inset vertical dark />
                   <q-item-section avatar>
-                    <q-toggle v-model="statusTicket" color="secondary" />
+                    <q-toggle
+                      v-model="item.paid"
+                      color="secondary"
+                      :true-value="1"
+                      :false-value="0"
+                      @update:model-value="emit('onPaid', item)"
+                    />
                   </q-item-section>
                 </q-item>
                 <q-separator dark />
@@ -67,10 +73,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const statusTicket = ref(false);
-const props = defineProps(['infoPlayer']);
+defineProps(['infoPlayer']);
+const emit = defineEmits(['onPaid']);
 </script>
 
 <style scoped></style>

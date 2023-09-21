@@ -12,3 +12,7 @@ export interface Bet {
   matches?: Match[];
   length?: number;
 }
+
+export interface PaidBet extends Bet {
+  room_id: number | string | null;
+}
