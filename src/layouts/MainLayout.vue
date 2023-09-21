@@ -81,7 +81,7 @@ const essentialLinks: EssentialLinkProps[] = [
     caption: '',
     icon: 'person',
     link: '/admin/users',
-    roles: [1, 2, 3],
+    roles: [1, 2],
   },
   {
     title: 'Equipos',
