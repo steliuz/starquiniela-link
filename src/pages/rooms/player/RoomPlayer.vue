@@ -2,12 +2,51 @@
 import { ref } from 'vue';
 import cardMatchsComponents from '../components/CardMatchs.vue';
 import formPlayer from '../components/formPlayer.vue';
-import { data } from 'pages/rooms/components/dataList';
-
-const dialogPlayer = ref(false);
+import { useRoomPlayer } from 'src/composables/useRoomPlayer';
+import { useRoute } from 'vue-router';
+// import { data } from 'pages/rooms/components/dataList';
 
 const openDialog = () => {
-  dialogPlayer.value = true;
+  dialog.value = true;
+};
+const { getRoom, room, registerPlayer, postBet, dialog } = useRoomPlayer();
+
+const router = useRoute();
+getRoom(`${router.params.code}`);
+
+const onSave = async (player: object) => {
+  let check = false;
+  room.value.matches?.map((match) => {
+    if (match.penaltyTeam1 == null || match.penaltyTeam2 == null) check = true;
+  });
+
+  if (check) {
+    alert('llenar apuesta');
+    return;
+  }
+  await registerPlayer({ ...player, cod_compartir: router.params.code }).then(
+    (resp) => {
+      let data = {
+        user_id: resp.userData.uid,
+        bets: room.value.matches?.map((match) => {
+          return {
+            match_id: match.id,
+            goalsTeam1: match.penaltyTeam1,
+            goalsTeam2: match.penaltyTeam2,
+          };
+        }),
+      };
+      postBet(data).then(() => {
+        room.value.matches = room.value.matches?.map((match) => {
+          return {
+            ...match,
+            penaltyTeam1: '',
+            penaltyTeam2: '',
+          };
+        });
+      });
+    }
+  );
 };
 </script>
 
@@ -18,7 +57,7 @@ const openDialog = () => {
         <q-toolbar-title class="q-pa-sm">
           <q-img
             width="50px"
-            src="src/assets/logo/logo-white.png"
+            src="/src/assets/logo/logo-white.png"
             spinner-color="primary"
             spinner-size="82px"
           />
@@ -34,7 +73,7 @@ const openDialog = () => {
             <div class="box-room">
               <div class="title-cardMatchs">
                 <p class="text-h5 text-white text-left">
-                  Nombre de Quiniela (Jornada 8)
+                  {{ room.name || '' }}
                 </p>
                 <q-icon
                   class="cursor-pointer"
@@ -44,10 +83,13 @@ const openDialog = () => {
                 />
               </div>
               <div class="box-inside form">
-                <formPlayer v-model="dialogPlayer" />
+                <formPlayer v-model="dialog" @savePlayer="onSave" />
               </div>
               <div class="box-inside rooms">
-                <cardMatchsComponents :dataMatch="data" :player="true" />
+                <cardMatchsComponents
+                  :dataMatch="room.matches"
+                  :player="true"
+                />
                 <div class="q-mt-sm box-button">
                   <q-btn
                     class="full-width"
@@ -105,11 +147,11 @@ const openDialog = () => {
       padding: 0 10px;
     }
 
-    .rooms {
-    }
+    // .rooms {
+    // }
 
-    .form {
-    }
+    // .form {
+    // }
   }
 }
 </style>

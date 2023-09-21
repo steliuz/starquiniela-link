@@ -37,11 +37,13 @@ const api = axios.create({
 // );
 
 const file_url = production ? process.env.FILE_URL_PROD : process.env.FILE_URL;
-// const vue_url = production ? 'https://atcreando.com' : 'http://localhost:9000';
+const vue_url = production
+  ? 'https://dev.starquiniela.com'
+  : 'http://localhost:9000';
 export default boot(({ app }) => {
   app.config.globalProperties.$axios = axios;
   app.config.globalProperties.$api = api;
   app.config.globalProperties.$file_url = file_url;
 });
 
-export { api, file_url };
+export { api, file_url, vue_url };

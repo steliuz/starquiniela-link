@@ -5,6 +5,8 @@ import { useRooms } from 'src/composables/useRooms';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'src/stores/auth';
 import { ref } from 'vue';
+import { copyToClipboard } from 'quasar';
+import { vue_url } from 'src/boot/axios';
 
 const { setRoom } = useAuthStore();
 const columns = [nameColumn, optColumn];
@@ -25,6 +27,20 @@ const goToMatch = (roomID: number) => {
   setTimeout(() => {
     router.push({ path: '/admin/rooms/matchs' });
   }, 500);
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const clipboard = (row: any) => {
+  let url = `${vue_url}/rooms/${row.room_user.cod_compartir}`;
+  copyToClipboard(url)
+    .then(() => {
+      // success!
+      console.log('success');
+    })
+    .catch(() => {
+      // fail
+      console.log('fail');
+    });
 };
 </script>
 
@@ -97,6 +113,18 @@ const goToMatch = (roomID: number) => {
                   </div>
                 </q-item-section>
               </q-item>
+              <q-item
+                clickable
+                v-close-popup
+                @click="clipboard(scope.props.row)"
+              >
+                <q-item-section>
+                  <div class="flex">
+                    <i class="q-mr-md fa-solid fa-shield text-red-5"></i>
+                    <span>Compartir</span>
+                  </div>
+                </q-item-section>
+              </q-item>
             </template>
           </UniversalTable>
         </q-tab-panel>
@@ -142,34 +170,34 @@ const goToMatch = (roomID: number) => {
                     <span>Comprar</span>
                   </div>
                 </q-item-section>
-              </q-item>
-              <q-popup-proxy>
-                <q-banner>
-                  <div class="row">
-                    <div class="col-12">
-                      <p class="ellipsis-2 text-center">
-                        ¿Está seguro de que desea comprar esta quiniela?
-                      </p>
-                    </div>
-                    <div class="col-6 text-center">
-                      <div class="col-6 text-center">
-                        <q-btn
-                          flat
-                          color="grey-13"
-                          label="Cancelar"
-                          v-close-popup
-                        />
+                <q-popup-proxy>
+                  <q-banner>
+                    <div class="row">
+                      <div class="col-12">
+                        <p class="ellipsis-2 text-center">
+                          ¿Está seguro de que desea comprar esta quiniela?
+                        </p>
                       </div>
+                      <div class="col-6 text-center">
+                        <div class="col-6 text-center">
+                          <q-btn
+                            flat
+                            color="grey-13"
+                            label="Cancelar"
+                            v-close-popup
+                          />
+                        </div>
+                      </div>
+                      <q-btn
+                        color="secondary"
+                        label="Comprar"
+                        v-close-popup
+                        @click.stop.prevent="buyRoom(scope.props.row.id)"
+                      />
                     </div>
-                    <q-btn
-                      color="secondary"
-                      label="Comprar"
-                      v-close-popup
-                      @click.stop.prevent="buyRoom(scope.props.row.id)"
-                    />
-                  </div>
-                </q-banner>
-              </q-popup-proxy>
+                  </q-banner>
+                </q-popup-proxy>
+              </q-item>
             </template>
           </UniversalTable>
         </q-tab-panel>

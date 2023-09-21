@@ -115,6 +115,8 @@ const emitStatus = (value: Math) => {
               dense
               filled
               class="q-pb-xs hide-number-arrows"
+              :disable="match.status == 0 && player"
+              :min="0"
             />
             <q-input
               v-model="match.penaltyTeam2"
@@ -125,6 +127,8 @@ const emitStatus = (value: Math) => {
               dense
               filled
               class="hide-number-arrows"
+              :disable="match.status == 0 && player"
+              :min="0"
             />
           </div>
           <div v-else>

@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     name: 'roomMatch',
-    path: '/roomMatch',
+    path: '/rooms/:code',
     component: () => import('pages/rooms/player/RoomPlayer.vue'),
   },
   {
