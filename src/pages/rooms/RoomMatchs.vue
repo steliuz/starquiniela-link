@@ -8,6 +8,10 @@ import { file_url } from 'src/boot/axios';
 import { Match } from 'src/interfaces/match';
 import { useAuthStore } from 'src/stores/auth';
 import cardMatchsComponents from './components/CardMatchs.vue';
+import dialogTickets from './components/DialogTickets.vue';
+
+const confirmTickets = ref(false);
+const infoPlayer = ref('');
 
 const { room_id: roomID, auth } = useAuthStore();
 const { room, getRoomById } = useRooms();
@@ -55,6 +59,12 @@ const onSubmit = async () => {
       team2: null,
     };
   });
+};
+
+const openTickets = (player: any) => {
+  console.log('player: ', player);
+  infoPlayer.value = player;
+  confirmTickets.value = !confirmTickets.value;
 };
 
 async function onSave(match: Match) {
@@ -211,13 +221,19 @@ async function onDelete(id: number | null | undefined | string) {
           <p class="q-mb-none q-pl-md text-body2 text-weight-bold ellipsis">
             Lista de jugadores
           </p>
+          <q-btn color="primary" icon="check" label="OK" @click="openTickets" />
+          <dialogTickets v-model="confirmTickets" :infoPlayer="infoPlayer" />
         </div>
         <q-list>
           <div v-for="player in room.players" :key="player.id">
             <q-item>
               <q-item-section>
                 <q-item-label>
-                  <a href="" class="text-white nameCustom">{{ player.name }}</a>
+                  <a
+                    class="text-white nameCustom"
+                    @click="openTickets(player)"
+                    >{{ player.name }}</a
+                  >
                   <i
                     class="fa-solid fa-circle-check text-secondary fa-xl q-mt-md q-ml-sm"
                   ></i>
