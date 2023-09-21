@@ -50,16 +50,20 @@ const clipboard = (row: any) => {
       <q-tabs
         v-model="tab"
         class="q-ml-md"
-        align="left"
+        align="center"
         active-bg-color="transparent"
         activeClass="text-white"
-        indicator-color="primary"
+        indicator-color="secondary"
       >
         <q-tab name="1" label="Adquiridas" @click="handlerTab(tab)" />
         <q-tab name="2" label="Comprar Quiniela" @click="handlerTab(tab)" />
       </q-tabs>
       <q-tab-panels v-model="tab" animated keep-alive>
-        <q-tab-panel class="bg-new-dark" name="1" :key="tab">
+        <q-tab-panel
+          class="bg-new-dark flex justify-center"
+          name="1"
+          :key="tab"
+        >
           <UniversalTable
             :respData="rooms"
             :columns="columns"
@@ -123,7 +127,11 @@ const clipboard = (row: any) => {
             </template>
           </UniversalTable>
         </q-tab-panel>
-        <q-tab-panel class="bg-new-dark" name="2" :key="tab">
+        <q-tab-panel
+          class="bg-new-dark flex justify-center"
+          name="2"
+          :key="tab"
+        >
           <UniversalTable
             :respData="rooms"
             :columns="columns"
