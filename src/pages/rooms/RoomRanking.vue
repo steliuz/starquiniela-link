@@ -2,28 +2,13 @@
   <section class="q-mt-md q-px-sm">
     <div class="flex justify-end">
       <q-btn
-        class="px-3"
+        class="q-my-sm"
         flat
         color="red-5"
         label="Regresar"
         @click="$router.go(-1)"
       />
     </div>
-
-    <!-- <aside>
-      <div class="q-pa-md">
-        <q-table
-          separator="cell"
-          dark
-          class="table-custom-columns bg-table"
-          flat
-          bordered
-          dense
-          :rows="rows"
-          :columns="columns"
-        />
-      </div>
-    </aside> -->
     <aside>
       <div class="pp mt-2 text-center hg_table" ref="containerTable">
         <table>
@@ -114,13 +99,12 @@
                   </div>
                 </th>
               </template>
-              <!-- <th v-for="(header, index) in headers" :key="index"></th> -->
             </tr>
           </thead>
           <tbody v-if="typeRoom">
             <tr v-for="(player, rowIndex) in players" :key="rowIndex">
-              <td class="name1">
-                <div class="text-name-player">{{ player.name }}</div>
+              <td class="name1 text-name-player">
+                <div class="">{{ player.name }}</div>
               </td>
               <td class="name2 bg-orange-6 text-black text-bold">
                 <div class="flex flex-center">
@@ -129,7 +113,11 @@
               </td>
 
               <template v-for="match in matches" :key="match.id">
-                <td class="roomNormal">{{ getPoint(match.id, player.id) }}</td>
+                <td class="roomNormal r">
+                  <div class="text-center">
+                    {{ getPoint(match.id, player.id) }}
+                  </div>
+                </td>
                 <td class="roomNormal">
                   <p class="q-mb-none text-bold text-center">
                     {{ getBet(match.id, player.id) }}
@@ -321,11 +309,13 @@ th:nth-child(3n + 3) {
   background-color: #001e28;
   color: #fff;
   font-weight: 500;
+  width: 30px;
 }
 td.roomNormal:nth-child(3n + 3) {
   background-color: #001e28;
   color: #fff;
   font-weight: 500;
+  width: 30px;
 }
 
 td.lev:nth-child(odd) {
@@ -347,21 +337,21 @@ td.lev:nth-child(odd) {
   position: sticky;
   width: 50px;
   height: 20px;
-  left: 108px;
+  left: 68px;
   background-color: #001e28;
   z-index: 1;
 }
 
 .text-name-player {
-  width: 101px;
-  max-width: 101px;
+  width: 120px;
+  max-width: 120px;
 }
 
 @media (max-width: 700px) {
   .name2:nth-of-type(2n) {
     position: sticky;
     height: 20px;
-    left: 62px;
+    left: 68px;
     z-index: 1000;
     overflow: auto;
     -webkit-overflow-scrolling: auto;

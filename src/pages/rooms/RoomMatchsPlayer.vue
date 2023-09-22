@@ -98,17 +98,21 @@ function onCancel() {
                 <div class="" v-if="showInputsPredict == index">
                   <q-input
                     v-model="match.goalsTeam1"
+                    input-class="text-center"
                     type="number"
                     style="max-width: 40px"
                     dense
+                    dark
                     filled
                     class="q-pb-xs hide-number-arrows"
                   />
                   <q-input
                     v-model="match.goalsTeam2"
+                    input-class="text-center"
                     type="number"
                     style="max-width: 40px"
                     dense
+                    dark
                     filled
                     class="hide-number-arrows"
                   />
@@ -120,17 +124,21 @@ function onCancel() {
                 <div class="" v-if="showInputsPredict == index">
                   <q-input
                     v-model="match.penaltyTeam1"
+                    input-class="text-center"
                     type="number"
                     style="max-width: 40px"
                     dense
+                    dark
                     filled
                     class="q-pb-xs hide-number-arrows"
                   />
                   <q-input
                     v-model="match.penaltyTeam2"
+                    input-class="text-center"
                     type="number"
                     style="max-width: 40px"
                     dense
+                    dark
                     filled
                     class="hide-number-arrows"
                   />

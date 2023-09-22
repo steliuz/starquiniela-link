@@ -3,6 +3,10 @@
 import { ref } from 'vue';
 import { Ref } from 'vue';
 import { file_url } from 'src/boot/axios';
+import { useAuthStore } from 'src/stores/auth';
+
+const { auth } = useAuthStore();
+console.log('auth: ', auth.role_id);
 
 const showInputsResult: Ref<null | number> = ref(null);
 defineProps(['dataMatch', 'player']);
@@ -36,19 +40,28 @@ const emitStatus = (value: Math) => {
     <q-card-section>
       <div
         class="box-matchs"
-        :class="player ? 'box-matchs-player' : 'box-matchs'"
+        :class="auth.role_id != 4 ? 'box-matchs-player' : 'box-matchs'"
       >
         <div class="index-number"></div>
         <div></div>
-        <div class="box-result">
+        <div class="box-result q-mb-xs">
           <p class="text-center text-weight-bold q-mb-none">R</p>
-          <p class="text-center text-weight-bold q-mb-none">P</p>
+          <p
+            class="text-center text-weight-bold q-mb-none"
+            v-if="auth.role_id == undefined || auth.role_id == 4"
+          >
+            P
+          </p>
         </div>
       </div>
 
       <div
         class="box-matchs"
-        :class="player ? 'box-matchs-player' : 'box-matchs'"
+        :class="
+          auth.role_id == undefined || auth.role_id != 4
+            ? 'box-matchs-player'
+            : 'box-matchs'
+        "
         v-for="(match, index) in dataMatch"
         :key="match.id ?? 0"
       >
@@ -81,14 +94,16 @@ const emitStatus = (value: Math) => {
         </div>
         <div
           class="box-result"
-          :class="player ? '' : 'border-right__box-result'"
+          :class="player ? 'border-right__box-result' : ''"
         >
           <div class="" v-if="showInputsResult == index">
             <q-input
               v-model="match.goalsTeam1"
               type="number"
               style="max-width: 50px"
+              input-class="text-white text-center"
               dense
+              dark
               filled
               class="q-pb-xs hide-number-arrows"
             />
@@ -96,7 +111,9 @@ const emitStatus = (value: Math) => {
               v-model="match.goalsTeam2"
               type="number"
               style="max-width: 50px"
+              input-class="text-white text-center"
               dense
+              dark
               filled
               class="hide-number-arrows"
             />
@@ -105,41 +122,47 @@ const emitStatus = (value: Math) => {
             <p>{{ match.goalsTeam1 || '-' }}</p>
             <p>{{ match.goalsTeam2 || '-' }}</p>
           </div>
-          <div class="" v-if="showInputsResult == index || player">
-            <q-input
-              v-model="match.penaltyTeam1"
-              type="number"
-              color="secondary"
-              :dark="player"
-              style="max-width: 50px"
-              dense
-              filled
-              class="q-pb-xs hide-number-arrows"
-              :disable="match.status == 0 && player"
-              :min="0"
-            />
-            <q-input
-              v-model="match.penaltyTeam2"
-              type="number"
-              color="secondary"
-              :dark="player"
-              style="max-width: 50px"
-              dense
-              filled
-              class="hide-number-arrows"
-              :disable="match.status == 0 && player"
-              :min="0"
-            />
-          </div>
-          <div v-else>
-            <!-- v-if="match.penaltyTeam1 != null" -->
-            <p class="text-red-5">
-              {{ match.penaltyTeam1 ? match.penaltyTeam1 : '-' }}
-            </p>
-            <p class="text-red-5">
-              {{ match.penaltyTeam2 ? match.penaltyTeam2 : '-' }}
-            </p>
-          </div>
+          <template v-if="auth.role_id == undefined || auth.role_id == 4">
+            <div class="" v-if="showInputsResult == index || player">
+              <q-input
+                v-model="match.penaltyTeam1"
+                type="number"
+                color="secondary"
+                dark
+                style="max-width: 50px"
+                dense
+                filled
+                input-class="text-white text-center"
+                class="q-pb-xs hide-number-arrows"
+                :disable="match.status == 0 && player"
+                :min="0"
+              />
+              <q-input
+                v-model="match.penaltyTeam2"
+                type="number"
+                color="secondary"
+                input-class="text-white text-center"
+                dark
+                style="max-width: 50px"
+                dense
+                filled
+                class="hide-number-arrows"
+                :disable="match.status == 0 && player"
+                :min="0"
+              />
+            </div>
+          </template>
+
+          <template v-else>
+            <div v-if="auth.role_id == undefined || auth.role_id == 4">
+              <p class="text-red-5">
+                {{ match.penaltyTeam1 ? match.penaltyTeam1 : '-' }}
+              </p>
+              <p class="text-red-5">
+                {{ match.penaltyTeam2 ? match.penaltyTeam2 : '-' }}
+              </p>
+            </div>
+          </template>
         </div>
         <div class="box-options" v-if="!player">
           <div v-if="showInputsResult == index" class="q-ml-sm">
@@ -206,6 +229,9 @@ const emitStatus = (value: Math) => {
   </q-card>
 </template>
 <style lang="scss" scoped>
+.w-50 {
+  width: 50px;
+}
 .name-quiniela {
   display: flex;
   justify-content: space-between;
@@ -307,11 +333,11 @@ const emitStatus = (value: Math) => {
 
     .box-result {
       display: grid;
-      grid-template-columns: repeat(2, auto);
+      grid-template-columns: repeat(2, 50px);
       align-items: center;
       gap: 5px;
       place-items: center;
-      padding-right: 8px;
+      padding-right: 15px;
 
       .mt-negative {
         margin-top: -30px;
@@ -329,10 +355,10 @@ const emitStatus = (value: Math) => {
   }
 
   .box-matchs-player {
-    grid-template-columns: 0.3fr repeat(1, minmax(100px, 3fr)) 1.2fr;
+    grid-template-columns: 0.3fr repeat(1, minmax(100px, 2.9fr)) 50px 50px;
 
     @media screen and (max-width: 500px) {
-      grid-template-columns: repeat(1, minmax(100px, 3fr)) 1.8fr;
+      grid-template-columns: repeat(1, minmax(100px, 2.9fr)) 50px 50px;
     }
   }
 }

@@ -209,9 +209,8 @@ const statusPaid = async (value: PaidBet) => {
             {{ room.name || '' }}
           </p>
           <q-btn
-            padding="5px"
             flat
-            color="primary"
+            color="orange-5"
             @click="$router.push('/admin/rooms/ranking')"
           >
             <i class="fa-solid fa-trophy text-orange-5 fa-xl"></i>

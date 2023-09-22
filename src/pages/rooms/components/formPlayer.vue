@@ -1,6 +1,6 @@
 <template>
   <q-dialog>
-    <q-card>
+    <q-card square class="bg-header-dark relative-position bg-new-dark">
       <q-card-section>
         <q-form @submit="onSubmit">
           <div class="row">
@@ -11,6 +11,7 @@
               <q-input
                 v-model="formPlayer.name"
                 dense
+                dark
                 filled
                 type="text"
                 placeholder="Nombre"
@@ -24,6 +25,7 @@
               <q-input
                 v-model="formPlayer.phone"
                 dense
+                dark
                 filled
                 type="text"
                 placeholder="Teléfono"
@@ -39,6 +41,7 @@
               <q-input
                 v-model="formPlayer.email"
                 dense
+                dark
                 filled
                 type="text"
                 placeholder="Correo (opcional)"
@@ -46,13 +49,18 @@
             </div>
           </div>
           <div>
-            <q-btn label="Submit" type="submit" color="primary" />
             <q-btn
-              label="Reset"
+              label="Cancelar"
               type="reset"
-              color="primary"
+              color="negative"
               flat
-              class="q-ml-sm"
+              class="q-my-xs full-width"
+            />
+            <q-btn
+              class="q-my-xs full-width"
+              label="Enviar"
+              type="submit"
+              color="secondary"
             />
           </div>
         </q-form>

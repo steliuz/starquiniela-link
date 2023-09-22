@@ -93,7 +93,7 @@ const onSave = async (player: object) => {
                 <div class="q-mt-sm box-button">
                   <q-btn
                     class="full-width"
-                    color="primary"
+                    color="secondary"
                     label="JUGAR"
                     @click="openDialog"
                   />
