@@ -256,7 +256,7 @@ const statusPaid = async (value: PaidBet) => {
               </q-item-section>
             </q-item>
 
-            <q-separator spaced inset />
+            <q-separator dark inset />
           </div>
         </q-list>
       </div>

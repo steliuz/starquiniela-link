@@ -40,26 +40,22 @@ const emitStatus = (value: Math) => {
     <q-card-section>
       <div
         class="box-matchs"
-        :class="auth.role_id != 4 ? 'box-matchs-player' : 'box-matchs'"
+        :class="player ? 'box-matchs-player' : 'box-matchs'"
       >
         <div class="index-number"></div>
-        <div></div>
+        <div class="bg-orange-5"></div>
         <div class="box-result q-mb-xs">
           <p class="text-center text-weight-bold q-mb-none" v-if="!player">
             Pe
           </p>
-          <p class="text-center text-weight-bold q-mb-none">Re</p>
+          <p class="text-center text-weight-bold q-mb-none">R</p>
           <p class="text-center text-weight-bold q-mb-none" v-if="player">Pr</p>
         </div>
       </div>
 
       <div
         class="box-matchs"
-        :class="
-          auth.role_id == undefined || auth.role_id != 4
-            ? 'box-matchs-player'
-            : 'box-matchs'
-        "
+        :class="player ? 'box-matchs-player' : 'box-matchs'"
         v-for="(match, index) in dataMatch"
         :key="match.id ?? 0"
       >
@@ -90,10 +86,7 @@ const emitStatus = (value: Math) => {
             <p>{{ match.team2?.name }}</p>
           </div>
         </div>
-        <div
-          class="box-result"
-          :class="player ? 'border-right__box-result' : ''"
-        >
+        <div class="box-result" :class="player ? '' : 'border-r'">
           <div class="" v-if="showInputsResult == index && !player">
             <q-input
               v-model="match.penaltyTeam1"
@@ -116,7 +109,7 @@ const emitStatus = (value: Math) => {
               class="hide-number-arrows"
             />
           </div>
-          <div v-if="!player && showInputsResult != index">
+          <div class="" v-if="!player && showInputsResult != index">
             <p>{{ match.penaltyTeam1 || '-' }}</p>
             <p>{{ match.penaltyTeam2 || '-' }}</p>
           </div>
@@ -142,7 +135,7 @@ const emitStatus = (value: Math) => {
               class="hide-number-arrows"
             />
           </div>
-          <div v-else>
+          <div class="" v-else>
             <p>
               {{ match.goalsTeam1 || '-' }}
               <span
@@ -358,17 +351,17 @@ const emitStatus = (value: Math) => {
       }
     }
 
-    .border-right__box-result {
+    .border-r {
       border-right: 1px solid #e6e6e6;
     }
 
     .box-result {
       display: grid;
-      grid-template-columns: repeat(2, 50px);
+      grid-template-columns: repeat(2, 1fr);
       align-items: center;
       gap: 5px;
       place-items: center;
-      padding-right: 15px;
+      // padding-right: 15px;
 
       .mt-negative {
         margin-top: -30px;
@@ -386,10 +379,10 @@ const emitStatus = (value: Math) => {
   }
 
   .box-matchs-player {
-    grid-template-columns: 0.3fr repeat(1, minmax(100px, 2.9fr)) 50px 50px;
+    grid-template-columns: 0.3fr repeat(1, minmax(100px, 2.7fr)) 100px;
 
     @media screen and (max-width: 500px) {
-      grid-template-columns: repeat(1, minmax(100px, 2.9fr)) 50px 50px;
+      grid-template-columns: repeat(1, minmax(100px, 2.7fr)) 100px;
     }
   }
 }
