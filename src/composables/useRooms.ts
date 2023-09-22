@@ -98,15 +98,15 @@ export function useRooms() {
   const handlerTab = (value: string) => {
     tab.value = value;
     if (value == '1') {
-      getReferRoom();
+      getReferRoom({ rowsPerPage: 20 });
     } else {
-      getRoomActive();
+      getRoomActive({ rowsPerPage: 20 });
     }
   };
 
   const buyRoom = async (id: number) => {
     await postData(`rooms/${id}/buy`).then(() => {
-      getRoomActive();
+      getRoomActive({ rowsPerPage: 20 });
     });
   };
   return {

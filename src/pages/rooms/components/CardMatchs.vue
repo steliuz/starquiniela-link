@@ -45,13 +45,11 @@ const emitStatus = (value: Math) => {
         <div class="index-number"></div>
         <div></div>
         <div class="box-result q-mb-xs">
-          <p class="text-center text-weight-bold q-mb-none">R</p>
-          <p
-            class="text-center text-weight-bold q-mb-none"
-            v-if="auth.role_id == undefined || auth.role_id == 4"
-          >
-            P
+          <p class="text-center text-weight-bold q-mb-none" v-if="!player">
+            Pe
           </p>
+          <p class="text-center text-weight-bold q-mb-none">Re</p>
+          <p class="text-center text-weight-bold q-mb-none" v-if="player">Pr</p>
         </div>
       </div>
 
@@ -96,6 +94,32 @@ const emitStatus = (value: Math) => {
           class="box-result"
           :class="player ? 'border-right__box-result' : ''"
         >
+          <div class="" v-if="showInputsResult == index && !player">
+            <q-input
+              v-model="match.penaltyTeam1"
+              type="number"
+              style="max-width: 50px"
+              input-class="text-white text-center"
+              dense
+              dark
+              filled
+              class="q-pb-xs hide-number-arrows"
+            />
+            <q-input
+              v-model="match.penaltyTeam2"
+              type="number"
+              style="max-width: 50px"
+              input-class="text-white text-center"
+              dense
+              dark
+              filled
+              class="hide-number-arrows"
+            />
+          </div>
+          <div v-if="!player && showInputsResult != index">
+            <p>{{ match.penaltyTeam1 || '-' }}</p>
+            <p>{{ match.penaltyTeam2 || '-' }}</p>
+          </div>
           <div class="" v-if="showInputsResult == index">
             <q-input
               v-model="match.goalsTeam1"
@@ -119,13 +143,31 @@ const emitStatus = (value: Math) => {
             />
           </div>
           <div v-else>
-            <p>{{ match.goalsTeam1 || '-' }}</p>
-            <p>{{ match.goalsTeam2 || '-' }}</p>
+            <p>
+              {{ match.goalsTeam1 || '-' }}
+              <span
+                v-if="
+                  match.penaltyTeam1 &&
+                  (auth.role_id == undefined || auth.role_id == 4)
+                "
+                >( {{ match.penaltyTeam1 }} )</span
+              >
+            </p>
+            <p>
+              {{ match.goalsTeam2 || '-' }}
+              <span
+                v-if="
+                  match.penaltyTeam2 &&
+                  (auth.role_id == undefined || auth.role_id == 4)
+                "
+                >( {{ match.penaltyTeam2 }} )</span
+              >
+            </p>
           </div>
-          <template v-if="auth.role_id == undefined || auth.role_id == 4">
+          <template v-if="player">
             <div class="" v-if="showInputsResult == index || player">
               <q-input
-                v-model="match.penaltyTeam1"
+                v-model="match.predictTeam1"
                 type="number"
                 color="secondary"
                 dark
@@ -138,7 +180,7 @@ const emitStatus = (value: Math) => {
                 :min="0"
               />
               <q-input
-                v-model="match.penaltyTeam2"
+                v-model="match.predictTeam2"
                 type="number"
                 color="secondary"
                 input-class="text-white text-center"
@@ -150,17 +192,6 @@ const emitStatus = (value: Math) => {
                 :disable="match.status == 0 && player"
                 :min="0"
               />
-            </div>
-          </template>
-
-          <template v-else>
-            <div v-if="auth.role_id == undefined || auth.role_id == 4">
-              <p class="text-red-5">
-                {{ match.penaltyTeam1 ? match.penaltyTeam1 : '-' }}
-              </p>
-              <p class="text-red-5">
-                {{ match.penaltyTeam2 ? match.penaltyTeam2 : '-' }}
-              </p>
             </div>
           </template>
         </div>

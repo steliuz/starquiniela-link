@@ -17,7 +17,7 @@ getRoom(`${router.params.code}`);
 const onSave = async (player: object) => {
   let check = false;
   room.value.matches?.map((match) => {
-    if (match.penaltyTeam1 == null || match.penaltyTeam2 == null) check = true;
+    if (match.predictTeam1 == null || match.predictTeam2 == null) check = true;
   });
 
   if (check) {
@@ -31,8 +31,8 @@ const onSave = async (player: object) => {
         bets: room.value.matches?.map((match) => {
           return {
             match_id: match.id,
-            goalsTeam1: match.penaltyTeam1,
-            goalsTeam2: match.penaltyTeam2,
+            goalsTeam1: match.predictTeam1,
+            goalsTeam2: match.predictTeam2,
           };
         }),
       };
@@ -40,8 +40,8 @@ const onSave = async (player: object) => {
         room.value.matches = room.value.matches?.map((match) => {
           return {
             ...match,
-            penaltyTeam1: '',
-            penaltyTeam2: '',
+            predictTeam1: '',
+            predictTeam2: '',
           };
         });
       });

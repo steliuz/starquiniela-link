@@ -9,6 +9,8 @@ export interface Match {
   goalsTeam2?: number | string;
   penaltyTeam1?: number | string;
   penaltyTeam2?: number | string;
+  predictTeam1?: number | string;
+  predictTeam2?: number | string;
   status: boolean | number;
   fase?: number;
 }
