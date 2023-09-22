@@ -71,6 +71,7 @@ const clipboard = (row: any) => {
             :loading="loading"
             title="Mis Quinielas"
             :editBtnHidden="true"
+            :delBtnHidden="true"
           >
             <template v-slot:customName="scope">
               <td>
