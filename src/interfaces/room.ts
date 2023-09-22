@@ -1,5 +1,5 @@
 import { Match } from 'src/interfaces/match';
-import { User } from './user';
+import { Player } from './user';
 export interface Room {
   name: string;
   type: number;
@@ -10,7 +10,7 @@ export interface Room {
   // fase: boolean;
   id?: number;
   matches?: Array<Match> | null;
-  players?: Array<User> | null;
+  players?: Array<Player> | null;
 }
 
 export interface RoomUser {

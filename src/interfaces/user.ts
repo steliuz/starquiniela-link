@@ -20,4 +20,5 @@ export interface User {
 export interface Player extends User {
   bets?: Bet[];
   rooms?: RoomUser[];
+  user?: User;
 }

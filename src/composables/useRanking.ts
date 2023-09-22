@@ -3,7 +3,8 @@ import { Room } from 'src/interfaces/room';
 
 import { getData } from 'src/services/communServices';
 import { Match } from 'src/interfaces/match';
-import { Player } from 'src/interfaces/user';
+// import { Player } from 'src/interfaces/user';
+import { Bet } from 'src/interfaces/bet';
 
 export function useRanking(roomID: number | string | null) {
   const matches: Ref<Match[]> = ref([
@@ -13,7 +14,7 @@ export function useRanking(roomID: number | string | null) {
       status: true,
     },
   ]);
-  const players: Ref<Player[]> = ref([]);
+  const players: Ref<Bet[]> = ref([]);
   const room: Ref<Room> = ref({
     name: '',
     category_room_id: 1,

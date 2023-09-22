@@ -1,4 +1,5 @@
 import { Match } from './match';
+import { User } from './user';
 
 export interface Bet {
   id?: number;
@@ -11,6 +12,8 @@ export interface Bet {
   paid: number;
   matches?: Match[];
   length?: number;
+  user?: User;
+  ticket_factura?: string;
 }
 
 export interface PaidBet extends Bet {

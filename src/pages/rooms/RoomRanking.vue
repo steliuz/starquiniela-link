@@ -104,28 +104,32 @@
           <tbody v-if="typeRoom">
             <tr v-for="(player, rowIndex) in players" :key="rowIndex">
               <td class="name1 text-name-player">
-                <div class="">{{ player.name }}</div>
+                <div class="">
+                  {{ player?.user?.name || '' }}
+                  <br />
+                  {{ `(${player.ticket_factura})` }}
+                </div>
               </td>
               <td class="name2 bg-orange-6 text-black text-bold">
                 <div class="flex flex-center">
-                  {{ getTotalPoint(player.id) }}
+                  {{ getTotalPoint(player.user_id) }}
                 </div>
               </td>
 
               <template v-for="match in matches" :key="match.id">
                 <td class="roomNormal r">
                   <div class="text-center">
-                    {{ getPoint(match.id, player.id) }}
+                    {{ getPoint(match.id, player.user_id, player.index) }}
                   </div>
                 </td>
                 <td class="roomNormal">
                   <p class="q-mb-none text-bold text-center">
-                    {{ getBet(match.id, player.id) }}
+                    {{ getBet(match.id, player.user_id, player.index) }}
                   </p>
                 </td>
                 <td class="roomNormal">
                   <p class="q-mb-none text-bold text-center">
-                    {{ getBet2(match.id, player.id) }}
+                    {{ getBet2(match.id, player.user_id, player.index) }}
                   </p>
                 </td>
               </template>
@@ -134,16 +138,22 @@
           <tbody v-else>
             <tr v-for="(player, rowIndex) in players" :key="rowIndex">
               <td class="name1">
-                <div class="text-name-player">{{ player.name }}</div>
+                <div class="text-name-player">
+                  {{ player?.user?.name || '' }}
+                  <br />
+                  {{ `(${player.ticket_factura})` }}
+                </div>
               </td>
               <td class="name2 bg-orange-6 text-black text-bold">
                 <div class="flex flex-center">9</div>
               </td>
               <template v-for="(match, index) in matches" :key="index">
-                <td class="lev">{{ getPoint(match.id, player.id) }}</td>
+                <td class="lev">
+                  {{ getPoint(match.id, player.user_id, player.index) }}
+                </td>
                 <td class="lev">
                   <p class="q-mb-none text-bold text-center">
-                    {{ getLEV(match.id, player.id) }}
+                    {{ getLEV(match.id, player.user_id, player.index) }}
                   </p>
                 </td>
               </template>
@@ -183,49 +193,61 @@ onMounted(() => {
 
 const getPoint = (
   matchID: number | undefined,
-  playerID: number | undefined
+  playerID: number | undefined,
+  index: number
 ) => {
-  let player = players.value.find((player) => {
-    return player.bets?.find((bet) => {
-      return bet.match_id == matchID && playerID == player.id;
-    });
+  let player = room.value.players?.find((player) => {
+    return playerID == player.id;
   }, {});
+
   let bet = player?.bets?.find((bet) => {
-    return bet.match_id == matchID;
+    return bet.match_id == matchID && bet.index == index;
   }, {});
+
   return bet?.points ? bet.points : 0;
 };
-const getBet = (matchID: number | undefined, playerID: number | undefined) => {
-  let player = players.value.find((player) => {
-    return player.bets?.find((bet) => {
-      return bet.match_id == matchID && playerID == player.id;
-    });
+const getBet = (
+  matchID: number | undefined,
+  playerID: number | undefined,
+  index: number
+) => {
+  let player = room.value.players?.find((player) => {
+    return playerID == player.id;
   }, {});
+
   let bet = player?.bets?.find((bet) => {
-    return bet.match_id == matchID;
+    return bet.match_id == matchID && bet.index == index;
   }, {});
-  return bet?.goalsTeam1 ? bet.goalsTeam1 : '';
+
+  return bet?.goalsTeam1 != null ? bet.goalsTeam1 : '';
 };
-const getBet2 = (matchID: number | undefined, playerID: number | undefined) => {
-  let player = players.value.find((player) => {
-    return player.bets?.find((bet) => {
-      return bet.match_id == matchID && playerID == player.id;
-    });
+const getBet2 = (
+  matchID: number | undefined,
+  playerID: number | undefined,
+  index: number
+) => {
+  let player = room.value.players?.find((player) => {
+    return playerID == player.id;
   }, {});
+
   let bet = player?.bets?.find((bet) => {
-    return bet.match_id == matchID;
+    return bet.match_id == matchID && bet.index == index;
   }, {});
-  return bet?.goalsTeam2 ? bet.goalsTeam2 : '';
+
+  return bet?.goalsTeam2 != null ? bet.goalsTeam2 : '';
 };
 
-const getLEV = (matchID: number | undefined, playerID: number | undefined) => {
-  let player = players.value.find((player) => {
-    return player.bets?.find((bet) => {
-      return bet.match_id == matchID && playerID == player.id;
-    });
+const getLEV = (
+  matchID: number | undefined,
+  playerID: number | undefined,
+  index: number
+) => {
+  let player = room.value.players?.find((player) => {
+    return playerID == player.id;
   }, {});
+
   let bet = player?.bets?.find((bet) => {
-    return bet.match_id == matchID;
+    return bet.match_id == matchID && bet.index == index;
   }, {});
 
   let lev;
@@ -250,8 +272,8 @@ const getLEV = (matchID: number | undefined, playerID: number | undefined) => {
 };
 
 const getTotalPoint = (playerID: number | undefined) => {
-  let player = players.value.find((player) => {
-    return player.id == playerID;
+  let player = room.value.players?.find((player) => {
+    return playerID == player.id;
   }, {});
 
   let total = player?.bets?.reduce((total, bet) => {
