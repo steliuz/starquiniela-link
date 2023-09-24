@@ -20,7 +20,7 @@ const onSubmit = () => {
   if (formTeam.value.image) formData.set('image', formTeam.value.image);
   if (formTeam.value.id) {
     formData.set('id', formTeam.value.id.toString());
-    emit('putTeam', formData);
+    emit('putTeam', formData, formTeam.value.id);
   } else {
     emit('postTeam', formData);
   }
@@ -101,7 +101,7 @@ watch(
                     <q-btn
                       unelevated
                       class="full-width"
-                      label="crear"
+                      :label="formTeam.id ? 'Guardar' : 'Crear'"
                       type="submit"
                       color="primary"
                     />

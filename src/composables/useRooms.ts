@@ -53,7 +53,6 @@ export function useRooms() {
     await postData('rooms', value).then(() => {
       dialog.value = false;
       onReset();
-      getRoom();
     });
   };
 
@@ -65,13 +64,12 @@ export function useRooms() {
     await putData('rooms/' + value.id, value).then(() => {
       dialog.value = false;
       onReset();
-      getRoom();
     });
   };
 
   const deleteRoom = async (id: number) => {
     await deleteData('rooms/' + id).then(() => {
-      getRoom();
+      onReset();
     });
   };
 
@@ -94,6 +92,7 @@ export function useRooms() {
       // global: false,
       // fase: false,
     };
+    getRoom({ rowsPerPage: 20 });
   };
   const handlerTab = (value: string) => {
     tab.value = value;

@@ -35,7 +35,6 @@ export function useAdvertise() {
     await postData('advertises', value).then(() => {
       dialog.value = false;
       onReset();
-      getAdvertise();
     });
   };
 
@@ -44,17 +43,16 @@ export function useAdvertise() {
     dialog.value = true;
   };
 
-  const putAdvertise = async (value: Advertise) => {
-    await putData('advertises/' + value.id, value).then(() => {
+  const putAdvertise = async (value: Advertise, id: number) => {
+    await putData('advertises/' + id, value).then(() => {
       dialog.value = false;
       onReset();
-      getAdvertise();
     });
   };
 
   const deleteAdvertise = async (id: number) => {
     await deleteData('advertises/' + id).then(() => {
-      getAdvertise();
+      onReset();
     });
   };
 
@@ -67,6 +65,7 @@ export function useAdvertise() {
       status: true,
     };
     dialog.value = false;
+    getAdvertise({ rowsPerPage: 20 });
   };
 
   return {

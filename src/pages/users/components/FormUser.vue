@@ -42,11 +42,11 @@ watch(
   (val) => {
     formUser.value = val;
     tempUser = Object.assign({}, val);
-    if (val.email) {
-      let email = val.email.split('@');
-      formUser.value.emailUser = email[0];
-      formUser.value.prefix = '@' + email[1];
-    }
+    // if (val.email) {
+    //   let email = val.email.split('@');
+    //   formUser.value.emailUser = email[0];
+    //   formUser.value.prefix = '@' + email[1];
+    // }
   }
 );
 </script>
@@ -58,24 +58,21 @@ watch(
       style="width: 80%; max-width: 900px; height: 85%"
     >
       <q-card-section class=" ">
-        <q-form
-          class="user_dialog_form full-width"
-          @submit="onSubmit"
-          @reset="onReset"
-        >
+        <q-form class="user_dialog_form full-width" @submit="onSubmit">
           <div class="title">
             <p class="text-h5 text-white">
               <!-- <i class="fa-solid fa-user-plus q-mr-xs text-white"></i> -->
               Crear nuevo usuario
             </p>
           </div>
-          <div class="title q-pl-sm">
+          <!-- <div class="title q-pl-sm">
             <p class="q-mb-none text-h6 text-white">
               <i class="fa-solid fa-envelope q-mr-xs text-secondary"></i>
               Correo
             </p>
-          </div>
-          <div>
+          </div> -->
+
+          <!-- <div>
             <BaseInput
               label="Subfijo correo"
               :disable="type_disabled"
@@ -92,8 +89,8 @@ watch(
                 />
               </template>
             </BaseInput>
-          </div>
-          <div>
+          </div> -->
+          <!-- <div>
             <BaseInput
               label="Dato de correo"
               v-model="formUser.emailUser"
@@ -106,7 +103,7 @@ watch(
                 </span>
               </template>
             </BaseInput>
-          </div>
+          </div> -->
           <div class="title q-pl-sm">
             <p class="q-mb-none text-h6 text-white">
               <i class="fa-solid fa-user q-mr-xs text-secondary"></i>
@@ -122,12 +119,22 @@ watch(
             />
           </div>
           <div>
+            <BaseInput
+              label="Correo electrónico"
+              v-model="formUser.email"
+              type="email"
+              required
+            >
+            </BaseInput>
+          </div>
+          <div>
             <BaseInput label="Teléfono" v-model="formUser.phone" type="text">
               <template v-slot:span>
                 <span class="text-caption text-secondary">(opcional)</span>
               </template>
             </BaseInput>
           </div>
+          <div></div>
           <div>
             <BaseInput
               label="Contraseña"
@@ -178,7 +185,8 @@ watch(
             class="q-mx-xs"
             label="cancelar"
             color="negative"
-            type="reset"
+            type="button"
+            v-close-popup
           />
           <q-btn
             class="q-mx-xs"

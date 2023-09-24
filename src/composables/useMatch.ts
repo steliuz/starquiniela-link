@@ -35,7 +35,6 @@ export function useMatch(roomID: any) {
     await postData('matches', value).then(() => {
       dialog.value = false;
       onReset();
-      // getMatch();
     });
   };
 
@@ -48,13 +47,12 @@ export function useMatch(roomID: any) {
     await putData('matches/' + match.id, match).then(() => {
       dialog.value = false;
       onReset();
-      getMatch();
     });
   };
 
   const deleteMatch = async (id: number | null | undefined | string) => {
     await deleteData('matches/' + id).then(() => {
-      getMatch();
+      onReset();
     });
   };
 
@@ -65,6 +63,7 @@ export function useMatch(roomID: any) {
       status: true,
     };
     dialog.value = false;
+    getMatch({ rowsPerPage: 20 });
   };
 
   const statusMatch = async (match: Match) => {

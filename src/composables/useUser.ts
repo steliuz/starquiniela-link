@@ -20,8 +20,9 @@ export function useUser() {
   });
   const dialog = ref(false);
   const user: Ref<User> = ref({
-    prefix: auth.value.prefix,
-    emailUser: '',
+    // prefix: auth.value.prefix,
+    // emailUser: '',
+    email: '',
     name: '',
     password: '',
     password_confirmation: '',
@@ -41,12 +42,11 @@ export function useUser() {
 
   const postUser = async (value: User) => {
     value.referral_id = auth.value.id;
-    value.email = value.emailUser + value.prefix;
+    // value.email = value.emailUser + value.prefix;
     if (auth.value.role_id == 3) value.role_id = 4;
     if (auth.value.role_id == 2) value.role_id = 3;
     await postData('register', value).then(() => {
       dialog.value = false;
-      getUser();
       onReset();
     });
   };
@@ -61,21 +61,21 @@ export function useUser() {
     if (auth.value.role_id == 2) value.role_id = 3;
     await putData('user/update', value).then(() => {
       dialog.value = false;
-      getUser();
       onReset();
     });
   };
 
   const deleteUser = async (id: number) => {
     await deleteData('user/' + id).then(() => {
-      getUser();
+      onReset();
     });
   };
 
   const onReset = () => {
     user.value = {
-      prefix: auth.value.prefix,
-      emailUser: '',
+      // prefix: auth.value.prefix,
+      // emailUser: '',
+      email: '',
       name: '',
       password: '',
       password_confirmation: '',
@@ -85,6 +85,7 @@ export function useUser() {
       referral_id: auth.value.id,
     };
     dialog.value = false;
+    getUser({ rowsPerPage: 20 });
   };
 
   const statusUser = async (value: User) => {

@@ -13,7 +13,7 @@
 
         <q-toolbar-title> {{ role }} </q-toolbar-title>
 
-        <div></div>
+        <div>Créditos: {{ auth.credits }}</div>
       </q-toolbar>
     </q-header>
 

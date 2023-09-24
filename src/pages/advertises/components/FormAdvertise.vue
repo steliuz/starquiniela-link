@@ -26,7 +26,7 @@ const onSubmit = () => {
     formData.set('image', formAdvertise.value.image);
   if (formAdvertise.value.id) {
     formData.set('id', formAdvertise.value.id.toString());
-    emit('putAdvertise', formData);
+    emit('putAdvertise', formData, formAdvertise.value.id);
   } else {
     emit('postAdvertise', formData);
   }

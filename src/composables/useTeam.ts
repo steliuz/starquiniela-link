@@ -34,7 +34,6 @@ export function useTeam() {
     await postData('teams', value).then(() => {
       dialog.value = false;
       onReset();
-      getTeam();
     });
   };
 
@@ -47,13 +46,12 @@ export function useTeam() {
     await putData('teams/' + id, value).then(() => {
       dialog.value = false;
       onReset();
-      getTeam();
     });
   };
 
   const deleteTeam = async (id: number) => {
     await deleteData('teams/' + id).then(() => {
-      getTeam();
+      onReset();
     });
   };
 
@@ -71,6 +69,7 @@ export function useTeam() {
       image: '',
       id: null,
     };
+    getTeam({ rowsPerPage: 20 });
   };
 
   return {

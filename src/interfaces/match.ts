@@ -1,7 +1,7 @@
 import { Team } from './team';
 
 export interface Match {
-  id?: number | undefined;
+  id?: number | undefined | null;
   name: string;
   team1?: Team | null;
   team2?: Team | null;

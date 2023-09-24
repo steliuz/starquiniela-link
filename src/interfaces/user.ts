@@ -2,8 +2,9 @@ import { Bet } from './bet';
 import { RoomUser } from './room';
 
 export interface User {
-  prefix: string;
-  email?: string;
+  // prefix: string;
+  // emailUser: string;
+  email: string;
   name: string;
   password?: string;
   password_confirmation?: string;
@@ -14,7 +15,6 @@ export interface User {
   id?: number;
   credits?: number;
   status?: boolean;
-  emailUser: string;
 }
 
 export interface Player extends User {
