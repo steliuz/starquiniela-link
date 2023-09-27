@@ -71,7 +71,6 @@ const clipboard = (row: any) => {
             :loading="loading"
             title="Mis Quinielas"
             :editBtnHidden="true"
-            :delBtnHidden="true"
           >
             <template v-slot:customName="scope">
               <td>
@@ -121,7 +120,7 @@ const clipboard = (row: any) => {
                 <q-item-section>
                   <div class="flex">
                     <i class="q-mr-md fa-solid fa-shield text-red-5"></i>
-                    <span>Compartir</span>
+                    <span>Link de Quiniela</span>
                   </div>
                 </q-item-section>
               </q-item>
@@ -180,6 +179,7 @@ const clipboard = (row: any) => {
                       <div class="col-12">
                         <p class="ellipsis-2 text-center">
                           ¿Está seguro de que desea comprar esta quiniela?
+                          (costo: {{ scope.props.row.credit }})
                         </p>
                       </div>
                       <div class="col-6 text-center">

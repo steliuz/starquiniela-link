@@ -1,10 +1,11 @@
 <script setup lang="ts">
-// import { ref } from 'vue';
+import { ref } from 'vue';
 import cardMatchsComponents from '../components/CardMatchs.vue';
 import formPlayer from '../components/formPlayer.vue';
 import { useRoomPlayer } from 'src/composables/useRoomPlayer';
 import { useRoute } from 'vue-router';
-// import { data } from 'pages/rooms/components/dataList';
+import { vue_url } from 'src/boot/axios';
+import { copyToClipboard } from 'quasar';
 
 const openDialog = () => {
   dialog.value = true;
@@ -13,7 +14,7 @@ const { getRoom, room, registerPlayer, postBet, dialog } = useRoomPlayer();
 
 const router = useRoute();
 getRoom(`${router.params.code}`);
-
+const dialogSuccess = ref(false);
 const onSave = async (player: object) => {
   let check = false;
   room.value.matches?.map((match) => {
@@ -44,9 +45,22 @@ const onSave = async (player: object) => {
             predictTeam2: '',
           };
         });
+        dialogSuccess.value = true;
       });
     }
   );
+};
+const clipboard = () => {
+  let url = `${vue_url}/rooms/${room.value.room_user?.cod_compartir}`;
+  copyToClipboard(url)
+    .then(() => {
+      // success!
+      console.log('success');
+    })
+    .catch(() => {
+      // fail
+      console.log('fail');
+    });
 };
 </script>
 
@@ -75,6 +89,7 @@ const onSave = async (player: object) => {
                 <p class="text-h5 text-white text-left">
                   {{ room.name || '' }}
                 </p>
+                <q-btn color="primary" flat icon="share" @click="clipboard" />
                 <q-icon
                   class="cursor-pointer"
                   size="sm"

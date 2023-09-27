@@ -6,7 +6,6 @@ import { file_url } from 'src/boot/axios';
 import { useAuthStore } from 'src/stores/auth';
 
 const { auth } = useAuthStore();
-console.log('auth: ', auth.role_id);
 
 const showInputsResult: Ref<null | number> = ref(null);
 defineProps(['dataMatch', 'player']);

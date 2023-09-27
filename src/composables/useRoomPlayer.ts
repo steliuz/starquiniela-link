@@ -29,7 +29,7 @@ export function useRoomPlayer() {
 
   const postBet = async (value: object) => {
     return await postData(
-      'players/bets',
+      'v2/players/bets',
       value,
       null,
       'Ticket enviado Exitosamente'

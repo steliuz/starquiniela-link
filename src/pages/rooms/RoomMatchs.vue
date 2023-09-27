@@ -5,13 +5,14 @@ import { useRooms } from 'src/composables/useRooms';
 import { useBet } from 'src/composables/useBet';
 import { Team } from 'src/interfaces/team';
 import { useMatch } from 'src/composables/useMatch';
-import { file_url } from 'src/boot/axios';
+import { file_url, vue_url } from 'src/boot/axios';
 import { Match } from 'src/interfaces/match';
 import { useAuthStore } from 'src/stores/auth';
 import cardMatchsComponents from './components/CardMatchs.vue';
 import dialogTickets from './components/DialogTickets.vue';
 import { Player } from 'src/interfaces/user';
 import { PaidBet } from 'src/interfaces/bet';
+import { copyToClipboard } from 'quasar';
 
 const confirmTickets = ref(false);
 const infoPlayer = ref();
@@ -88,6 +89,19 @@ const statusPaid = async (value: PaidBet) => {
   value.room_id = roomID;
   await statusPaidBet(value);
 };
+
+const clipboard = () => {
+  let url = `${vue_url}/rooms/${room.value.room_user?.cod_compartir}`;
+  copyToClipboard(url)
+    .then(() => {
+      // success!
+      console.log('success');
+    })
+    .catch(() => {
+      // fail
+      console.log('fail');
+    });
+};
 </script>
 <template>
   <section class="q-mt-md q-px-sm">
@@ -101,7 +115,7 @@ const statusPaid = async (value: PaidBet) => {
       />
     </div>
     <div class="row q-mb-md">
-      <div class="col-12 full-width" v-if="auth.role_id === 1">
+      <div class="col-12 full-width" v-if="auth.role_id == 1">
         <q-form class="box-form" @submit="onSubmit">
           <div class="row">
             <div class="col-6 col-md-5 q-px-sm">
@@ -208,6 +222,7 @@ const statusPaid = async (value: PaidBet) => {
           <p class="q-mb-none text-body2 text-weight-bold ellipsis">
             {{ room.name || '' }}
           </p>
+          <q-btn color="primary" flat icon="share" @click="clipboard" />
           <q-btn
             flat
             color="orange-5"

@@ -11,6 +11,7 @@ export interface Room {
   id?: number;
   matches?: Array<Match> | null;
   players?: Array<Player> | null;
+  room_user?: RoomUser;
 }
 
 export interface RoomUser {

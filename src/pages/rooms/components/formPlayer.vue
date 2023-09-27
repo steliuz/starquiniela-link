@@ -55,6 +55,7 @@
               color="negative"
               flat
               class="q-my-xs full-width"
+              v-close-popup
             />
             <q-btn
               class="q-my-xs full-width"
