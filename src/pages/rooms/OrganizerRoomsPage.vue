@@ -168,36 +168,46 @@ const clipboard = (row: any) => {
             <template v-slot:opt="scope">
               <q-item clickable ref="popup">
                 <q-item-section>
-                  <div class="flex">
-                    <i class="q-mr-md fa-solid fa-shield text-red-5"></i>
-                    <span>Comprar</span>
+                  <div class="flex items-center">
+                    <i class="fa-solid fa-cart-shopping text-secondary"></i>
+                    <span class="q-ml-sm">Comprar</span>
                   </div>
                 </q-item-section>
                 <q-popup-proxy>
-                  <q-banner>
+                  <q-banner class="bg-header-dark q-pa-lg">
                     <div class="row">
                       <div class="col-12">
-                        <p class="ellipsis-2 text-center">
+                        <p class="ellipsis-2 text-center text-h6">
                           ¿Está seguro de que desea comprar esta quiniela?
-                          (costo: {{ scope.props.row.credit }})
+                          (costo: )
+                        </p>
+                        <p class="text-h5 text-center">
+                          Costo:
+                          <span class="text-warning"
+                            >{{ scope.props.row.credit }} Moneda</span
+                          >
                         </p>
                       </div>
-                      <div class="col-6 text-center">
-                        <div class="col-6 text-center">
-                          <q-btn
-                            flat
-                            color="grey-13"
-                            label="Cancelar"
-                            v-close-popup
-                          />
-                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6 text-center q-px-sm">
+                        <q-btn
+                          class="full-width"
+                          outline
+                          color="negative"
+                          label="Cancelar"
+                          v-close-popup
+                        />
                       </div>
-                      <q-btn
-                        color="secondary"
-                        label="Comprar"
-                        v-close-popup
-                        @click.stop.prevent="buyRoom(scope.props.row.id)"
-                      />
+                      <div class="col-6 text-center q-px-sm">
+                        <q-btn
+                          class="full-width"
+                          color="secondary"
+                          label="Comprar"
+                          v-close-popup
+                          @click.stop.prevent="buyRoom(scope.props.row.id)"
+                        />
+                      </div>
                     </div>
                   </q-banner>
                 </q-popup-proxy>

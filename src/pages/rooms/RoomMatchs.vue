@@ -5,14 +5,15 @@ import { useRooms } from 'src/composables/useRooms';
 import { useBet } from 'src/composables/useBet';
 import { Team } from 'src/interfaces/team';
 import { useMatch } from 'src/composables/useMatch';
-import { file_url, vue_url } from 'src/boot/axios';
+import { file_url } from 'src/boot/axios';
 import { Match } from 'src/interfaces/match';
 import { useAuthStore } from 'src/stores/auth';
 import cardMatchsComponents from './components/CardMatchs.vue';
 import dialogTickets from './components/DialogTickets.vue';
 import { Player } from 'src/interfaces/user';
 import { PaidBet } from 'src/interfaces/bet';
-import { copyToClipboard } from 'quasar';
+// import { copyToClipboard } from 'quasar';
+import sharedComponent from 'src/components/SharedComponent.vue';
 
 const confirmTickets = ref(false);
 const infoPlayer = ref();
@@ -90,18 +91,18 @@ const statusPaid = async (value: PaidBet) => {
   await statusPaidBet(value);
 };
 
-const clipboard = () => {
-  let url = `${vue_url}/rooms/${room.value.room_user?.cod_compartir}`;
-  copyToClipboard(url)
-    .then(() => {
-      // success!
-      console.log('success');
-    })
-    .catch(() => {
-      // fail
-      console.log('fail');
-    });
-};
+// const clipboard = () => {
+//   let url = `${vue_url}/rooms/${room.value.room_user?.cod_compartir}`;
+//   copyToClipboard(url)
+//     .then(() => {
+//       // success!
+//       console.log('success');
+//     })
+//     .catch(() => {
+//       // fail
+//       console.log('fail');
+//     });
+// };
 </script>
 <template>
   <section class="q-mt-md q-px-sm">
@@ -217,28 +218,38 @@ const clipboard = () => {
       </div>
     </div>
     <div class="row q-mt-xl">
-      <div class="col-12 col-md-6 offset-md-1 q-px-md-md">
+      <div
+        class=""
+        :class="
+          auth.role_id == 1
+            ? 'col-12'
+            : 'col-12 col-md-6 offset-md-1 q-px-md-md'
+        "
+      >
         <div class="name-quiniela">
           <p class="q-mb-none text-body2 text-weight-bold ellipsis">
             {{ room.name || '' }}
           </p>
-          <q-btn color="primary" flat icon="share" @click="clipboard" />
-          <q-btn
-            flat
-            color="orange-5"
-            @click="$router.push('/admin/rooms/ranking')"
-          >
-            <i class="fa-solid fa-trophy text-orange-5 fa-xl"></i>
-          </q-btn>
+          <div>
+            <sharedComponent :code="room.room_user?.cod_compartir" />
+            <q-btn
+              flat
+              color="orange-5"
+              @click="$router.push('/admin/rooms/ranking')"
+            >
+              <i class="fa-solid fa-trophy text-orange-5 fa-xl"></i>
+            </q-btn>
+          </div>
         </div>
         <cardMatchsComponents
+          v-if="room.matches?.length != 0"
           :dataMatch="room.matches"
           @emitSave="onSave"
           @emitStatus="onStatus"
           @emitDelete="onDelete"
         />
       </div>
-      <div class="col-12 col-md-4 q-px-md">
+      <div class="col-12 col-md-4 q-px-md" v-if="auth.role_id != 1">
         <div class="name-quiniela">
           <p class="q-mb-none q-pl-md text-body2 text-weight-bold ellipsis">
             Lista de jugadores

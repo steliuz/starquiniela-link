@@ -4,8 +4,8 @@ import cardMatchsComponents from '../components/CardMatchs.vue';
 import formPlayer from '../components/formPlayer.vue';
 import { useRoomPlayer } from 'src/composables/useRoomPlayer';
 import { useRoute } from 'vue-router';
-import { vue_url } from 'src/boot/axios';
-import { copyToClipboard } from 'quasar';
+import { handleMessages } from 'src/services/notifys';
+import sharedComponent from 'src/components/SharedComponent.vue';
 
 const openDialog = () => {
   dialog.value = true;
@@ -22,7 +22,12 @@ const onSave = async (player: object) => {
   });
 
   if (check) {
-    alert('llenar apuesta');
+    handleMessages({
+      message: 'Debes llenar todas las predicciones',
+      color: 'red-7',
+      icon: 'info',
+      position: 'center',
+    });
     return;
   }
   await registerPlayer({ ...player, cod_compartir: router.params.code }).then(
@@ -49,18 +54,6 @@ const onSave = async (player: object) => {
       });
     }
   );
-};
-const clipboard = () => {
-  let url = `${vue_url}/rooms/${room.value.room_user?.cod_compartir}`;
-  copyToClipboard(url)
-    .then(() => {
-      // success!
-      console.log('success');
-    })
-    .catch(() => {
-      // fail
-      console.log('fail');
-    });
 };
 </script>
 
@@ -89,18 +82,20 @@ const clipboard = () => {
                 <p class="text-h5 text-white text-left">
                   {{ room.name || '' }}
                 </p>
-                <q-btn color="primary" flat icon="share" @click="clipboard" />
-                <q-icon
-                  class="cursor-pointer"
-                  size="sm"
-                  name="fa-solid fa-trophy"
-                  color="warning"
-                />
+                <div>
+                  <sharedComponent :code="router.params.code" />
+                  <q-icon
+                    class="cursor-pointer q-ml-md"
+                    size="sm"
+                    name="fa-solid fa-trophy"
+                    color="warning"
+                  />
+                </div>
               </div>
               <div class="box-inside form">
                 <formPlayer v-model="dialog" @savePlayer="onSave" />
               </div>
-              <div class="box-inside rooms">
+              <div class="box-inside rooms" v-if="room.matches?.length != 0">
                 <cardMatchsComponents
                   :dataMatch="room.matches"
                   :player="true"

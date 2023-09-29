@@ -63,7 +63,7 @@ export function useMatch(roomID: any) {
       status: true,
     };
     dialog.value = false;
-    getMatch({ rowsPerPage: 20 });
+    getMatch({ room_id: roomID });
   };
 
   const statusMatch = async (match: Match) => {

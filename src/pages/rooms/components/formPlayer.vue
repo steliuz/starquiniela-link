@@ -35,16 +35,16 @@
           </div>
           <div class="row">
             <div class="col-12 q-pa-xs">
-              <!-- <p class="label-input">
-          Correo <span class="text-caption">(opcional)</span>
-        </p> -->
+              <p class="label-input">
+                Correo
+                <span class="text-caption text-negative">(opcional)</span>
+              </p>
               <q-input
                 v-model="formPlayer.email"
                 dense
                 dark
                 filled
                 type="text"
-                placeholder="Correo (opcional)"
               />
             </div>
           </div>
