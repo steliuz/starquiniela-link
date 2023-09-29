@@ -39,11 +39,17 @@ export function useRoomPlayer() {
     });
   };
 
+  const getTicketPdf = async (id: number) => {
+    const data = await getData(`v2/tickets/${id}/pdf`);
+    return data;
+  };
+
   return {
     room,
     dialog,
     getRoom,
     registerPlayer,
     postBet,
+    getTicketPdf,
   };
 }

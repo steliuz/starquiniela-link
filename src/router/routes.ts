@@ -18,6 +18,16 @@ const routes: RouteRecordRaw[] = [
     component: () => import('pages/rooms/player/RoomPlayer.vue'),
   },
   {
+    name: 'ticket-pdf',
+    path: '/ticket/:id/pdf',
+    component: () => import('pages/rooms/pdf/TicketPDF.vue'),
+  },
+  {
+    name: 'ticket-status',
+    path: '/invoices/:id/tickets/status',
+    component: () => import('pages/rooms/pdf/TicketPDF.vue'),
+  },
+  {
     path: '/admin',
     name: 'admin',
     redirect: '/admin/dashboard',

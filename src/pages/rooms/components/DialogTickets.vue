@@ -51,6 +51,17 @@
                       @update:model-value="emit('onPaid', item)"
                     />
                   </q-item-section>
+                  <q-separator spaced inset vertical dark />
+
+                  <q-item-section>
+                    <q-btn
+                      padding="2px 10px"
+                      flat
+                      color="red-5"
+                      icon="picture_as_pdf"
+                      @click="showPDF(item.id)"
+                    />
+                  </q-item-section>
                 </q-item>
                 <q-separator dark />
               </template>
@@ -73,8 +84,16 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+
 defineProps(['infoPlayer']);
 const emit = defineEmits(['onPaid']);
+
+const routes = useRouter();
+const showPDF = (id: number) => {
+  let route = routes.resolve(`/ticket/${id}/pdf`);
+  window.open(route.href, '_blank');
+};
 </script>
 
 <style scoped></style>
