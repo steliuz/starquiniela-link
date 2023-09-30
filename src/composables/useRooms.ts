@@ -79,8 +79,10 @@ export function useRooms() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getRoomById = async (id: any) => {
+    loading.value = true;
     await getData('rooms/' + id).then((resp) => {
       room.value = resp;
+      loading.value = false;
     });
   };
 

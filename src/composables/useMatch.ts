@@ -74,6 +74,10 @@ export function useMatch(roomID: any) {
     await putData('matches/result/' + match.id, match);
   };
 
+  const statusAllMatch = async (value: number) => {
+    await putData(`v2/rooms/${roomID}/status/all`, { status: value });
+  };
+
   return {
     postMatch,
     editMatch,
@@ -87,5 +91,6 @@ export function useMatch(roomID: any) {
     onReset,
     statusMatch,
     resultMatch,
+    statusAllMatch,
   };
 }

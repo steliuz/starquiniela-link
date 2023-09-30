@@ -109,8 +109,12 @@ const emitStatus = (value: Math) => {
             />
           </div>
           <div class="" v-if="!player && showInputsResult != index">
-            <p>{{ match.penaltyTeam1 || '-' }}</p>
-            <p>{{ match.penaltyTeam2 || '-' }}</p>
+            <p>
+              {{ match.penaltyTeam1 != null ? match.penaltyTeam1 : '-' }}
+            </p>
+            <p>
+              {{ match.penaltyTeam2 != null ? match.penaltyTeam2 : '-' }}
+            </p>
           </div>
           <div class="" v-if="showInputsResult == index">
             <q-input
@@ -136,7 +140,7 @@ const emitStatus = (value: Math) => {
           </div>
           <div class="" v-else>
             <p>
-              {{ match.goalsTeam1 || '-' }}
+              {{ match.goalsTeam1 != null ? match.goalsTeam1 : '-' }}
               <span
                 v-if="
                   match.penaltyTeam1 &&
@@ -146,7 +150,7 @@ const emitStatus = (value: Math) => {
               >
             </p>
             <p>
-              {{ match.goalsTeam2 || '-' }}
+              {{ match.goalsTeam2 != null ? match.goalsTeam2 : '-' }}
               <span
                 v-if="
                   match.penaltyTeam2 &&
@@ -219,12 +223,43 @@ const emitStatus = (value: Math) => {
                       </div>
                     </q-item-section>
                   </q-item>
-                  <q-item @click="emitDelete(match.id)" clickable v-close-popup>
+                  <q-item clickable>
                     <q-item-section>
                       <div class="flex">
                         <i class="q-mr-md fa-solid fa-trash text-red-5"></i>
                         <span>Eliminar</span>
                       </div>
+                      <q-popup-proxy>
+                        <q-banner>
+                          <div class="row">
+                            <div class="col-12">
+                              <p class="ellipsis-2 text-center text-h6">
+                                ¿Está seguro de eliminar esta predicción?
+                              </p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6 text-center q-px-sm">
+                              <q-btn
+                                class="full-width"
+                                outline
+                                color="negative"
+                                label="Cancelar"
+                                v-close-popup
+                              />
+                            </div>
+                            <div class="col-6 text-center q-px-sm">
+                              <q-btn
+                                class="full-width"
+                                color="secondary"
+                                label="Guardar"
+                                v-close-popup
+                                @click="emitDelete(match.id)"
+                              />
+                            </div>
+                          </div>
+                        </q-banner>
+                      </q-popup-proxy>
                     </q-item-section>
                   </q-item>
                   <q-separator spaced inset />

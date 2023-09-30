@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useTeam } from 'src/composables/useTeam';
 import { useRooms } from 'src/composables/useRooms';
 import { useBet } from 'src/composables/useBet';
@@ -19,14 +19,15 @@ const confirmTickets = ref(false);
 const infoPlayer = ref();
 
 const { room_id: roomID, auth } = useAuthStore();
-const { room, getRoomById } = useRooms();
+const { room, getRoomById, loading: loadingRoom } = useRooms();
 const { statusPaidBet } = useBet();
 const formMatch = ref({
   team1: null,
   team2: null,
 });
 const { selectTeams, optionsTeams, loading } = useTeam();
-const { postMatch, deleteMatch, statusMatch, resultMatch } = useMatch(roomID);
+const { postMatch, deleteMatch, statusMatch, resultMatch, statusAllMatch } =
+  useMatch(roomID);
 
 onMounted(async () => {
   if (auth.role_id === 1) await selectTeams();
@@ -89,20 +90,21 @@ async function onDelete(id: number | null | undefined | string) {
 const statusPaid = async (value: PaidBet) => {
   value.room_id = roomID;
   await statusPaidBet(value);
+  await getRoomById(roomID);
 };
 
-// const clipboard = () => {
-//   let url = `${vue_url}/rooms/${room.value.room_user?.cod_compartir}`;
-//   copyToClipboard(url)
-//     .then(() => {
-//       // success!
-//       console.log('success');
-//     })
-//     .catch(() => {
-//       // fail
-//       console.log('fail');
-//     });
-// };
+const statusAll = computed(() => {
+  let check = false;
+  room.value.matches?.map((match) => {
+    if (match.status == 0) check = true;
+  });
+  return check;
+});
+
+const updateStatusAll = async () => {
+  await statusAllMatch(statusAll.value ? 1 : 0);
+  await getRoomById(roomID);
+};
 </script>
 <template>
   <section class="q-mt-md q-px-sm">
@@ -230,6 +232,10 @@ const statusPaid = async (value: PaidBet) => {
           <p class="q-mb-none text-body2 text-weight-bold ellipsis">
             {{ room.name || '' }}
           </p>
+          <p v-if="auth.role_id == 3">
+            {{ room.count_player || 0 }} /
+            {{ room.room_user?.limit_player ?? '--' }}
+          </p>
           <div>
             <sharedComponent :code="room.room_user?.cod_compartir" />
             <q-btn
@@ -239,6 +245,46 @@ const statusPaid = async (value: PaidBet) => {
             >
               <i class="fa-solid fa-trophy text-orange-5 fa-xl"></i>
             </q-btn>
+
+            <q-btn color="primary" flat
+              ><i
+                class="fa-solid text-orange-5 fa-xl"
+                :class="statusAll ? 'fa-unlock' : 'fa-lock'"
+              ></i>
+              <q-popup-proxy>
+                <q-banner>
+                  <div class="row">
+                    <div class="col-12">
+                      <p class="ellipsis-2 text-center text-h6">
+                        ¿Está seguro de
+                        {{ statusAll ? 'abrir' : 'cerrar' }} todas las
+                        predicciones?
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 text-center q-px-sm">
+                      <q-btn
+                        class="full-width"
+                        outline
+                        color="negative"
+                        label="Cancelar"
+                        v-close-popup
+                      />
+                    </div>
+                    <div class="col-6 text-center q-px-sm">
+                      <q-btn
+                        class="full-width"
+                        color="secondary"
+                        label="Guardar"
+                        v-close-popup
+                        @click.stop.prevent="updateStatusAll"
+                      />
+                    </div>
+                  </div>
+                </q-banner>
+              </q-popup-proxy>
+            </q-btn>
           </div>
         </div>
         <cardMatchsComponents
@@ -247,6 +293,7 @@ const statusPaid = async (value: PaidBet) => {
           @emitSave="onSave"
           @emitStatus="onStatus"
           @emitDelete="onDelete"
+          :key="loadingRoom ? 1 : 0"
         />
       </div>
       <div class="col-12 col-md-4 q-px-md" v-if="auth.role_id != 1">

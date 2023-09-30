@@ -7,6 +7,7 @@ import { useAuthStore } from 'src/stores/auth';
 import { ref } from 'vue';
 import { copyToClipboard } from 'quasar';
 import { vue_url } from 'src/boot/axios';
+import { handleMessages } from 'src/services/notifys';
 
 const { setRoom } = useAuthStore();
 const columns = [idColumn, nameColumn, optColumn];
@@ -34,12 +35,20 @@ const clipboard = (row: any) => {
   let url = `${vue_url}/rooms/${row.room_user.cod_compartir}`;
   copyToClipboard(url)
     .then(() => {
-      // success!
-      console.log('success');
+      handleMessages({
+        message: 'Link de compartir, copiado',
+        color: 'secondary',
+        icon: 'check',
+        position: 'center',
+      });
     })
     .catch(() => {
-      // fail
-      console.log('fail');
+      handleMessages({
+        message: 'Hubo un problema al intentar copiarlo',
+        color: 'red-7',
+        icon: 'closed',
+        position: 'center',
+      });
     });
 };
 </script>
@@ -179,7 +188,6 @@ const clipboard = (row: any) => {
                       <div class="col-12">
                         <p class="ellipsis-2 text-center text-h6">
                           ¿Está seguro de que desea comprar esta quiniela?
-                          (costo: )
                         </p>
                         <p class="text-h5 text-center">
                           Costo:

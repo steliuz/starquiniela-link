@@ -15,9 +15,6 @@ const clipboard = () => {
   let url = `${vue_url}/rooms/${props.code}`;
   copyToClipboard(url)
     .then(() => {
-      console.log(props.code);
-      // success!
-      console.log('success');
       handleMessages({
         message: 'Link de compartir, copiado',
         color: 'secondary',
@@ -32,7 +29,6 @@ const clipboard = () => {
         icon: 'closed',
         position: 'center',
       });
-      console.log('fail');
     });
 };
 </script>

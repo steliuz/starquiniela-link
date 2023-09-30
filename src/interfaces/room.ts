@@ -12,6 +12,7 @@ export interface Room {
   matches?: Array<Match> | null;
   players?: Array<Player> | null;
   room_user?: RoomUser;
+  count_player?: number;
 }
 
 export interface RoomUser {
@@ -22,4 +23,5 @@ export interface RoomUser {
   vip?: number;
   status?: number;
   cod_compartir?: string;
+  limit_player: number;
 }
