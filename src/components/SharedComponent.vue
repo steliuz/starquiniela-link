@@ -21,6 +21,14 @@
           </q-item-label>
         </q-item-section>
       </q-item>
+      <q-separator spaced inset dark />
+      <q-item clickable @click="downloadImg" v-close-popup>
+        <q-item-section>
+          <q-item-label>
+            <q-btn color="primary" label="Descargar QR" />
+          </q-item-label>
+        </q-item-section>
+      </q-item>
     </q-list>
   </q-btn-dropdown>
 </template>
@@ -31,7 +39,7 @@ import { vue_url } from 'src/boot/axios';
 import { copyToClipboard } from 'quasar';
 import { handleMessages } from 'src/services/notifys';
 
-const props = defineProps(['code', 'imgBase64']);
+const props = defineProps(['code', 'imgBase64', 'download']);
 let decodedSVG = ref('');
 
 const clipboard = () => {
@@ -55,13 +63,25 @@ const clipboard = () => {
     });
 };
 
+watch(
+  () => props.imgBase64,
+  () => {
+    codificar();
+  }
+);
+
 const codificar = () => {
   decodedSVG.value = atob(props.imgBase64);
 };
 
-onMounted(() => {
-  codificar();
-});
+const downloadImg = () => {
+  const url = window.URL.createObjectURL(new Blob([props.download]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', 'qrcode.png'); //or any other extension
+  document.body.appendChild(link);
+  link.click();
+};
 </script>
 
 <style lang="scss" scoped>

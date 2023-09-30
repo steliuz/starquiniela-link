@@ -25,6 +25,11 @@ export function useRooms() {
     rowsPerPage: 20,
   });
 
+  const qrcode = ref({
+    encode: null,
+    path: null,
+  });
+
   const getReferRoom = async (value: object = rooms.value) => {
     loading.value = true;
     await getData('referer/rooms', value).then((resp) => {
@@ -110,6 +115,13 @@ export function useRooms() {
       getRoomActive({ rowsPerPage: 20 });
     });
   };
+
+  const getQrRoom = async (code: string) => {
+    const data = await getData(`v2/rooms/${code}/qrcode`);
+    qrcode.value.encode = data.qrcode_encode;
+    qrcode.value.path = data.qrcode_path;
+    return data;
+  };
   return {
     loading,
     dialog,
@@ -128,5 +140,7 @@ export function useRooms() {
     handlerTab,
     getRoomActive,
     buyRoom,
+    getQrRoom,
+    qrcode,
   };
 }

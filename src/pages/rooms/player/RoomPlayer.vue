@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import cardMatchsComponents from '../components/CardMatchs.vue';
 import formPlayer from '../components/formPlayer.vue';
 import { useRoomPlayer } from 'src/composables/useRoomPlayer';
 import { useRoute } from 'vue-router';
 import { handleMessages } from 'src/services/notifys';
 import sharedComponent from 'src/components/SharedComponent.vue';
+import { useRooms } from 'src/composables/useRooms';
 
 const openDialog = () => {
   dialog.value = true;
 };
 const { getRoom, room, registerPlayer, postBet, dialog } = useRoomPlayer();
+
+const { getQrRoom, qrcode, loading: loadingRoom } = useRooms();
 
 const router = useRoute();
 getRoom(`${router.params.code}`);
@@ -55,6 +58,11 @@ const onSave = async (player: object) => {
     }
   );
 };
+
+onMounted(async () => {
+  await getRoom(`${router.params.code}`);
+  await getQrRoom(`${room.value.room_user?.cod_compartir}`);
+});
 </script>
 
 <template>
@@ -83,7 +91,12 @@ const onSave = async (player: object) => {
                   {{ room.name || '' }}
                 </p>
                 <div>
-                  <sharedComponent :code="router.params.code" />
+                  <sharedComponent
+                    :code="router.params.code"
+                    :imgBase64="qrcode.encode"
+                    :key="loadingRoom ? 1 : 0"
+                    :download="qrcode.path"
+                  />
                   <q-icon
                     class="cursor-pointer q-ml-md"
                     size="sm"
