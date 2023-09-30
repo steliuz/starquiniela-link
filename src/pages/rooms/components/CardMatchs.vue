@@ -60,31 +60,41 @@ const emitStatus = (value: Math) => {
       >
         <div class="index-number">{{ index + 1 }}</div>
         <div class="box-team">
-          <div>
-            <img
-              class="img-team"
-              :src="
-                match.team1 && match.team1.image
-                  ? file_url + match.team1.image
-                  : '/src/assets/team1.jpg'
-              "
-              alt="team1"
-            />
-            <p>{{ match.team1?.name }}</p>
+          <div class="divTeams">
+            <div>
+              <img
+                class="img-team"
+                :src="
+                  match.team1 && match.team1.image
+                    ? file_url + match.team1.image
+                    : '/src/assets/team1.jpg'
+                "
+                alt="team1"
+              />
+              <p>{{ match.team1?.name }}</p>
+            </div>
+            <div>
+              <img
+                class="img-team"
+                :src="
+                  match.team2 && match.team2.image
+                    ? file_url + match.team2.image
+                    : '/src/assets/team2.jpg'
+                "
+                alt="team1"
+              />
+              <p>{{ match.team2?.name }}</p>
+            </div>
           </div>
-          <div>
-            <img
-              class="img-team"
-              :src="
-                match.team2 && match.team2.image
-                  ? file_url + match.team2.image
-                  : '/src/assets/team2.jpg'
-              "
-              alt="team1"
-            />
-            <p>{{ match.team2?.name }}</p>
+
+          <div class="box-block flex flex-center q-px-sm">
+            <i
+              class="fa-solid fa-md"
+              :class="match.status ? 'fa-lock text-orange-5' : 'hidden'"
+            ></i>
           </div>
         </div>
+
         <div class="box-result" :class="player ? '' : 'border-r'">
           <div class="" v-if="showInputsResult == index && !player">
             <q-input
@@ -360,9 +370,8 @@ const emitStatus = (value: Math) => {
 
     .box-team {
       display: flex;
-      flex-direction: column;
 
-      & > div {
+      & .divTeams div {
         display: flex;
 
         p {

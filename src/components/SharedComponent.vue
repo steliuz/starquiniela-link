@@ -1,15 +1,38 @@
 <template>
-  <q-btn color="secondary" flat icon="share" @click="clipboard">
-    <q-tooltip class="bg-primary"> Link para compartir</q-tooltip>
-  </q-btn>
+  <q-btn-dropdown unelevated flat icon="share" color="secondary">
+    <q-list class="bg-header-dark q-pa-xs">
+      <q-item clickable v-close-popup>
+        <q-item-section>
+          <q-item-label @click="clipboard">
+            <q-btn
+              color="secondary"
+              label="Link para compartir"
+              @click="clipboard"
+            />
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-separator spaced inset dark />
+      <q-item clickable v-close-popup>
+        <q-item-section>
+          <q-item-label>
+            <p class="q-mb-sm text-white text-center">Escanera código QR</p>
+            <div v-html="decodedSVG"></div>
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </q-btn-dropdown>
 </template>
 
 <script setup lang="ts">
+import { ref, watch, onMounted } from 'vue';
 import { vue_url } from 'src/boot/axios';
 import { copyToClipboard } from 'quasar';
 import { handleMessages } from 'src/services/notifys';
 
-const props = defineProps(['code']);
+const props = defineProps(['code', 'imgBase64']);
+let decodedSVG = ref('');
 
 const clipboard = () => {
   let url = `${vue_url}/rooms/${props.code}`;
@@ -31,6 +54,18 @@ const clipboard = () => {
       });
     });
 };
+
+const codificar = () => {
+  decodedSVG.value = atob(props.imgBase64);
+};
+
+onMounted(() => {
+  codificar();
+});
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+::v-deep .q-btn-dropdown__arrow {
+  display: none !important;
+}
+</style>

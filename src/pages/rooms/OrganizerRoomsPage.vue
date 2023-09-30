@@ -198,7 +198,7 @@ const clipboard = (row: any) => {
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-6 text-center q-px-sm">
+                      <div class="col-12 col-sm-6 text-center q-pa-sm">
                         <q-btn
                           class="full-width"
                           outline
@@ -207,7 +207,7 @@ const clipboard = (row: any) => {
                           v-close-popup
                         />
                       </div>
-                      <div class="col-6 text-center q-px-sm">
+                      <div class="col-12 col-sm-6 text-center q-pa-sm">
                         <q-btn
                           class="full-width"
                           color="secondary"
