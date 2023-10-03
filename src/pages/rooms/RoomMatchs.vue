@@ -122,6 +122,11 @@ const updateStatusAll = async () => {
   await statusAllMatch(statusAll.value ? 1 : 0);
   await getRoomById(roomID);
 };
+
+const onResetMatch = async (id: number) => {
+  await resetMatch(id);
+  await getRoomById(roomID);
+};
 </script>
 <template>
   <section class="q-mt-md q-px-sm">
@@ -323,7 +328,7 @@ const updateStatusAll = async () => {
           @emitStatus="onStatus"
           @emitDelete="onDelete"
           :key="loadingRoom ? 1 : 0"
-          @resetMatch="resetMatch"
+          @resetMatch="onResetMatch"
         />
       </div>
       <div class="col-12 col-md-4 q-px-md" v-if="auth.role_id != 1">
