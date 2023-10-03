@@ -6,7 +6,6 @@ import OptionGroup from 'src/components/OptionGroup.vue';
 
 const emit = defineEmits(['postUser', 'editUser', 'putUser', 'onReset']);
 const props = defineProps(['user', 'admin']);
-const type_disabled: Ref<boolean> = ref(true);
 const isPwd = ref(false);
 const optionsData = [
   {
@@ -23,7 +22,6 @@ const optionsData = [
   },
 ];
 const formUser: Ref<User> = ref(props.user);
-let tempUser = Object.assign({}, props.user);
 const onSubmit = () => {
   if (formUser.value.id) {
     emit('putUser', formUser.value);
@@ -32,16 +30,10 @@ const onSubmit = () => {
   }
 };
 
-const onReset = () => {
-  formUser.value = tempUser;
-  emit('onReset');
-};
-
 watch(
   () => props.user,
   (val) => {
     formUser.value = val;
-    tempUser = Object.assign({}, val);
     // if (val.email) {
     //   let email = val.email.split('@');
     //   formUser.value.emailUser = email[0];

@@ -78,6 +78,10 @@ export function useMatch(roomID: any) {
     await putData(`v2/rooms/${roomID}/status/all`, { status: value });
   };
 
+  const resetMatch = async (id: number) => {
+    await putData(`v2/matches/${id}/reset`);
+  };
+
   return {
     postMatch,
     editMatch,
@@ -92,5 +96,6 @@ export function useMatch(roomID: any) {
     statusMatch,
     resultMatch,
     statusAllMatch,
+    resetMatch,
   };
 }

@@ -1,4 +1,5 @@
-import { Ref, ref } from 'vue';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Ref, computed, ref } from 'vue';
 import { Room } from 'src/interfaces/room';
 
 import {
@@ -29,6 +30,20 @@ export function useRooms() {
     encode: null,
     path: null,
   });
+
+  const tickets = ref([
+    {
+      id: 0,
+      ticket_factura: '',
+      index: 0,
+      paid: 0,
+      user_id: 0,
+      name: '',
+      email: '',
+      phone: '',
+    },
+  ]);
+  const search = ref('');
 
   const getReferRoom = async (value: object = rooms.value) => {
     loading.value = true;
@@ -87,9 +102,38 @@ export function useRooms() {
     loading.value = true;
     await getData('rooms/' + id).then((resp) => {
       room.value = resp;
+      setTickets(resp.players);
       loading.value = false;
     });
   };
+
+  const setTickets = (players: any) => {
+    const bets: any = [];
+
+    players.forEach((ele: any) => {
+      ele.bets.forEach((val: any) => {
+        bets.push({
+          id: val.id,
+          ticket_factura: val.ticket_factura,
+          index: val.index,
+          paid: val.paid,
+          user_id: val.user_id,
+          name: ele.name,
+          email: ele.email,
+          phone: ele.phone,
+        });
+      });
+    });
+    tickets.value = bets;
+  };
+
+  const filteredTicket = computed(() => {
+    return tickets.value.filter(
+      (val: any) =>
+        val.name.toLowerCase().includes(search.value.toLowerCase()) ||
+        val.ticket_factura.includes(search.value.toLowerCase())
+    );
+  });
 
   const onReset = () => {
     room.value = {
@@ -122,6 +166,7 @@ export function useRooms() {
     qrcode.value.path = data.qrcode_path;
     return data;
   };
+
   return {
     loading,
     dialog,
@@ -142,5 +187,8 @@ export function useRooms() {
     buyRoom,
     getQrRoom,
     qrcode,
+    tickets,
+    filteredTicket,
+    search,
   };
 }

@@ -9,14 +9,14 @@ import { file_url } from 'src/boot/axios';
 import { Match } from 'src/interfaces/match';
 import { useAuthStore } from 'src/stores/auth';
 import cardMatchsComponents from './components/CardMatchs.vue';
-import dialogTickets from './components/DialogTickets.vue';
-import { Player } from 'src/interfaces/user';
+// import dialogTickets from './components/DialogTickets.vue';
+// import { Player } from 'src/interfaces/user';
 import { PaidBet } from 'src/interfaces/bet';
 // import { copyToClipboard } from 'quasar';
 import sharedComponent from 'src/components/SharedComponent.vue';
 
-const confirmTickets = ref(false);
-const infoPlayer = ref();
+// const confirmTickets = ref(false);
+// const infoPlayer = ref();
 
 const { room_id: roomID, auth } = useAuthStore();
 const {
@@ -25,6 +25,9 @@ const {
   loading: loadingRoom,
   getQrRoom,
   qrcode,
+  // tickets,
+  filteredTicket,
+  search,
 } = useRooms();
 const { statusPaidBet } = useBet();
 const formMatch = ref({
@@ -32,8 +35,14 @@ const formMatch = ref({
   team2: null,
 });
 const { selectTeams, optionsTeams, loading } = useTeam();
-const { postMatch, deleteMatch, statusMatch, resultMatch, statusAllMatch } =
-  useMatch(roomID);
+const {
+  postMatch,
+  deleteMatch,
+  statusMatch,
+  resultMatch,
+  statusAllMatch,
+  resetMatch,
+} = useMatch(roomID);
 
 onMounted(async () => {
   if (auth.role_id === 1) await selectTeams();
@@ -75,10 +84,10 @@ const onSubmit = async () => {
   });
 };
 
-const openTickets = (player: Player) => {
-  infoPlayer.value = player;
-  confirmTickets.value = !confirmTickets.value;
-};
+// const openTickets = (player: Player) => {
+//   infoPlayer.value = player;
+//   confirmTickets.value = !confirmTickets.value;
+// };
 
 async function onSave(match: Match) {
   await resultMatch(match);
@@ -314,6 +323,7 @@ const updateStatusAll = async () => {
           @emitStatus="onStatus"
           @emitDelete="onDelete"
           :key="loadingRoom ? 1 : 0"
+          @resetMatch="resetMatch"
         />
       </div>
       <div class="col-12 col-md-4 q-px-md" v-if="auth.role_id != 1">
@@ -321,31 +331,64 @@ const updateStatusAll = async () => {
           <p class="q-mb-none q-pl-md text-body2 text-weight-bold ellipsis">
             Lista de jugadores
           </p>
-          <dialogTickets
+          <!-- <dialogTickets
             v-model="confirmTickets"
             :infoPlayer="infoPlayer"
             @on-paid="statusPaid"
-          />
+          /> -->
         </div>
+
+        <q-input
+          dense
+          dark
+          filled
+          v-model="search"
+          type="text"
+          placeholder="Buscar por nombre o ticket"
+        >
+          <template v-slot:append>
+            <q-icon
+              v-if="search != ''"
+              class="cursor-pointer q-px-none"
+              name="clear"
+              size="xs"
+              @click="search = ''"
+            />
+            <q-icon class="" name="search" />
+            <!-- <q-btn v-else color="primary" round size="xs">
+            </q-btn> -->
+          </template>
+        </q-input>
         <q-list>
-          <div v-for="player in room.players" :key="player.id">
+          <div v-for="player in filteredTicket" :key="player.id">
             <q-item>
+              <q-item-section avatar>
+                <q-toggle
+                  v-model="player.paid"
+                  color="secondary"
+                  :true-value="1"
+                  :false-value="0"
+                  @update:model-value="statusPaid(player)"
+                />
+              </q-item-section>
+              <q-separator spaced inset vertical dark />
               <q-item-section>
                 <q-item-label>
-                  <a
+                  <!-- <a
                     class="text-white nameCustom"
                     @click="openTickets(player)"
                     >{{ player.name }}</a
-                  >
-                  <i
+                  > -->
+                  {{ player.name }} - {{ player.ticket_factura }}
+                  <!-- <i
                     class="fa-solid fa-circle-check text-secondary fa-xl q-mt-md q-ml-sm"
-                  ></i>
+                  ></i> -->
                 </q-item-label>
-                <q-item-label class="text-white q-pl-sm" caption lines="2">
+                <!-- <q-item-label class="text-white q-pl-sm" caption lines="2">
                   <div class="q-pt-sm">
                     {{ player.email }}
                   </div>
-                </q-item-label>
+                </q-item-label> -->
               </q-item-section>
             </q-item>
 

@@ -37,6 +37,7 @@ const onSave = async (player: object) => {
     (resp) => {
       let data = {
         user_id: resp.userData.uid,
+        room_id: room.value.id,
         bets: room.value.matches?.map((match) => {
           return {
             match_id: match.id,

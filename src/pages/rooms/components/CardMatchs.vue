@@ -9,7 +9,12 @@ const { auth } = useAuthStore();
 
 const showInputsResult: Ref<null | number> = ref(null);
 defineProps(['dataMatch', 'player']);
-const emit = defineEmits(['emitSave', 'emitDelete', 'emitStatus']);
+const emit = defineEmits([
+  'emitSave',
+  'emitDelete',
+  'emitStatus',
+  'resetMatch',
+]);
 
 const emitCancel = () => {
   showInputsResult.value = null;
@@ -28,6 +33,10 @@ const emitDelete = (id: number) => {
 };
 const emitStatus = (value: Math) => {
   emit('emitStatus', value);
+};
+
+const resetMatch = (id: number) => {
+  emit('resetMatch', id);
 };
 // const showPredict = (value: any) => {
 //   console.log('value: ', value);
@@ -233,7 +242,7 @@ const emitStatus = (value: Math) => {
                       </div>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable>
+                  <q-item clickable v-if="auth.role_id === 1">
                     <q-item-section>
                       <div class="flex">
                         <i class="q-mr-md fa-solid fa-trash text-red-5"></i>
@@ -270,6 +279,14 @@ const emitStatus = (value: Math) => {
                           </div>
                         </q-banner>
                       </q-popup-proxy>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable v-else @click="resetMatch(match.id)">
+                    <q-item-section>
+                      <div class="flex">
+                        <i class="q-mr-md fa-solid fa-trash text-red-5"></i>
+                        <span>Reset</span>
+                      </div>
                     </q-item-section>
                   </q-item>
                   <q-separator spaced inset />

@@ -12,6 +12,7 @@
         />
 
         <q-toolbar-title> {{ role }} </q-toolbar-title>
+        <q-toolbar-title> {{ auth.name }} </q-toolbar-title>
 
         <div class="flex flex-center">
           <span class="text-orange-5 text-h6">{{ auth.credits }}</span>

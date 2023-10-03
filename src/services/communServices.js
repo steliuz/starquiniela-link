@@ -1,8 +1,31 @@
 import { api } from 'boot/axios';
 import { handleMessages } from './notifys';
 
-const ERROR_MESSAGE =
-  'Oops, hubo un problema durante el proceso, por favor intente mas tarde';
+const handleError = (error) => {
+  let msg =
+    'Oops, hubo un problema durante el proceso, por favor intente mas tarde';
+  if (error.response.data.error) {
+    msg = error.response.data.error;
+  } else if (error.response.data.errors) {
+    let errors = Object.values(error.response.data.errors);
+    errors.forEach((element) => {
+      handleMessages({
+        message: element,
+        color: 'negative',
+        icon: 'cancel',
+      });
+    });
+    throw error.response;
+  }
+
+  handleMessages({
+    message: msg,
+    color: 'negative',
+    icon: 'cancel',
+  });
+  throw error.response;
+};
+
 export const getData = async (path, params, options) => {
   try {
     const { data } = await api.get(path, {
@@ -11,13 +34,7 @@ export const getData = async (path, params, options) => {
     });
     return data;
   } catch (error) {
-    let msg = error.response.data.error ?? ERROR_MESSAGE;
-    handleMessages({
-      message: msg,
-      color: 'negative',
-      icon: 'cancel',
-    });
-    throw error.response;
+    return handleError(error);
   }
 };
 
@@ -38,13 +55,7 @@ export const postData = async (
     }
     return data;
   } catch (error) {
-    let msg = error.response.data.error ?? ERROR_MESSAGE;
-    handleMessages({
-      message: msg,
-      color: 'negative',
-      icon: 'cancel',
-    });
-    throw error.response;
+    return handleError(error);
   }
 };
 
@@ -65,13 +76,7 @@ export const putData = async (
     }
     return data;
   } catch (error) {
-    let msg = error.response.data.error ?? ERROR_MESSAGE;
-    handleMessages({
-      message: msg,
-      color: 'negative',
-      icon: 'cancel',
-    });
-    throw error.response;
+    return handleError(error);
   }
 };
 
@@ -90,13 +95,7 @@ export const deleteData = async (
     }
     return data;
   } catch (error) {
-    let msg = error.response.data.error ?? ERROR_MESSAGE;
-    handleMessages({
-      message: msg,
-      color: 'negative',
-      icon: 'cancel',
-    });
-    throw error.response;
+    return handleError(error);
   }
 };
 
