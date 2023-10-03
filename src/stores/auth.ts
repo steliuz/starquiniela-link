@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { dataLogin, dataUser } from 'src/interfaces/DataLogin';
+import { getData } from 'src/services/communServices';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -17,6 +18,11 @@ export const useAuthStore = defineStore('auth', {
     },
     setRoom(id: number | string) {
       this.room_id = id;
+    },
+    async getMe() {
+      await getData('/user/me').then((resp) => {
+        this.auth = resp.user;
+      });
     },
   },
   persist: true,

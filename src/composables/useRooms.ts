@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Ref, computed, ref } from 'vue';
 import { Room } from 'src/interfaces/room';
-
 import {
   getData,
   postData,
   putData,
   deleteData,
 } from 'src/services/communServices';
+import { useAuthStore } from 'src/stores/auth';
+
+const { getMe } = useAuthStore();
 
 export function useRooms() {
   const loading = ref(false);
@@ -157,6 +159,7 @@ export function useRooms() {
   const buyRoom = async (id: number) => {
     await postData(`rooms/${id}/buy`).then(() => {
       getRoomActive({ rowsPerPage: 20 });
+      getMe();
     });
   };
 
@@ -165,6 +168,10 @@ export function useRooms() {
     qrcode.value.encode = data.qrcode_encode;
     qrcode.value.path = data.qrcode_path;
     return data;
+  };
+
+  const putUpgradePremium = async (value) => {
+    await postData('room/updatePremiun', value);
   };
 
   return {

@@ -12,7 +12,9 @@
         />
 
         <q-toolbar-title> {{ role }} </q-toolbar-title>
-        <q-toolbar-title> {{ auth.name }} </q-toolbar-title>
+        <q-toolbar-title>
+          {{ auth.name }}
+        </q-toolbar-title>
 
         <div class="flex flex-center">
           <span class="text-orange-5 text-h6">{{ auth.credits }}</span>
@@ -83,11 +85,13 @@ import EssentialLink, {
   EssentialLinkProps,
 } from 'components/EssentialLink.vue';
 import { useAuthStore } from 'src/stores/auth';
+import { storeToRefs } from 'pinia';
 
 const showGif = ref(true);
 
 const router = useRouter();
-const { auth } = useAuthStore();
+const authStore = useAuthStore();
+const { auth } = storeToRefs(authStore);
 
 const essentialLinks: EssentialLinkProps[] = [
   {
@@ -142,8 +146,8 @@ const essentialLinks: EssentialLinkProps[] = [
 ];
 const role = computed(() => {
   let name = 'Admin';
-  if (auth.role_id == 2) name = 'Reseller';
-  if (auth.role_id == 3) name = 'Organizador';
+  if (auth.value.role_id == 2) name = 'Reseller';
+  if (auth.value.role_id == 3) name = 'Organizador';
   return name;
 });
 const leftDrawerOpen = ref(false);

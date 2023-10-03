@@ -14,10 +14,12 @@ import cardMatchsComponents from './components/CardMatchs.vue';
 import { PaidBet } from 'src/interfaces/bet';
 // import { copyToClipboard } from 'quasar';
 import sharedComponent from 'src/components/SharedComponent.vue';
+import DialogUpgrade from 'src/components/DialogUpgrade.vue';
 
 // const confirmTickets = ref(false);
 // const infoPlayer = ref();
 
+const dialogUpgrade = ref(false);
 const { room_id: roomID, auth } = useAuthStore();
 const {
   room,
@@ -130,6 +132,10 @@ const onResetMatch = async (id: number) => {
 </script>
 <template>
   <section class="q-mt-md q-px-sm">
+    <DialogUpgrade
+      v-model="dialogUpgrade"
+      :category_id="room.category_room_id"
+    />
     <div class="flex justify-end">
       <q-btn
         class="px-3"
@@ -319,6 +325,13 @@ const onResetMatch = async (id: number) => {
                 </q-banner>
               </q-popup-proxy>
             </q-btn>
+
+            <q-btn
+              color="primary"
+              icon="print"
+              label="OK"
+              @click="dialogUpgrade = true"
+            />
           </div>
         </div>
         <cardMatchsComponents
