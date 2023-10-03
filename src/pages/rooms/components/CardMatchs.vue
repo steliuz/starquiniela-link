@@ -90,7 +90,7 @@ const emitStatus = (value: Math) => {
           <div class="box-block flex flex-center q-px-sm">
             <i
               class="fa-solid fa-md"
-              :class="match.status ? 'fa-lock text-orange-5' : 'hidden'"
+              :class="match.status ? 'hidden ' : 'fa-lock text-orange-5'"
             ></i>
           </div>
         </div>
@@ -275,7 +275,7 @@ const emitStatus = (value: Math) => {
                   <q-separator spaced inset />
                   <q-item v-close-popup>
                     <q-item-section class="text-center">
-                      <p class="q-mb-none">Activo / Inactivo</p>
+                      <p class="q-mb-none">Inactivo / Activo</p>
                       <div class="flex justify-center">
                         <q-toggle
                           v-model="match.status"

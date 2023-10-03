@@ -13,7 +13,7 @@
         </q-item-section>
       </q-item>
       <q-separator spaced inset dark />
-      <q-item clickable v-close-popup>
+      <q-item>
         <q-item-section>
           <q-item-label>
             <p class="q-mb-sm text-white text-center">Escanera código QR</p>
@@ -21,11 +21,15 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-separator spaced inset dark />
       <q-item clickable @click="downloadImg" v-close-popup>
         <q-item-section>
           <q-item-label>
-            <q-btn color="primary" label="Descargar QR" />
+            <q-btn
+              class="full-width"
+              size="sm"
+              color="primary"
+              label="Descargar QR"
+            />
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -34,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 import { vue_url } from 'src/boot/axios';
 import { copyToClipboard } from 'quasar';
 import { handleMessages } from 'src/services/notifys';
@@ -78,14 +82,19 @@ const downloadImg = () => {
   const url = window.URL.createObjectURL(new Blob([props.download]));
   const link = document.createElement('a');
   link.href = url;
-  link.setAttribute('download', 'qrcode.png'); //or any other extension
+  link.setAttribute('download', 'qrcode.png');
   document.body.appendChild(link);
   link.click();
+  handleMessages({
+    message: 'Compartelo con tus amigos',
+    color: 'secondary',
+    icon: 'check',
+  });
 };
 </script>
 
 <style lang="scss" scoped>
-::v-deep .q-btn-dropdown__arrow {
+:deep(.q-btn-dropdown__arrow) {
   display: none !important;
 }
 </style>

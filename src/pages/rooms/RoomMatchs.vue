@@ -268,7 +268,7 @@ const updateStatusAll = async () => {
               ><i
                 class="fa-solid fa-xl"
                 :class="
-                  statusAll ? 'fa-unlock text-white' : 'fa-lock text-orange-5'
+                  statusAll ? 'fa-lock text-orange-5' : ' fa-unlock text-white'
                 "
               ></i>
               <q-popup-proxy>

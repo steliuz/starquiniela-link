@@ -13,7 +13,25 @@
 
         <q-toolbar-title> {{ role }} </q-toolbar-title>
 
-        <div>Créditos: {{ auth.credits }}</div>
+        <div class="flex flex-center">
+          <span class="text-orange-5 text-h6">{{ auth.credits }}</span>
+
+          <q-img
+            v-if="showGif"
+            class="q-ml-sm"
+            width="35px"
+            src="~assets/icons/coin.gif"
+            :ratio="1 / 1"
+            spinner-color="primary"
+            spinner-size="82px"
+          />
+          <q-img
+            v-else
+            width="45px"
+            src="~assets/icons/coin.png"
+            :ratio="1 / 1"
+          />
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -57,13 +75,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { logout } from 'src/services/auth/login';
 import { useRouter } from 'vue-router';
 import EssentialLink, {
   EssentialLinkProps,
 } from 'components/EssentialLink.vue';
 import { useAuthStore } from 'src/stores/auth';
+
+const showGif = ref(true);
 
 const router = useRouter();
 const { auth } = useAuthStore();
@@ -140,6 +160,12 @@ const handleLogout = async () => {
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
+
+onMounted(() => {
+  setTimeout(() => {
+    showGif.value = !showGif.value;
+  }, 5000);
+});
 </script>
 
 <style lang="scss" scoped>
