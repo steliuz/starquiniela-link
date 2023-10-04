@@ -30,6 +30,7 @@ const {
   // tickets,
   filteredTicket,
   search,
+  postUpgradePremium,
 } = useRooms();
 const { statusPaidBet } = useBet();
 const formMatch = ref({
@@ -120,7 +121,6 @@ const statusAll = computed(() => {
 });
 
 const updateStatusAll = async () => {
-  console.log('hola');
   await statusAllMatch(statusAll.value ? 1 : 0);
   await getRoomById(roomID);
 };
@@ -129,12 +129,25 @@ const onResetMatch = async (id: number) => {
   await resetMatch(id);
   await getRoomById(roomID);
 };
+
+const upgradePremium = async (id: number) => {
+  let data = {
+    subscribe_id: id,
+    room_id: roomID,
+  };
+  await postUpgradePremium(data).then(async () => {
+    dialogUpgrade.value = false;
+    await getRoomById(roomID);
+  });
+};
 </script>
 <template>
   <section class="q-mt-md q-px-sm">
     <DialogUpgrade
       v-model="dialogUpgrade"
       :category_id="room.category_room_id"
+      @upgradePremium="upgradePremium"
+      :vip="room.room_user?.vip"
     />
     <div class="flex justify-end">
       <q-btn

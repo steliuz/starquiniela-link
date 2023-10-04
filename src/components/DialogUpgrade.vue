@@ -1,4 +1,3 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <template>
   <q-dialog persistent>
     <q-card>
@@ -11,7 +10,11 @@
         <span class="q-ml-sm"
           >{{ getTicketAmount(item.id) || 'Ilimitados' }} Tickets</span
         >
-        <q-btn color="primary" :label="`${getPrice(item.id)} monedas`">
+        <q-btn
+          color="primary"
+          :label="`${getPrice(item.id)} monedas`"
+          :disable="vip === item.id"
+        >
           <q-popup-proxy>
             <q-banner>
               ¿Desea mejorar el plan?
@@ -19,7 +22,7 @@
                 color="primary"
                 icon="check"
                 label="OK"
-                @click="onUpgrade(item)"
+                @click="onUpgrade(item.id)"
                 v-close-popup
               />
               <q-btn
@@ -43,15 +46,19 @@ import { storeToRefs } from 'pinia';
 import { useSubscribeStore } from 'src/stores/subscribe';
 import { onMounted } from 'vue';
 
-const props = defineProps(['category_id']);
+const props = defineProps(['category_id', 'vip']);
+const emit = defineEmits(['upgradePremium']);
 const { subscribes } = storeToRefs(useSubscribeStore());
 const { getSubscribe } = useSubscribeStore();
 
 const getPrice = (id: number) => {
   let price = 1;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const subscribe = subscribes.value.find((val: any) => val.id == id);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const credit: any = subscribe?.credits?.find(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (val: any) => val.category_room_id == props.category_id
   );
 
@@ -83,8 +90,8 @@ const getTicketAmount = (id: number) => {
   return amount;
 };
 
-const onUpgrade = (value) => {
-  console.log('🚀 ~ file: DialogUpgrade.vue:72 ~ onUpgrade ~ value:', value);
+const onUpgrade = (id: number) => {
+  emit('upgradePremium', id);
 };
 
 onMounted(() => {

@@ -170,8 +170,9 @@ export function useRooms() {
     return data;
   };
 
-  const putUpgradePremium = async (value) => {
-    await postData('room/updatePremiun', value);
+  const postUpgradePremium = async (value: any) => {
+    await putData('room/premium/update', value);
+    getMe();
   };
 
   return {
@@ -197,5 +198,6 @@ export function useRooms() {
     tickets,
     filteredTicket,
     search,
+    postUpgradePremium,
   };
 }

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineStore } from 'pinia';
 import { getData } from 'src/services/communServices';
 
 export const useSubscribeStore = defineStore('subscribe', {
   state: () => ({
-    subscribes: [],
+    subscribes: [] as any,
   }),
 
   getters: {},
@@ -15,5 +16,5 @@ export const useSubscribeStore = defineStore('subscribe', {
       });
     },
   },
-  // persist: true,
+  persist: true,
 });
