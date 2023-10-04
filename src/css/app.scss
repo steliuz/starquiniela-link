@@ -70,3 +70,27 @@ p.label-input {
   background-color: #00141e;
   color: #fff;
 }
+
+.shield-plan {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    animation: pulse 1.2s infinite;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

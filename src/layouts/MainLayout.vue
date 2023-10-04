@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-header-dark">
-      <q-toolbar>
+      <q-toolbar class="q-py-sm">
         <q-btn
           flat
           dense
@@ -11,12 +11,32 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> {{ role }} </q-toolbar-title>
-        <q-toolbar-title>
-          {{ auth.name }}
+        <q-toolbar-title class="flex items-center">
+          <q-avatar class="flex flex-center" size="40px">
+            <q-img
+              class="shield-plan"
+              width="32px"
+              :src="getImageSrc(auth.role_id)"
+              :ratio="1 / 1"
+              spinner-color="primary"
+              spinner-size="82px"
+              @click="dialogUpgrade = true"
+            />
+          </q-avatar>
+
+          <div>
+            <p class="q-mb-none">{{ auth.name }}</p>
+            <p class="text-caption text-secondary q-mb-none">{{ role }}</p>
+          </div>
         </q-toolbar-title>
 
         <div class="flex flex-center">
+          <q-btn
+            class="q-mr-md"
+            color="secondary"
+            label="planes"
+            @click="dialogUpgrade = true"
+          />
           <span class="text-orange-5 text-h6">{{ auth.credits }}</span>
 
           <q-img
@@ -74,6 +94,13 @@
     <q-page-container class="bg-all-section">
       <router-view />
     </q-page-container>
+
+    <DialogUpgrade
+      v-model="dialogUpgrade"
+      :category_id="room.category_room_id"
+      @upgradePremium="upgradePremium"
+      :vip="room.room_user?.vip"
+    />
   </q-layout>
 </template>
 
@@ -85,13 +112,22 @@ import EssentialLink, {
   EssentialLinkProps,
 } from 'components/EssentialLink.vue';
 import { useAuthStore } from 'src/stores/auth';
-import { storeToRefs } from 'pinia';
+import { useRooms } from 'src/composables/useRooms';
+import { useMatch } from 'src/composables/useMatch';
+import DialogUpgrade from 'src/components/DialogUpgrade.vue';
+import bronce from 'src/assets/medallas/bronce.png';
+import plata from 'src/assets/medallas/plata.png';
+import oro from 'src/assets/medallas/oro.png';
+import platino from 'src/assets/medallas/platino.png';
 
+const dialogUpgrade = ref(false);
 const showGif = ref(true);
 
 const router = useRouter();
-const authStore = useAuthStore();
-const { auth } = storeToRefs(authStore);
+const { room_id: roomID, auth } = useAuthStore();
+
+const { room, getRoomById, postUpgradePremium } = useRooms();
+const {} = useMatch(roomID);
 
 const essentialLinks: EssentialLinkProps[] = [
   {
@@ -146,8 +182,8 @@ const essentialLinks: EssentialLinkProps[] = [
 ];
 const role = computed(() => {
   let name = 'Admin';
-  if (auth.value.role_id == 2) name = 'Reseller';
-  if (auth.value.role_id == 3) name = 'Organizador';
+  if (auth.role_id == 2) name = 'Reseller';
+  if (auth.role_id == 3) name = 'Organizador';
   return name;
 });
 const leftDrawerOpen = ref(false);
@@ -165,6 +201,30 @@ const handleLogout = async () => {
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
+
+const upgradePremium = async (id: number) => {
+  let data = {
+    subscribe_id: id,
+    room_id: roomID,
+  };
+  await postUpgradePremium(data).then(async () => {
+    dialogUpgrade.value = false;
+    await getRoomById(roomID);
+  });
+};
+
+const getImageSrc = (id: number) => {
+  switch (id) {
+    case 2:
+      return bronce;
+    case 3:
+      return plata;
+    case 4:
+      return oro;
+    case 5:
+      return platino;
+  }
+};
 
 onMounted(() => {
   setTimeout(() => {

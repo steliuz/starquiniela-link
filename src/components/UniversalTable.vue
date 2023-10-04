@@ -79,6 +79,8 @@
         <q-btn class="q-pa-sm" color="white" flat icon="more_vert">
           <q-menu class="bg-header-dark">
             <q-list style="min-width: 140px">
+              <slot name="opt" :props="props"></slot>
+
               <q-item
                 clickable
                 v-close-popup
@@ -105,7 +107,6 @@
                   </div>
                 </q-item-section>
               </q-item>
-              <slot name="opt" :props="props"></slot>
             </q-list>
           </q-menu>
         </q-btn>

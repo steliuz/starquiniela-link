@@ -14,12 +14,10 @@ import cardMatchsComponents from './components/CardMatchs.vue';
 import { PaidBet } from 'src/interfaces/bet';
 // import { copyToClipboard } from 'quasar';
 import sharedComponent from 'src/components/SharedComponent.vue';
-import DialogUpgrade from 'src/components/DialogUpgrade.vue';
 
 // const confirmTickets = ref(false);
 // const infoPlayer = ref();
 
-const dialogUpgrade = ref(false);
 const { room_id: roomID, auth } = useAuthStore();
 const {
   room,
@@ -27,10 +25,8 @@ const {
   loading: loadingRoom,
   getQrRoom,
   qrcode,
-  // tickets,
   filteredTicket,
   search,
-  postUpgradePremium,
 } = useRooms();
 const { statusPaidBet } = useBet();
 const formMatch = ref({
@@ -129,26 +125,9 @@ const onResetMatch = async (id: number) => {
   await resetMatch(id);
   await getRoomById(roomID);
 };
-
-const upgradePremium = async (id: number) => {
-  let data = {
-    subscribe_id: id,
-    room_id: roomID,
-  };
-  await postUpgradePremium(data).then(async () => {
-    dialogUpgrade.value = false;
-    await getRoomById(roomID);
-  });
-};
 </script>
 <template>
   <section class="q-mt-md q-px-sm">
-    <DialogUpgrade
-      v-model="dialogUpgrade"
-      :category_id="room.category_room_id"
-      @upgradePremium="upgradePremium"
-      :vip="room.room_user?.vip"
-    />
     <div class="flex justify-end">
       <q-btn
         class="px-3"
@@ -338,13 +317,6 @@ const upgradePremium = async (id: number) => {
                 </q-banner>
               </q-popup-proxy>
             </q-btn>
-
-            <q-btn
-              color="primary"
-              icon="print"
-              label="OK"
-              @click="dialogUpgrade = true"
-            />
           </div>
         </div>
         <cardMatchsComponents
@@ -393,6 +365,17 @@ const upgradePremium = async (id: number) => {
         <q-list>
           <div v-for="player in filteredTicket" :key="player.id">
             <q-item>
+              <q-item-section>
+                <q-item-label>
+                  <p class="q-mb-none text-subtitle1">
+                    {{ player.ticket_factura }}
+                  </p>
+                  <span class="text-caption text-orange-5"
+                    >{{ player.name }}
+                  </span>
+                </q-item-label>
+              </q-item-section>
+              <q-separator spaced inset vertical dark />
               <q-item-section avatar>
                 <q-toggle
                   v-model="player.paid"
@@ -401,25 +384,6 @@ const upgradePremium = async (id: number) => {
                   :false-value="0"
                   @update:model-value="statusPaid(player)"
                 />
-              </q-item-section>
-              <q-separator spaced inset vertical dark />
-              <q-item-section>
-                <q-item-label>
-                  <!-- <a
-                    class="text-white nameCustom"
-                    @click="openTickets(player)"
-                    >{{ player.name }}</a
-                  > -->
-                  {{ player.name }} - {{ player.ticket_factura }}
-                  <!-- <i
-                    class="fa-solid fa-circle-check text-secondary fa-xl q-mt-md q-ml-sm"
-                  ></i> -->
-                </q-item-label>
-                <!-- <q-item-label class="text-white q-pl-sm" caption lines="2">
-                  <div class="q-pt-sm">
-                    {{ player.email }}
-                  </div>
-                </q-item-label> -->
               </q-item-section>
             </q-item>
 

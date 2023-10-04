@@ -112,24 +112,24 @@ const clipboard = (row: any) => {
               <q-item
                 clickable
                 v-close-popup
-                @click="goToMatch(scope.props.row.id)"
+                @click="clipboard(scope.props.row)"
               >
                 <q-item-section>
                   <div class="flex">
-                    <i class="q-mr-md fa-solid fa-shield text-red-5"></i>
-                    <span>Enfrentamientos</span>
+                    <i class="q-mr-md fa-solid fa-share text-secondary"></i>
+                    <span>Link de Quiniela</span>
                   </div>
                 </q-item-section>
               </q-item>
               <q-item
                 clickable
                 v-close-popup
-                @click="clipboard(scope.props.row)"
+                @click="goToMatch(scope.props.row.id)"
               >
                 <q-item-section>
                   <div class="flex">
-                    <i class="q-mr-md fa-solid fa-shield text-red-5"></i>
-                    <span>Link de Quiniela</span>
+                    <i class="q-mr-md fa-solid fa-shield text-orange-5"></i>
+                    <span>Enfrentamientos</span>
                   </div>
                 </q-item-section>
               </q-item>
