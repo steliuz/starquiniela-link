@@ -349,14 +349,9 @@ const upgradePremium = async (id: number) => {
           <p class="q-mb-none q-pl-md text-body2 text-weight-bold ellipsis">
             Lista de jugadores
           </p>
-          <!-- <dialogTickets
-            v-model="confirmTickets"
-            :infoPlayer="infoPlayer"
-            @on-paid="statusPaid"
-          /> -->
-          <div class="row q-mb-md" v-if="auth.role_id == 3">
+          <div v-if="auth.role_id == 3">
             <q-btn
-              class="q-mr-md"
+              class=""
               color="secondary"
               label="planes"
               @click="dialogUpgrade = true"
@@ -387,8 +382,6 @@ const upgradePremium = async (id: number) => {
               @click="search = ''"
             />
             <q-icon class="" name="search" />
-            <!-- <q-btn v-else color="primary" round size="xs">
-            </q-btn> -->
           </template>
         </q-input>
         <q-list>

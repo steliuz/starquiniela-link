@@ -12,17 +12,6 @@
         />
 
         <q-toolbar-title class="flex items-center">
-          <q-avatar class="flex flex-center" size="40px">
-            <q-img
-              class="shield-plan"
-              width="32px"
-              :src="getImageSrc(auth.role_id)"
-              :ratio="1 / 1"
-              spinner-color="primary"
-              spinner-size="82px"
-            />
-          </q-avatar>
-
           <div>
             <p class="q-mb-none">{{ auth.name }}</p>
             <p class="text-caption text-secondary q-mb-none">{{ role }}</p>
@@ -99,10 +88,6 @@ import EssentialLink, {
 } from 'components/EssentialLink.vue';
 import { useAuthStore } from 'src/stores/auth';
 import { useMatch } from 'src/composables/useMatch';
-import bronce from 'src/assets/medallas/bronce.png';
-import plata from 'src/assets/medallas/plata.png';
-import oro from 'src/assets/medallas/oro.png';
-import platino from 'src/assets/medallas/platino.png';
 import { storeToRefs } from 'pinia';
 
 const showGif = ref(true);
@@ -184,19 +169,6 @@ const handleLogout = async () => {
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
-
-const getImageSrc = (id: number) => {
-  switch (id) {
-    case 2:
-      return bronce;
-    case 3:
-      return plata;
-    case 4:
-      return oro;
-    case 5:
-      return platino;
-  }
-};
 
 onMounted(() => {
   setTimeout(() => {
