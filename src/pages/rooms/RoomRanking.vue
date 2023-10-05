@@ -43,7 +43,9 @@
                       </q-tooltip>
                     </q-avatar>
                     <div class="text-center flex justify-center">
-                      <p class="gols">{{ team.goalsTeam1 || '-' }}</p>
+                      <p class="gols">
+                        {{ team.goalsTeam1 != null ? team.goalsTeam1 : '-' }}
+                      </p>
                     </div>
                   </div>
                 </th>
@@ -64,7 +66,9 @@
                       </q-tooltip>
                     </q-avatar>
                     <div class="text-center flex justify-center">
-                      <p class="gols">{{ team.goalsTeam2 || '-' }}</p>
+                      <p class="gols">
+                        {{ team.goalsTeam2 != null ? team.goalsTeam2 : '-' }}
+                      </p>
                     </div>
                   </div>
                 </th>
@@ -80,7 +84,9 @@
                         </q-tooltip>
                       </q-avatar>
                       <div class="text-center flex justify-center">
-                        <p class="gols">{{ team.goalsTeam1 || '-' }}</p>
+                        <p class="gols">
+                          {{ team.goalsTeam1 != null ? team.goalsTeam1 : '-' }}
+                        </p>
                       </div>
                     </div>
                     <div class="q-mx-xs">
@@ -93,7 +99,9 @@
                         </q-tooltip>
                       </q-avatar>
                       <div class="text-center flex justify-center">
-                        <p class="gols">{{ team.goalsTeam2 || '-' }}</p>
+                        <p class="gols">
+                          {{ team.goalsTeam2 != null ? team.goalsTeam2 : '-' }}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -192,7 +200,7 @@ onMounted(() => {
 });
 
 const getPoint = (
-  matchID: number | undefined,
+  matchID: number | undefined | null,
   playerID: number | undefined,
   index: number
 ) => {
@@ -207,7 +215,7 @@ const getPoint = (
   return bet?.points ? bet.points : 0;
 };
 const getBet = (
-  matchID: number | undefined,
+  matchID: number | undefined | null,
   playerID: number | undefined,
   index: number
 ) => {
@@ -222,7 +230,7 @@ const getBet = (
   return bet?.goalsTeam1 != null ? bet.goalsTeam1 : '';
 };
 const getBet2 = (
-  matchID: number | undefined,
+  matchID: number | undefined | null,
   playerID: number | undefined,
   index: number
 ) => {
@@ -238,7 +246,7 @@ const getBet2 = (
 };
 
 const getLEV = (
-  matchID: number | undefined,
+  matchID: number | undefined | null,
   playerID: number | undefined,
   index: number
 ) => {
@@ -277,7 +285,7 @@ const getTotalPoint = (playerID: number | undefined) => {
   }, {});
 
   let total = player?.bets?.reduce((total, bet) => {
-    return total + bet.points;
+    return total + (bet.points ?? 0);
   }, 0);
   return total;
 };

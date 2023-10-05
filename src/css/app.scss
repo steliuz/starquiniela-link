@@ -73,7 +73,7 @@ p.label-input {
 
 .shield-plan {
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-  cursor: pointer;
+  // cursor: pointer;
 
   &:hover {
     animation: pulse 1.2s infinite;

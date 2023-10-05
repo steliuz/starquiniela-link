@@ -14,6 +14,7 @@ import cardMatchsComponents from './components/CardMatchs.vue';
 import { PaidBet } from 'src/interfaces/bet';
 // import { copyToClipboard } from 'quasar';
 import sharedComponent from 'src/components/SharedComponent.vue';
+import DialogUpgrade from 'src/components/DialogUpgrade.vue';
 
 // const confirmTickets = ref(false);
 // const infoPlayer = ref();
@@ -27,6 +28,7 @@ const {
   qrcode,
   filteredTicket,
   search,
+  postUpgradePremium,
 } = useRooms();
 const { statusPaidBet } = useBet();
 const formMatch = ref({
@@ -42,6 +44,7 @@ const {
   statusAllMatch,
   resetMatch,
 } = useMatch(roomID);
+const dialogUpgrade = ref(false);
 
 onMounted(async () => {
   if (auth.role_id === 1) await selectTeams();
@@ -124,6 +127,17 @@ const updateStatusAll = async () => {
 const onResetMatch = async (id: number) => {
   await resetMatch(id);
   await getRoomById(roomID);
+};
+
+const upgradePremium = async (id: number) => {
+  let data = {
+    subscribe_id: id,
+    room_id: roomID,
+  };
+  await postUpgradePremium(data).then(async () => {
+    dialogUpgrade.value = false;
+    await getRoomById(roomID);
+  });
 };
 </script>
 <template>
@@ -239,6 +253,7 @@ const onResetMatch = async (id: number) => {
         </q-form>
       </div>
     </div>
+
     <div class="row q-mt-xl">
       <div
         class=""
@@ -339,6 +354,20 @@ const onResetMatch = async (id: number) => {
             :infoPlayer="infoPlayer"
             @on-paid="statusPaid"
           /> -->
+          <div class="row q-mb-md" v-if="auth.role_id == 3">
+            <q-btn
+              class="q-mr-md"
+              color="secondary"
+              label="planes"
+              @click="dialogUpgrade = true"
+            />
+            <DialogUpgrade
+              v-model="dialogUpgrade"
+              :category_id="room.category_room_id"
+              @upgradePremium="upgradePremium"
+              :vip="room.room_user?.vip"
+            />
+          </div>
         </div>
 
         <q-input

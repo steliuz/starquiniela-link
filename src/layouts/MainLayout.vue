@@ -20,7 +20,6 @@
               :ratio="1 / 1"
               spinner-color="primary"
               spinner-size="82px"
-              @click="dialogUpgrade = true"
             />
           </q-avatar>
 
@@ -31,12 +30,6 @@
         </q-toolbar-title>
 
         <div class="flex flex-center">
-          <q-btn
-            class="q-mr-md"
-            color="secondary"
-            label="planes"
-            @click="dialogUpgrade = true"
-          />
           <span class="text-orange-5 text-h6">{{ auth.credits }}</span>
 
           <q-img
@@ -94,13 +87,6 @@
     <q-page-container class="bg-all-section">
       <router-view />
     </q-page-container>
-
-    <DialogUpgrade
-      v-model="dialogUpgrade"
-      :category_id="room.category_room_id"
-      @upgradePremium="upgradePremium"
-      :vip="room.room_user?.vip"
-    />
   </q-layout>
 </template>
 
@@ -112,21 +98,18 @@ import EssentialLink, {
   EssentialLinkProps,
 } from 'components/EssentialLink.vue';
 import { useAuthStore } from 'src/stores/auth';
-import { useRooms } from 'src/composables/useRooms';
 import { useMatch } from 'src/composables/useMatch';
-import DialogUpgrade from 'src/components/DialogUpgrade.vue';
 import bronce from 'src/assets/medallas/bronce.png';
 import plata from 'src/assets/medallas/plata.png';
 import oro from 'src/assets/medallas/oro.png';
 import platino from 'src/assets/medallas/platino.png';
+import { storeToRefs } from 'pinia';
 
-const dialogUpgrade = ref(false);
 const showGif = ref(true);
 
 const router = useRouter();
-const { room_id: roomID, auth } = useAuthStore();
+const { room_id: roomID, auth } = storeToRefs(useAuthStore());
 
-const { room, getRoomById, postUpgradePremium } = useRooms();
 const {} = useMatch(roomID);
 
 const essentialLinks: EssentialLinkProps[] = [
@@ -182,8 +165,8 @@ const essentialLinks: EssentialLinkProps[] = [
 ];
 const role = computed(() => {
   let name = 'Admin';
-  if (auth.role_id == 2) name = 'Reseller';
-  if (auth.role_id == 3) name = 'Organizador';
+  if (auth.value.role_id == 2) name = 'Reseller';
+  if (auth.value.role_id == 3) name = 'Organizador';
   return name;
 });
 const leftDrawerOpen = ref(false);
@@ -201,17 +184,6 @@ const handleLogout = async () => {
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
-
-const upgradePremium = async (id: number) => {
-  let data = {
-    subscribe_id: id,
-    room_id: roomID,
-  };
-  await postUpgradePremium(data).then(async () => {
-    dialogUpgrade.value = false;
-    await getRoomById(roomID);
-  });
-};
 
 const getImageSrc = (id: number) => {
   switch (id) {
