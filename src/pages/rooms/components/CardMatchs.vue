@@ -52,10 +52,7 @@ const resetMatch = (id: number) => {
       >
         <div class="index-number"></div>
         <div class="bg-orange-5"></div>
-        <div class="box-result q-mb-xs">
-          <p class="text-center text-weight-bold q-mb-none" v-if="!player">
-            Pe
-          </p>
+        <div class="box-result q-mb-xs" :class="player ? '' : 'results-admin'">
           <p class="text-center text-weight-bold q-mb-none">R</p>
           <p class="text-center text-weight-bold q-mb-none" v-if="player">Pr</p>
         </div>
@@ -104,37 +101,7 @@ const resetMatch = (id: number) => {
           </div>
         </div>
 
-        <div class="box-result" :class="player ? '' : 'border-r'">
-          <div class="" v-if="showInputsResult == index && !player">
-            <q-input
-              v-model="match.penaltyTeam1"
-              type="number"
-              style="max-width: 50px"
-              input-class="text-white text-center"
-              dense
-              dark
-              filled
-              class="q-pb-xs hide-number-arrows"
-            />
-            <q-input
-              v-model="match.penaltyTeam2"
-              type="number"
-              style="max-width: 50px"
-              input-class="text-white text-center"
-              dense
-              dark
-              filled
-              class="hide-number-arrows"
-            />
-          </div>
-          <div class="" v-if="!player && showInputsResult != index">
-            <p>
-              {{ match.penaltyTeam1 != null ? match.penaltyTeam1 : '-' }}
-            </p>
-            <p>
-              {{ match.penaltyTeam2 != null ? match.penaltyTeam2 : '-' }}
-            </p>
-          </div>
+        <div class="box-result" :class="player ? '' : 'border-r results-admin'">
           <div class="" v-if="showInputsResult == index">
             <q-input
               v-model="match.goalsTeam1"
@@ -346,7 +313,7 @@ const resetMatch = (id: number) => {
 
   .box-matchs {
     display: grid;
-    grid-template-columns: 0.3fr repeat(1, minmax(100px, 3fr)) 1.2fr 30px;
+    grid-template-columns: 0.3fr repeat(1, minmax(100px, 3fr)) 100px 30px;
     align-items: center;
     gap: 5px;
     padding: 8px;
@@ -355,7 +322,7 @@ const resetMatch = (id: number) => {
     font-size: 14px;
 
     @media screen and (max-width: 500px) {
-      grid-template-columns: repeat(1, minmax(100px, 3fr)) 1.8fr 30px;
+      grid-template-columns: repeat(1, minmax(100px, 3fr)) 100px 30px;
     }
 
     &:first-child {
@@ -422,6 +389,10 @@ const resetMatch = (id: number) => {
       gap: 5px;
       place-items: center;
       // padding-right: 15px;
+
+      &.results-admin {
+        grid-template-columns: repeat(1, 1fr);
+      }
 
       .mt-negative {
         margin-top: -30px;
