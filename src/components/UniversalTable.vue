@@ -74,6 +74,19 @@
         />
       </td>
     </template>
+    <template #body-cell-show_ranking="props">
+      <td class="text-center" style="width: 150px">
+        <q-toggle
+          unchecked-icon="clear"
+          checked-icon="check"
+          color="green"
+          :false-value="0"
+          :true-value="1"
+          v-model="props.row.room_user.show_ranking"
+          @update:model-value="showRanking(props.row.room_user)"
+        />
+      </td>
+    </template>
     <template #body-cell-opt="props">
       <q-td style="width: 10%" :props="props" class="no-wrap text-center">
         <q-btn class="q-pa-sm" color="white" flat icon="more_vert">
@@ -182,6 +195,7 @@ const emit = defineEmits([
   'editData',
   'deleteData',
   'statusData',
+  'showRanking',
 ]);
 let paginations = ref({
   page: 1,
@@ -236,6 +250,9 @@ const openDialogConfirm = (row: keyable) => {
 function updateStatus(row: object) {
   emit('statusData', row);
 }
+const showRanking = (row: object) => {
+  emit('showRanking', row);
+};
 watch(
   () => props.respData as ResponseData,
   (newVal: ResponseData) => {

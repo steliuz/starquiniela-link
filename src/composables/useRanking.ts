@@ -26,6 +26,7 @@ export function useRanking(roomID: number | string | null) {
       players.value = resp.players;
       room.value = resp.room;
       matches.value = resp.matches;
+      // players.value = players.value.sort((a, b) => b.max_points - a.max_points);
     });
   };
   return {

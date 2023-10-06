@@ -85,24 +85,29 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/players',
     name: 'players',
-    redirect: '/players/dashboard',
-    meta: { requiresAuth: true, roles: [4] },
-    component: () => import('layouts/MainLayout.vue'),
+    // redirect: '/players/dashboard',
+    // meta: { requiresAuth: true, roles: [4] },
+    component: () => import('layouts/PlayerLayout.vue'),
     children: [
+      // {
+      //   name: 'players-dashboard',
+      //   path: 'dashboard',
+      //   component: () => import('pages/IndexPage.vue'),
+      // },
+      // {
+      //   name: 'players-rooms',
+      //   path: 'rooms',
+      //   component: () => import('pages/rooms/RoomsPage.vue'),
+      // },
+      // {
+      //   name: 'players-rooms-matches',
+      //   path: 'rooms/matchs',
+      //   component: () => import('pages/rooms/RoomMatchsPlayer.vue'),
+      // },
       {
-        name: 'players-dashboard',
-        path: 'dashboard',
-        component: () => import('pages/IndexPage.vue'),
-      },
-      {
-        name: 'players-rooms',
-        path: 'rooms',
-        component: () => import('pages/rooms/RoomsPage.vue'),
-      },
-      {
-        name: 'players-rooms-matches',
-        path: 'rooms/matchs',
-        component: () => import('pages/rooms/RoomMatchsPlayer.vue'),
+        name: 'players-rooms-ranking',
+        path: 'rooms/ranking',
+        component: () => import('pages/rooms/RoomRanking.vue'),
       },
     ],
   },

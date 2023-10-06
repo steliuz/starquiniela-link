@@ -120,7 +120,7 @@
               </td>
               <td class="name2 bg-orange-6 text-black text-bold">
                 <div class="flex flex-center">
-                  {{ getTotalPoint(player.user_id) }}
+                  {{ player.max_points }}
                 </div>
               </td>
 
@@ -279,16 +279,16 @@ const getLEV = (
   return lev;
 };
 
-const getTotalPoint = (playerID: number | undefined) => {
-  let player = room.value.players?.find((player) => {
-    return playerID == player.id;
-  }, {});
+// const getTotalPoint = (playerID: number | undefined) => {
+//   let player = room.value.players?.find((player) => {
+//     return playerID == player.id;
+//   }, {});
 
-  let total = player?.bets?.reduce((total, bet) => {
-    return total + (bet.points ?? 0);
-  }, 0);
-  return total;
-};
+//   let total = player?.bets?.reduce((total, bet) => {
+//     return total + (bet.points ?? 0);
+//   }, 0);
+//   return total;
+// };
 </script>
 
 <style lang="scss" scoped>

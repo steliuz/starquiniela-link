@@ -1,66 +1,72 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header>
+    <q-header style="background-color: transparent">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title> Jugador </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <q-toolbar-title class="q-pa-sm">
+          <q-img
+            width="50px"
+            src="/src/assets/logo/logo-white.png"
+            spinner-color="primary"
+            spinner-size="82px"
+          />
+        </q-toolbar-title>
+        <div></div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
+    <q-page-container class="bg-img">
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import EssentialLink, {
-  EssentialLinkProps,
-} from 'components/EssentialLink.vue';
+<script setup lang="ts"></script>
 
-const essentialLinks: EssentialLinkProps[] = [
-  {
-    title: 'Inicio',
-    caption: 'quasar.dev',
-    icon: 'home',
-    link: '/players/dashboard',
-    roles: [4],
-  },
-  {
-    title: 'Quiniela',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: '/players/rooms',
-    roles: [4],
-  },
-];
-
-const leftDrawerOpen = ref(false);
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
+<style lang="scss" scoped>
+.bg-img {
+  // background-color: #010A0F;
+  background-image: url('src/assets/bg-4.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  overflow-y: scroll;
 }
-</script>
+
+.title-cardMatchs {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.container-box {
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+
+  .box-room {
+    flex-grow: 0;
+    flex-shrink: 0;
+    display: grid;
+    // grid-template-columns: 1.5fr repeat(1, minmax(300px, 2fr));
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    width: 90vw;
+    padding-bottom: 100px;
+
+    .box-inside {
+      padding: 0 10px;
+    }
+
+    // .rooms {
+    // }
+
+    // .form {
+    // }
+  }
+}
+</style>

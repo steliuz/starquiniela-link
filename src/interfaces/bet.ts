@@ -14,6 +14,7 @@ export interface Bet {
   length?: number;
   user?: User;
   ticket_factura?: string;
+  max_points?: string;
 }
 
 export interface PaidBet extends Bet {
