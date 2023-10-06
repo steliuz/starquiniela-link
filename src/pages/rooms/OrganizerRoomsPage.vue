@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import UniversalTable from 'src/components/UniversalTable.vue';
-import { idColumn, nameColumn, optColumn } from 'src/helpers/columns';
+import {
+  customColumn,
+  idColumn,
+  nameColumn,
+  optColumn,
+} from 'src/helpers/columns';
 import { useRooms } from 'src/composables/useRooms';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'src/stores/auth';
@@ -10,7 +15,18 @@ import { vue_url } from 'src/boot/axios';
 import { handleMessages } from 'src/services/notifys';
 
 const { setRoom } = useAuthStore();
-const columns = [idColumn, nameColumn, optColumn];
+const columns = [
+  idColumn,
+  nameColumn,
+  customColumn({
+    name: 'show_ranking',
+    label: 'Ver Ranking',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    field: (row: any) => row.room_user?.show_ranking,
+  }),
+  optColumn,
+];
+const columns2 = [idColumn, nameColumn, optColumn];
 const {
   loading,
   rooms,
@@ -19,6 +35,8 @@ const {
   handlerTab,
   getRoomActive,
   buyRoom,
+  deleteRoom,
+  showRanking,
 } = useRooms();
 const router = useRouter();
 const popup = ref();
@@ -80,6 +98,8 @@ const clipboard = (row: any) => {
             :loading="loading"
             title="Mis Quinielas"
             :editBtnHidden="true"
+            @deleteData="deleteRoom"
+            @showRanking="showRanking"
           >
             <template v-slot:customName="scope">
               <td>
@@ -143,7 +163,7 @@ const clipboard = (row: any) => {
         >
           <UniversalTable
             :respData="rooms"
-            :columns="columns"
+            :columns="columns2"
             @paginateData="getRoomActive"
             :loading="loading"
             title="Quinielas Activas"

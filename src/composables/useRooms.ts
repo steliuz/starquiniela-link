@@ -9,7 +9,7 @@ import {
 } from 'src/services/communServices';
 import { useAuthStore } from 'src/stores/auth';
 
-const { getMe } = useAuthStore();
+const { getMe, auth } = useAuthStore();
 
 export function useRooms() {
   const loading = ref(false);
@@ -145,7 +145,11 @@ export function useRooms() {
       // global: false,
       // fase: false,
     };
-    getRoom({ rowsPerPage: 20 });
+    if (auth.role_id == 3) {
+      handlerTab(tab.value);
+    } else {
+      getRoom({ rowsPerPage: 20 });
+    }
   };
   const handlerTab = (value: string) => {
     tab.value = value;
@@ -175,6 +179,13 @@ export function useRooms() {
     getMe();
   };
 
+  const showRanking = async (value: any) => {
+    const data = {
+      status: value.show_ranking,
+    };
+    await putData(`statusRanking/${value.id}`, data);
+  };
+
   return {
     loading,
     dialog,
@@ -199,5 +210,6 @@ export function useRooms() {
     filteredTicket,
     search,
     postUpgradePremium,
+    showRanking,
   };
 }

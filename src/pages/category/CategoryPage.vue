@@ -70,15 +70,22 @@
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
 import { getData, putData } from 'src/services/communServices';
-const subscribes: Ref<Array> = ref([]);
+interface keyable {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
+const subscribes: Ref<Array<keyable>> = ref([]);
 
 function getSubscribes() {
   getData('creditos').then((resp) => {
     let data = resp.subscribes;
-    let array = [];
-    data.forEach((val) => {
-      let credits = data.filter((v) => v.subscribe_id == val.subscribe_id);
-      let exist = array.find((v) => v.id == val.subscribe_id);
+    let array: Array<object> = [];
+    data.forEach((val: keyable) => {
+      let credits = data.filter(
+        (v: keyable) => v.subscribe_id == val.subscribe_id
+      );
+      let exist = array.find((v: keyable) => v.id == val.subscribe_id);
       if (!exist)
         array.push({
           id: val.subscribe.id,
@@ -91,7 +98,7 @@ function getSubscribes() {
 }
 getSubscribes();
 
-function updateSubscribe(credit) {
+function updateSubscribe(credit: keyable) {
   let payload = {
     price: credit.price,
     id: credit.id,

@@ -103,13 +103,18 @@ onMounted(async () => {
                     size="sm"
                     name="fa-solid fa-trophy"
                     color="warning"
+                    @click="$router.push('/players/rooms/ranking')"
+                    v-if="room.room_user?.show_ranking == 1 && room.status == 1"
                   />
                 </div>
               </div>
               <div class="box-inside form">
                 <formPlayer v-model="dialog" @savePlayer="onSave" />
               </div>
-              <div class="box-inside rooms" v-if="room.matches?.length != 0">
+              <div
+                class="box-inside rooms"
+                v-if="room.matches?.length != 0 && room.status == 1"
+              >
                 <cardMatchsComponents
                   :dataMatch="room.matches"
                   :player="true"
@@ -120,8 +125,18 @@ onMounted(async () => {
                     color="secondary"
                     label="JUGAR"
                     @click="openDialog"
+                    :disable="room.status === 1 ? false : true"
                   />
                 </div>
+              </div>
+              <div v-if="room.matches?.length != 0 && room.status == 0">
+                <q-icon
+                  class="cursor-pointer q-ml-md"
+                  size="xl"
+                  name="fa-solid fa-trophy"
+                  color="warning"
+                  @click="$router.push('/players/rooms/ranking')"
+                />
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { Player } from './user';
 export interface Room {
   name: string;
   type: number;
-  status?: boolean;
+  status?: number;
   category_room_id: number;
   // price: number;
   // global: boolean;
@@ -24,4 +24,5 @@ export interface RoomUser {
   status?: number;
   cod_compartir?: string;
   limit_player: number;
+  show_ranking?: number;
 }
