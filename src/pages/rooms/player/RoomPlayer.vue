@@ -11,12 +11,13 @@ import { useRooms } from 'src/composables/useRooms';
 const openDialog = () => {
   dialog.value = true;
 };
-const { getRoom, room, registerPlayer, postBet, dialog } = useRoomPlayer();
+const { getRoomByCode, room, registerPlayer, postBet, dialog } =
+  useRoomPlayer();
 
 const { getQrRoom, qrcode, loading: loadingRoom } = useRooms();
 
 const router = useRoute();
-getRoom(`${router.params.code}`);
+getRoomByCode(`${router.params.code}`);
 const dialogSuccess = ref(false);
 const onSave = async (player: object) => {
   let check = false;
@@ -61,9 +62,32 @@ const onSave = async (player: object) => {
 };
 
 onMounted(async () => {
-  await getRoom(`${router.params.code}`);
+  await getRoomByCode(`${router.params.code}`);
   await getQrRoom(`${room.value.room_user?.cod_compartir}`);
 });
+
+const checkResult = () => {
+  let check = true;
+  room.value.matches?.forEach((item) => {
+    if (item.goalsTeam1 == null) check = false;
+  });
+
+  return check;
+};
+
+const checkStatusMatch = () => {
+  let check = false;
+  room.value.matches?.forEach((item) => {
+    if (item.status == 1) check = true;
+  });
+  console.log(
+    '🚀 ~ file: RoomPlayer.vue:80 ~ checkStatusMatch ~ check:',
+    check
+  );
+
+  return check;
+};
+checkStatusMatch();
 </script>
 
 <template>
@@ -90,14 +114,13 @@ onMounted(async () => {
               <p class="text-h5 text-white text-left">
                 {{ room.name || '' }}
               </p>
-              <div>
+              <div @click="$router.push('/players/rooms/ranking')">
                 <q-icon
                   class="cursor-pointer q-ml-md"
                   size="sm"
                   name="fa-solid fa-trophy"
                   color="warning"
-                  @click="$router.push('/players/rooms/ranking')"
-                  v-if="room.room_user?.show_ranking == 1 && room.status == 1"
+                  v-if="room.room_user?.show_ranking == 1"
                 />
               </div>
             </div>
@@ -106,7 +129,7 @@ onMounted(async () => {
             </div>
             <div
               class="box-inside rooms"
-              v-if="room.matches?.length != 0 && room.status == 1"
+              v-if="room.matches?.length != 0 && !checkResult()"
             >
               <cardMatchsComponents :dataMatch="room.matches" :player="true" />
               <div class="q-mt-sm box-button">
@@ -115,17 +138,18 @@ onMounted(async () => {
                   color="secondary"
                   label="JUGAR"
                   @click="openDialog"
-                  :disable="room.status === 1 ? false : true"
+                  :disable="checkResult() || !checkStatusMatch()"
                 />
               </div>
             </div>
-            <div v-if="room.matches?.length != 0 && room.status == 0">
+            <div v-if="room.matches?.length != 0 && checkResult()">
               <q-icon
                 class="cursor-pointer q-ml-md"
                 size="xl"
                 name="fa-solid fa-trophy"
                 color="warning"
                 @click="$router.push('/players/rooms/ranking')"
+                v-if="room.room_user?.show_ranking == 1"
               />
             </div>
           </div>

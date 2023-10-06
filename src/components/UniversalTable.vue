@@ -83,7 +83,7 @@
           :false-value="0"
           :true-value="1"
           v-model="props.row.room_user.show_ranking"
-          @update:model-value="showRanking(props.row.room_user)"
+          @update:model-value="showRanking(props.row)"
         />
       </td>
     </template>

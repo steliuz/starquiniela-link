@@ -13,7 +13,7 @@ export function useRoomPlayer() {
     // fase: false,
   });
 
-  const getRoom = async (code: string) => {
+  const getRoomByCode = async (code: string) => {
     await getData('rooms/code', { code: code }).then((resp) => {
       room.value = resp.room;
     });
@@ -47,7 +47,7 @@ export function useRoomPlayer() {
   return {
     room,
     dialog,
-    getRoom,
+    getRoomByCode,
     registerPlayer,
     postBet,
     getTicketPdf,

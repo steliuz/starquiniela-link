@@ -181,7 +181,7 @@ export function useRooms() {
 
   const showRanking = async (value: any) => {
     const data = {
-      status: value.show_ranking,
+      status: value.room_user.show_ranking,
     };
     await putData(`statusRanking/${value.id}`, data);
   };
