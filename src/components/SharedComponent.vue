@@ -1,5 +1,20 @@
 <template>
-  <q-btn-dropdown unelevated flat icon="share" color="secondary">
+  <div class="text-center q-mx-sm">
+    <q-btn color="secondary" label="Link para compartir" @click="clipboard" />
+    <q-separator spaced inset dark />
+    <p class="q-mb-sm text-white text-center">Escanera código QR</p>
+    <div v-html="decodedSVG"></div>
+    <div>
+      <q-btn
+        class="full-width q-mt-sm"
+        size="sm"
+        color="primary"
+        label="Descargar QR"
+        @click="downloadImg"
+      />
+    </div>
+  </div>
+  <!-- <q-btn-dropdown unelevated flat icon="share" color="secondary">
     <q-list class="bg-header-dark q-pa-xs">
       <q-item clickable v-close-popup>
         <q-item-section>
@@ -34,7 +49,7 @@
         </q-item-section>
       </q-item>
     </q-list>
-  </q-btn-dropdown>
+  </q-btn-dropdown> -->
 </template>
 
 <script setup lang="ts">

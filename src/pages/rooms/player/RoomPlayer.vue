@@ -83,65 +83,61 @@ onMounted(async () => {
     </q-header>
 
     <q-page-container class="bg-img">
-      <div class="">
-        <section class="q-mt-md q-mx-sm">
-          <div class="container-box">
-            <div class="box-room">
-              <div class="title-cardMatchs">
-                <p class="text-h5 text-white text-left">
-                  {{ room.name || '' }}
-                </p>
-                <div>
-                  <sharedComponent
-                    :code="router.params.code"
-                    :imgBase64="qrcode.encode"
-                    :key="loadingRoom ? 1 : 0"
-                    :download="qrcode.path"
-                  />
-                  <q-icon
-                    class="cursor-pointer q-ml-md"
-                    size="sm"
-                    name="fa-solid fa-trophy"
-                    color="warning"
-                    @click="$router.push('/players/rooms/ranking')"
-                    v-if="room.room_user?.show_ranking == 1 && room.status == 1"
-                  />
-                </div>
-              </div>
-              <div class="box-inside form">
-                <formPlayer v-model="dialog" @savePlayer="onSave" />
-              </div>
-              <div
-                class="box-inside rooms"
-                v-if="room.matches?.length != 0 && room.status == 1"
-              >
-                <cardMatchsComponents
-                  :dataMatch="room.matches"
-                  :player="true"
-                />
-                <div class="q-mt-sm box-button">
-                  <q-btn
-                    class="full-width"
-                    color="secondary"
-                    label="JUGAR"
-                    @click="openDialog"
-                    :disable="room.status === 1 ? false : true"
-                  />
-                </div>
-              </div>
-              <div v-if="room.matches?.length != 0 && room.status == 0">
+      <section class="q-mt-md q-mx-sm">
+        <div class="container-box">
+          <div class="box-room">
+            <div class="title-cardMatchs">
+              <p class="text-h5 text-white text-left">
+                {{ room.name || '' }}
+              </p>
+              <div>
                 <q-icon
                   class="cursor-pointer q-ml-md"
-                  size="xl"
+                  size="sm"
                   name="fa-solid fa-trophy"
                   color="warning"
                   @click="$router.push('/players/rooms/ranking')"
+                  v-if="room.room_user?.show_ranking == 1 && room.status == 1"
                 />
               </div>
             </div>
+            <div class="box-inside form">
+              <formPlayer v-model="dialog" @savePlayer="onSave" />
+            </div>
+            <div
+              class="box-inside rooms"
+              v-if="room.matches?.length != 0 && room.status == 1"
+            >
+              <cardMatchsComponents :dataMatch="room.matches" :player="true" />
+              <div class="q-mt-sm box-button">
+                <q-btn
+                  class="full-width"
+                  color="secondary"
+                  label="JUGAR"
+                  @click="openDialog"
+                  :disable="room.status === 1 ? false : true"
+                />
+              </div>
+            </div>
+            <div v-if="room.matches?.length != 0 && room.status == 0">
+              <q-icon
+                class="cursor-pointer q-ml-md"
+                size="xl"
+                name="fa-solid fa-trophy"
+                color="warning"
+                @click="$router.push('/players/rooms/ranking')"
+              />
+            </div>
           </div>
-        </section>
-      </div>
+          <sharedComponent
+            class="q-ml-xl"
+            :code="router.params.code"
+            :imgBase64="qrcode.encode"
+            :key="loadingRoom ? 1 : 0"
+            :download="qrcode.path"
+          />
+        </div>
+      </section>
     </q-page-container>
   </q-layout>
 </template>
@@ -167,10 +163,10 @@ onMounted(async () => {
 
 .container-box {
   display: flex;
-  // justify-content: center;
-  align-items: center;
+  justify-content: center;
+  align-items: start;
   width: 100%;
-  flex-direction: column;
+  // flex-direction: column;
 
   .box-room {
     flex-grow: 0;

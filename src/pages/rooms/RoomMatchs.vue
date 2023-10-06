@@ -277,12 +277,6 @@ const upgradePremium = async (id: number) => {
             </p>
           </div>
           <div>
-            <sharedComponent
-              :code="room.room_user?.cod_compartir"
-              :imgBase64="qrcode.encode"
-              :key="loadingRoom ? 1 : 0"
-              :download="qrcode.path"
-            />
             <q-btn
               flat
               color="orange-5"
@@ -344,7 +338,13 @@ const upgradePremium = async (id: number) => {
           @resetMatch="onResetMatch"
         />
       </div>
-      <div class="col-12 col-md-4 q-px-md" v-if="auth.role_id != 1">
+      <div class="col-12 col-md-3 q-px-md" v-if="auth.role_id != 1">
+        <sharedComponent
+          :code="room.room_user?.cod_compartir"
+          :imgBase64="qrcode.encode"
+          :key="loadingRoom ? 1 : 0"
+          :download="qrcode.path"
+        />
         <div class="name-quiniela">
           <p class="q-mb-none q-pl-md text-body2 text-weight-bold ellipsis">
             Lista de jugadores
