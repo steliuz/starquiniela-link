@@ -8,7 +8,7 @@ export interface Room {
   // price: number;
   // global: boolean;
   // fase: boolean;
-  id?: number;
+  id?: number | string;
   matches?: Array<Match> | null;
   players?: Array<Player> | null;
   room_user?: RoomUser;

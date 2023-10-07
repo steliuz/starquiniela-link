@@ -6,7 +6,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     auth: {} as dataUser,
     barLoading: false,
-    room_id: null as string | null | number,
+    room_id: '' as string | number | undefined,
   }),
   getters: {},
   actions: {
@@ -16,7 +16,7 @@ export const useAuthStore = defineStore('auth', {
     handlebarLoading(payload: boolean) {
       this.barLoading = !payload;
     },
-    setRoom(id: number | string) {
+    setRoom(id: number | string | undefined) {
       this.room_id = id;
     },
     async getMe() {

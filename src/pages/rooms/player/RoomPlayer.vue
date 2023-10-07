@@ -7,6 +7,7 @@ import { useRoute } from 'vue-router';
 import { handleMessages } from 'src/services/notifys';
 import sharedComponent from 'src/components/SharedComponent.vue';
 import { useRooms } from 'src/composables/useRooms';
+import { useAuthStore } from 'src/stores/auth';
 
 const openDialog = () => {
   dialog.value = true;
@@ -15,9 +16,10 @@ const { getRoomByCode, room, registerPlayer, postBet, dialog } =
   useRoomPlayer();
 
 const { getQrRoom, qrcode, loading: loadingRoom } = useRooms();
+const { setRoom } = useAuthStore();
 
 const router = useRoute();
-getRoomByCode(`${router.params.code}`);
+// getRoomByCode(`${router.params.code}`);
 const dialogSuccess = ref(false);
 const onSave = async (player: object) => {
   let check = false;
@@ -64,6 +66,7 @@ const onSave = async (player: object) => {
 onMounted(async () => {
   await getRoomByCode(`${router.params.code}`);
   await getQrRoom(`${room.value.room_user?.cod_compartir}`);
+  setRoom(room.value.id);
 });
 
 const checkResult = () => {
