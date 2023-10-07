@@ -80,10 +80,6 @@ const checkStatusMatch = () => {
   room.value.matches?.forEach((item) => {
     if (item.status == 1) check = true;
   });
-  console.log(
-    '🚀 ~ file: RoomPlayer.vue:80 ~ checkStatusMatch ~ check:',
-    check
-  );
 
   return check;
 };
@@ -188,7 +184,7 @@ checkStatusMatch();
 .container-box {
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   width: 100%;
   // flex-direction: column;
 
@@ -205,12 +201,6 @@ checkStatusMatch();
     .box-inside {
       padding: 0 10px;
     }
-
-    // .rooms {
-    // }
-
-    // .form {
-    // }
   }
 }
 </style>
