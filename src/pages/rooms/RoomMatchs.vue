@@ -278,6 +278,8 @@ const upgradePremium = async (id: number) => {
           </div>
           <div>
             <q-btn
+              size="lg"
+              class="q-mr-sm"
               flat
               color="orange-5"
               @click="$router.push('/admin/rooms/ranking')"
@@ -285,13 +287,14 @@ const upgradePremium = async (id: number) => {
               <i class="fa-solid fa-trophy text-orange-5 fa-xl"></i>
             </q-btn>
 
-            <q-btn color="primary" flat
-              ><i
+            <q-btn color="primary" size="lg" class="" flat>
+              <i
                 class="fa-solid fa-xl"
                 :class="
                   statusAll ? 'fa-lock text-orange-5' : ' fa-unlock text-white'
                 "
-              ></i>
+              >
+              </i>
               <q-popup-proxy>
                 <q-banner class="bg-header-dark q-pa-lg">
                   <div class="row">

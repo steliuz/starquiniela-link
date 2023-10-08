@@ -1,82 +1,42 @@
 <template>
-  <section class="q-mt-md q-px-sm">
-    <div class="flex justify-end">
-      <q-btn
-        class="q-my-sm"
-        flat
-        color="red-5"
-        label="Regresar"
-        @click="$router.go(-1)"
-      />
-    </div>
-    <aside>
-      <div class="pp mt-2 text-center hg_table" ref="containerTable">
-        <table>
-          <thead>
-            <tr>
-              <th class="name1 bg-header-dark">
-                <div class="q-px-xs text-center">Jugador</div>
-              </th>
-              <th class="name2 text-center bg-header-dark">
-                <div class="q-px-xs">Pts</div>
-              </th>
-              <template v-for="(team, index) of matches" :key="index">
-                <th>
-                  <div class="full-width full-height flex flex-center">
-                    {{ index + 1 }}
-                  </div>
+  <section class="row">
+    <div class="col-12 col-md-10 offset-md-1 q-px-md">
+      <div class="flex justify-end">
+        <q-btn
+          class="q-my-sm"
+          flat
+          color="red-5"
+          label="Regresar"
+          @click="$router.go(-1)"
+        />
+      </div>
+      <aside>
+        <div class="pp mt-2 text-center hg_table" ref="containerTable">
+          <table>
+            <thead>
+              <tr>
+                <th class="name1 bg-header-dark">
+                  <div class="q-px-xs text-center">Jugador</div>
                 </th>
-                <th v-if="typeRoom" class="text-center th-custom">
-                  <div class="m-0 q-pa-none text-center">
-                    <q-avatar size="30px">
-                      <img
-                        :src="
-                          team?.team1?.image
-                            ? `${file_url}${team?.team1?.image}`
-                            : ''
-                        "
-                      />
-                      <q-tooltip>
-                        <span class="text-capitalize">
-                          {{ team?.team1?.name }}</span
-                        >
-                      </q-tooltip>
-                    </q-avatar>
-                    <div class="text-center flex justify-center">
-                      <p class="gols">
-                        {{ team.goalsTeam1 != null ? team.goalsTeam1 : '-' }}
-                      </p>
+                <th class="name2 text-center bg-header-dark">
+                  <div class="q-px-xs">Pts</div>
+                </th>
+                <template v-for="(team, index) of matches" :key="index">
+                  <th>
+                    <div class="full-width full-height flex flex-center">
+                      {{ index + 1 }}
                     </div>
-                  </div>
-                </th>
-                <th v-if="typeRoom" class="text-center th-custom2">
-                  <div class="m-0 q-pa-none text-center">
-                    <q-avatar size="30px">
-                      <img
-                        :src="
-                          team?.team1?.image
-                            ? `${file_url}${team?.team2?.image}`
-                            : ''
-                        "
-                      />
-                      <q-tooltip>
-                        <span class="text-capitalize">
-                          {{ team?.team2?.name }}
-                        </span>
-                      </q-tooltip>
-                    </q-avatar>
-                    <div class="text-center flex justify-center">
-                      <p class="gols">
-                        {{ team.goalsTeam2 != null ? team.goalsTeam2 : '-' }}
-                      </p>
-                    </div>
-                  </div>
-                </th>
-                <th v-if="!typeRoom">
-                  <div class="flex justify-center" style="width: 80px">
-                    <div class="q-mx-xs">
+                  </th>
+                  <th v-if="typeRoom" class="text-center th-custom">
+                    <div class="m-0 q-pa-none text-center">
                       <q-avatar size="30px">
-                        <img :src="`${file_url}${team?.team1?.image}`" />
+                        <img
+                          :src="
+                            team?.team1?.image
+                              ? `${file_url}${team?.team1?.image}`
+                              : ''
+                          "
+                        />
                         <q-tooltip>
                           <span class="text-capitalize">
                             {{ team?.team1?.name }}</span
@@ -89,9 +49,17 @@
                         </p>
                       </div>
                     </div>
-                    <div class="q-mx-xs">
+                  </th>
+                  <th v-if="typeRoom" class="text-center th-custom2">
+                    <div class="m-0 q-pa-none text-center">
                       <q-avatar size="30px">
-                        <img :src="`${file_url}${team?.team2?.image}`" />
+                        <img
+                          :src="
+                            team?.team1?.image
+                              ? `${file_url}${team?.team2?.image}`
+                              : ''
+                          "
+                        />
                         <q-tooltip>
                           <span class="text-capitalize">
                             {{ team?.team2?.name }}
@@ -104,72 +72,112 @@
                         </p>
                       </div>
                     </div>
+                  </th>
+                  <th v-if="!typeRoom">
+                    <div class="flex justify-center" style="width: 80px">
+                      <div class="q-mx-xs">
+                        <q-avatar size="30px">
+                          <img :src="`${file_url}${team?.team1?.image}`" />
+                          <q-tooltip>
+                            <span class="text-capitalize">
+                              {{ team?.team1?.name }}</span
+                            >
+                          </q-tooltip>
+                        </q-avatar>
+                        <div class="text-center flex justify-center">
+                          <p class="gols">
+                            {{
+                              team.goalsTeam1 != null ? team.goalsTeam1 : '-'
+                            }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="q-mx-xs">
+                        <q-avatar size="30px">
+                          <img :src="`${file_url}${team?.team2?.image}`" />
+                          <q-tooltip>
+                            <span class="text-capitalize">
+                              {{ team?.team2?.name }}
+                            </span>
+                          </q-tooltip>
+                        </q-avatar>
+                        <div class="text-center flex justify-center">
+                          <p class="gols">
+                            {{
+                              team.goalsTeam2 != null ? team.goalsTeam2 : '-'
+                            }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </th>
+                </template>
+              </tr>
+            </thead>
+            <tbody v-if="typeRoom">
+              <tr v-for="(player, rowIndex) in players" :key="rowIndex">
+                <td class="name1 text-name-player">
+                  <div class="">
+                    {{ player?.user?.name || '' }}
+                    <p class="text-caption text-orange-5 no-margin">
+                      {{ `(${player.ticket_factura})` }}
+                    </p>
                   </div>
-                </th>
-              </template>
-            </tr>
-          </thead>
-          <tbody v-if="typeRoom">
-            <tr v-for="(player, rowIndex) in players" :key="rowIndex">
-              <td class="name1 text-name-player">
-                <div class="">
-                  {{ player?.user?.name || '' }}
-                  <br />
-                  {{ `(${player.ticket_factura})` }}
-                </div>
-              </td>
-              <td class="name2 bg-orange-6 text-black text-bold">
-                <div class="flex flex-center">
-                  {{ player.max_points }}
-                </div>
-              </td>
+                </td>
+                <td class="name2 bg-orange-6 text-black text-bold">
+                  <div class="flex flex-center">
+                    {{ player.max_points }}
+                  </div>
+                </td>
 
-              <template v-for="match in matches" :key="match.id">
-                <td class="roomNormal r">
-                  <div class="text-center">
-                    {{ getPoint(match.id, player.user_id, player.index) }}
+                <template v-for="match in matches" :key="match.id">
+                  <td class="roomNormal r">
+                    <div class="text-center">
+                      {{ getPoint(match.id, player.user_id, player.index) }}
+                    </div>
+                  </td>
+                  <td class="roomNormal">
+                    <p class="q-mb-none text-bold text-center">
+                      {{ getBet(match.id, player.user_id, player.index) }}
+                    </p>
+                  </td>
+                  <td class="roomNormal">
+                    <p class="q-mb-none text-bold text-center">
+                      {{ getBet2(match.id, player.user_id, player.index) }}
+                    </p>
+                  </td>
+                </template>
+              </tr>
+            </tbody>
+            <tbody v-else>
+              <tr v-for="(player, rowIndex) in players" :key="rowIndex">
+                <td class="name1">
+                  <div class="text-name-player">
+                    {{ player?.user?.name || '' }}
+                    <p class="text-caption text-orange-5 no-margin">
+                      {{ `(${player.ticket_factura})` }}
+                    </p>
                   </div>
                 </td>
-                <td class="roomNormal">
-                  <p class="q-mb-none text-bold text-center">
-                    {{ getBet(match.id, player.user_id, player.index) }}
-                  </p>
+                <td class="name2 bg-orange-6 text-black text-bold">
+                  <div class="flex flex-center">9</div>
                 </td>
-                <td class="roomNormal">
-                  <p class="q-mb-none text-bold text-center">
-                    {{ getBet2(match.id, player.user_id, player.index) }}
-                  </p>
-                </td>
-              </template>
-            </tr>
-          </tbody>
-          <tbody v-else>
-            <tr v-for="(player, rowIndex) in players" :key="rowIndex">
-              <td class="name1">
-                <div class="text-name-player">
-                  {{ player?.user?.name || '' }}
-                  <br />
-                  {{ `(${player.ticket_factura})` }}
-                </div>
-              </td>
-              <td class="name2 bg-orange-6 text-black text-bold">
-                <div class="flex flex-center">9</div>
-              </td>
-              <template v-for="(match, index) in matches" :key="index">
-                <td class="lev">
-                  {{ getPoint(match.id, player.user_id, player.index) }}
-                </td>
-                <td class="lev">
-                  <p class="q-mb-none text-bold text-center">
-                    {{ getLEV(match.id, player.user_id, player.index) }}
-                  </p>
-                </td>
-              </template>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </aside>
+                <template v-for="(match, index) in matches" :key="index">
+                  <td class="lev">
+                    {{ getPoint(match.id, player.user_id, player.index) }}
+                  </td>
+                  <td class="lev">
+                    <p class="q-mb-none text-bold text-center">
+                      {{ getLEV(match.id, player.user_id, player.index) }}
+                    </p>
+                  </td>
+                </template>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </aside>
+    </div>
   </section>
 </template>
 
@@ -180,20 +188,12 @@ import { useRanking } from 'src/composables/useRanking';
 import { useAuthStore } from 'src/stores/auth';
 import { onMounted, ref } from 'vue';
 import { file_url } from 'src/boot/axios';
-// import { Bet } from 'src/interfaces/bet';
-// import { Match } from 'src/interfaces/match';
 
 const { room_id: roomID } = useAuthStore();
 const { getRanking, room, players, matches } = useRanking(roomID);
 const containerTable = ref<HTMLElement | null>(null);
 
 const typeRoom = ref(room.value.type != 3 ? true : false);
-
-// const restante = (bets: Bet[]) => {
-//   let count = 0;
-//   count = matches.value.length ?? 0 - (bets.length ? bets.length : 0);
-//   return count;
-// };
 
 onMounted(() => {
   getRanking();
@@ -296,6 +296,8 @@ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  color: #fff;
+  background-color: #010a0f;
 }
 
 aside > div.hg_table {

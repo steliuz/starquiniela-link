@@ -110,10 +110,13 @@ checkStatusMatch();
         <div class="container-box">
           <div class="box-room">
             <div class="title-cardMatchs">
-              <p class="text-h5 text-white text-left">
+              <p class="text-h6 text-white text-left">
                 {{ room.name || '' }}
               </p>
-              <div @click="$router.push('/players/rooms/ranking')">
+              <div
+                v-if="room.matches?.length != 0 && !checkResult()"
+                @click="$router.push('/players/rooms/ranking')"
+              >
                 <q-icon
                   class="cursor-pointer q-ml-md"
                   size="sm"
@@ -142,18 +145,24 @@ checkStatusMatch();
               </div>
             </div>
             <div v-if="room.matches?.length != 0 && checkResult()">
-              <q-icon
-                class="cursor-pointer q-ml-md"
-                size="xl"
-                name="fa-solid fa-trophy"
-                color="warning"
-                @click="$router.push('/players/rooms/ranking')"
-                v-if="room.room_user?.show_ranking == 1"
-              />
+              <div class="flex justify-center">
+                <p class="text-white text-h5 text-center">
+                  Esta quiniela ya ha finalizado Puedes ver los resultados en la
+                  tabla ranking
+                </p>
+                <q-icon
+                  class="cursor-pointer q-ml-md"
+                  size="xl"
+                  name="fa-solid fa-trophy"
+                  color="orange-5"
+                  @click="$router.push('/players/rooms/ranking')"
+                  v-if="room.room_user?.show_ranking == 1"
+                />
+              </div>
             </div>
           </div>
           <sharedComponent
-            class="q-ml-xl"
+            class="q-md-ml-xl"
             :code="router.params.code"
             :imgBase64="qrcode.encode"
             :key="loadingRoom ? 1 : 0"
@@ -189,6 +198,7 @@ checkStatusMatch();
   justify-content: center;
   align-items: flex-start;
   width: 100%;
+  flex-wrap: wrap;
   // flex-direction: column;
 
   .box-room {
@@ -205,5 +215,8 @@ checkStatusMatch();
       padding: 0 10px;
     }
   }
+}
+
+@media screen and (max-width: 700px) {
 }
 </style>

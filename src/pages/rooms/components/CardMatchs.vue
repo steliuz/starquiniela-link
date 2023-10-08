@@ -182,7 +182,7 @@ const resetMatch = (id: number) => {
             <q-btn
               padding="8px"
               flat
-              color="primary"
+              color="secondary"
               icon="check"
               @click="emitSave(match)"
             />
@@ -204,7 +204,9 @@ const resetMatch = (id: number) => {
                   <q-item clickable v-close-popup @click="emitResult(index)">
                     <q-item-section>
                       <div class="flex">
-                        <i class="q-mr-md fa-solid fa-futbol text-primary"></i>
+                        <i
+                          class="q-mr-md fa-solid fa-futbol text-secondary"
+                        ></i>
                         <span>Resultados</span>
                       </div>
                     </q-item-section>

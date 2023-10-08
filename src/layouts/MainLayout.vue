@@ -18,7 +18,7 @@
           </div>
         </q-toolbar-title>
 
-        <div class="flex flex-center">
+        <div class="flex flex-center" v-if="auth.role_id != 1">
           <span class="text-orange-5 text-h6">{{ auth.credits }}</span>
 
           <q-img
@@ -65,10 +65,6 @@
               @click="handleLogout"
             />
           </q-item-section>
-
-          <!-- <q-item-section>
-            <q-item-label>Salir</q-item-label>
-          </q-item-section> -->
         </q-item>
       </q-list>
     </q-drawer>
