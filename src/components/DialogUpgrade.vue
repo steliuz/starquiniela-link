@@ -24,7 +24,7 @@
                 class="q-mt-sm"
                 color="secondary"
                 :label="`${getPrice(item.id)} monedas`"
-                :disable="vip === item.id"
+                :disable="vip >= item.id"
               >
                 <q-popup-proxy>
                   <q-banner class="bg-header-dark q-pa-md">

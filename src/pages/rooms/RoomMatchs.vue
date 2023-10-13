@@ -15,6 +15,7 @@ import { PaidBet } from 'src/interfaces/bet';
 // import { copyToClipboard } from 'quasar';
 import sharedComponent from 'src/components/SharedComponent.vue';
 import DialogUpgrade from 'src/components/DialogUpgrade.vue';
+import { handleMessages } from 'src/services/notifys';
 
 // const confirmTickets = ref(false);
 // const infoPlayer = ref();
@@ -107,6 +108,21 @@ async function onDelete(id: number | null | undefined | string) {
 
 const statusPaid = async (value: PaidBet) => {
   value.room_id = roomID;
+  if (
+    (room.value?.count_player ?? 0) >=
+      (room.value?.room_user?.limit_player ?? 0) &&
+    value.paid == 1
+  ) {
+    handleMessages({
+      message: 'Se ha superado el límite de aprobación de tickets',
+      color: 'red-7',
+      icon: 'info',
+      position: 'center',
+    });
+    value.paid = 0;
+    dialogUpgrade.value = true;
+    return;
+  }
   await statusPaidBet(value);
   await getRoomById(roomID);
 };

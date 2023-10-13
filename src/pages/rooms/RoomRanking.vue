@@ -1,6 +1,9 @@
 <template>
   <section class="q-mt-md q-px-sm">
     <div class="flex justify-end">
+      <div v-if="auth.role_id == 3">
+        {{ `${room.count_player}/${room.room_user?.limit_player}` }}
+      </div>
       <q-btn
         class="q-my-sm"
         flat
@@ -174,26 +177,16 @@
 </template>
 
 <script setup lang="ts">
-// import { PropType } from 'vue';
-// import { QTableProps } from 'quasar';
 import { useRanking } from 'src/composables/useRanking';
 import { useAuthStore } from 'src/stores/auth';
 import { onMounted, ref } from 'vue';
 import { file_url } from 'src/boot/axios';
-// import { Bet } from 'src/interfaces/bet';
-// import { Match } from 'src/interfaces/match';
 
-const { room_id: roomID } = useAuthStore();
+const { room_id: roomID, auth } = useAuthStore();
 const { getRanking, room, players, matches } = useRanking(roomID);
 const containerTable = ref<HTMLElement | null>(null);
 
 const typeRoom = ref(room.value.type != 3 ? true : false);
-
-// const restante = (bets: Bet[]) => {
-//   let count = 0;
-//   count = matches.value.length ?? 0 - (bets.length ? bets.length : 0);
-//   return count;
-// };
 
 onMounted(() => {
   getRanking();
@@ -278,17 +271,6 @@ const getLEV = (
 
   return lev;
 };
-
-// const getTotalPoint = (playerID: number | undefined) => {
-//   let player = room.value.players?.find((player) => {
-//     return playerID == player.id;
-//   }, {});
-
-//   let total = player?.bets?.reduce((total, bet) => {
-//     return total + (bet.points ?? 0);
-//   }, 0);
-//   return total;
-// };
 </script>
 
 <style lang="scss" scoped>

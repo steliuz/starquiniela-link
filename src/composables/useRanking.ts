@@ -6,7 +6,7 @@ import { Match } from 'src/interfaces/match';
 // import { Player } from 'src/interfaces/user';
 import { Bet } from 'src/interfaces/bet';
 
-export function useRanking(roomID: number | string | null) {
+export function useRanking(roomID: number | string | undefined) {
   const matches: Ref<Match[]> = ref([
     {
       id: 0,

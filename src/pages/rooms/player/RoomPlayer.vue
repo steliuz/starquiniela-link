@@ -23,10 +23,19 @@ const router = useRoute();
 const dialogSuccess = ref(false);
 const onSave = async (player: object) => {
   let check = false;
+  console.log('🚀 ~ file: RoomPlayer.vue:26 ~ onSave ~ check:', check);
   room.value.matches?.map((match) => {
-    if (match.predictTeam1 == null || match.predictTeam2 == null) check = true;
+    if (
+      (match.predictTeam1 == null || match.predictTeam2 == null) &&
+      match.status == 1
+    )
+      check = true;
   });
 
+  console.log(
+    '🚀 ~ file: RoomPlayer.vue:33 ~ room.value.matches?.map ~ check:',
+    check
+  );
   if (check) {
     handleMessages({
       message: 'Debes llenar todas las predicciones',
@@ -36,6 +45,7 @@ const onSave = async (player: object) => {
     });
     return;
   }
+
   await registerPlayer({ ...player, cod_compartir: router.params.code }).then(
     (resp) => {
       let data = {
@@ -53,8 +63,8 @@ const onSave = async (player: object) => {
         room.value.matches = room.value.matches?.map((match) => {
           return {
             ...match,
-            predictTeam1: '',
-            predictTeam2: '',
+            predictTeam1: null,
+            predictTeam2: null,
           };
         });
         dialogSuccess.value = true;
