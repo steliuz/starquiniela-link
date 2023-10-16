@@ -98,17 +98,3 @@ export const deleteData = async (
     return handleError(error);
   }
 };
-
-// export const searchData = async (path, payload) => {
-//   try {
-//     const { data } = await api.post(path, payload);
-//     return data;
-//   } catch (error) {
-//     handleMessages({
-//       message: error.response.data.error,
-//       color: 'negative',
-//       icon: 'cancel',
-//     });
-//     throw error.response;
-//   }
-// };

@@ -3,7 +3,10 @@
     <div class="col-12 col-md-10 offset-md-1 q-px-md">
       <div class="flex justify-end">
         <div v-if="auth.role_id == 3">
-          {{ `${room.count_player}/${room.room_user?.limit_player}` }}
+          <span class="text-orange-5">
+            {{ room.count_player || 0 }} /
+            {{ room.room_user?.limit_player ?? '--' }}
+          </span>
         </div>
         <q-btn
           class="q-my-sm"
@@ -197,7 +200,7 @@ const containerTable = ref<HTMLElement | null>(null);
 const typeRoom = ref(room.value.type != 3 ? true : false);
 
 onMounted(() => {
-  getRanking();
+  getRanking(auth.role_id);
 });
 
 const getPoint = (

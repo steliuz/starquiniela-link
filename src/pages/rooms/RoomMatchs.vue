@@ -367,6 +367,10 @@ const upgradePremium = async (id: number) => {
         <div class="name-quiniela">
           <p class="q-mb-none q-pl-md text-body2 text-weight-bold ellipsis">
             Lista de jugadores
+            <span class="text-orange-5">
+              {{ room.count_player || 0 }} /
+              {{ room.room_user?.limit_player ?? '--' }}
+            </span>
           </p>
           <div v-if="auth.role_id == 3">
             <q-btn

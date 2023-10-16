@@ -31,6 +31,7 @@ export const logout = async () => {
   try {
     await api.post('logout');
     localStorage.removeItem('access_token');
+    localStorage.removeItem('auth');
     // localStorage.removeItem("user");
     handleMessages({
       message: 'Esperamos regreses pronto',

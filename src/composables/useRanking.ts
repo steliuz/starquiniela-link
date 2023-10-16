@@ -21,8 +21,12 @@ export function useRanking(roomID: number | string | undefined) {
     type: 1,
   });
 
-  const getRanking = async () => {
-    await getData(`rooms/${roomID}/ranking`).then((resp) => {
+  const getRanking = async (role_id = 0) => {
+    const url =
+      role_id == 3
+        ? `rooms/${roomID}/ranking`
+        : `v2/rooms/${roomID}/players/ranking`;
+    await getData(url).then((resp) => {
       players.value = resp.players;
       room.value = resp.room;
       matches.value = resp.matches;

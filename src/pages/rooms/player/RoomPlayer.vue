@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import cardMatchsComponents from '../components/CardMatchs.vue';
 import formPlayer from '../components/formPlayer.vue';
 import { useRoomPlayer } from 'src/composables/useRoomPlayer';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { handleMessages } from 'src/services/notifys';
 import sharedComponent from 'src/components/SharedComponent.vue';
 import { useRooms } from 'src/composables/useRooms';
@@ -18,12 +18,12 @@ const { getRoomByCode, room, registerPlayer, postBet, dialog } =
 const { getQrRoom, qrcode, loading: loadingRoom } = useRooms();
 const { setRoom } = useAuthStore();
 
+const routes = useRouter();
 const router = useRoute();
 // getRoomByCode(`${router.params.code}`);
 const dialogSuccess = ref(false);
 const onSave = async (player: object) => {
   let check = false;
-  console.log('🚀 ~ file: RoomPlayer.vue:26 ~ onSave ~ check:', check);
   room.value.matches?.map((match) => {
     if (
       (match.predictTeam1 == null || match.predictTeam2 == null) &&
@@ -32,10 +32,6 @@ const onSave = async (player: object) => {
       check = true;
   });
 
-  console.log(
-    '🚀 ~ file: RoomPlayer.vue:33 ~ room.value.matches?.map ~ check:',
-    check
-  );
   if (check) {
     handleMessages({
       message: 'Debes llenar todas las predicciones',
@@ -59,7 +55,7 @@ const onSave = async (player: object) => {
           };
         }),
       };
-      postBet(data).then(() => {
+      postBet(data).then((resp) => {
         room.value.matches = room.value.matches?.map((match) => {
           return {
             ...match,
@@ -68,6 +64,11 @@ const onSave = async (player: object) => {
           };
         });
         dialogSuccess.value = true;
+
+        let ticket = resp.ticket;
+
+        let route = routes.resolve(`/ticket/${ticket.id}/pdf`);
+        window.open(route.href, '_blank');
       });
     }
   );
