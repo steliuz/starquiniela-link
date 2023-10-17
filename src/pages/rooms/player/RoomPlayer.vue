@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { Ref, onMounted, ref } from 'vue';
 import cardMatchsComponents from '../components/CardMatchs.vue';
 import formPlayer from '../components/formPlayer.vue';
 import { useRoomPlayer } from 'src/composables/useRoomPlayer';
@@ -20,8 +20,11 @@ const { setRoom } = useAuthStore();
 
 const routes = useRouter();
 const router = useRoute();
-// getRoomByCode(`${router.params.code}`);
+
 const dialogSuccess = ref(false);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const tickets: Ref<Array<any>> = ref([]);
 const onSave = async (player: object) => {
   let check = false;
   room.value.matches?.map((match) => {
@@ -67,17 +70,35 @@ const onSave = async (player: object) => {
 
         let ticket = resp.ticket;
 
-        let route = routes.resolve(`/ticket/${ticket.id}/pdf`);
-        window.open(route.href, '_blank');
+        let array_tickets = tickets.value;
+
+        array_tickets.push(ticket);
+
+        localStorage.setItem(
+          'user_tickets_' + room.value.id,
+          JSON.stringify(array_tickets)
+        );
+
+        // let route = routes.resolve(`/ticket/${ticket.id}/pdf`);
+        // window.open(route.href, '_blank');
       });
     }
   );
+};
+
+const goToTickets = (ticketID: number) => {
+  let route = routes.resolve(`/ticket/${ticketID}/pdf`);
+  window.open(route.href, '_blank');
 };
 
 onMounted(async () => {
   await getRoomByCode(`${router.params.code}`);
   await getQrRoom(`${room.value.room_user?.cod_compartir}`);
   setRoom(room.value.id);
+
+  tickets.value = JSON.parse(
+    localStorage.getItem('user_tickets_' + room.value.id) || '[]'
+  );
 });
 
 const checkResult = () => {
@@ -179,6 +200,21 @@ checkStatusMatch();
             :key="loadingRoom ? 1 : 0"
             :download="qrcode.path"
           />
+
+          <div v-if="tickets" class="text-white">
+            Lista de Tickets
+            <q-list bordered>
+              <q-item
+                clickable
+                v-ripple
+                v-for="ticket in tickets"
+                :key="ticket.id"
+                @click="goToTickets(ticket.id)"
+              >
+                <q-item-section>{{ ticket.ticket_factura }}</q-item-section>
+              </q-item>
+            </q-list>
+          </div>
         </div>
       </section>
     </q-page-container>

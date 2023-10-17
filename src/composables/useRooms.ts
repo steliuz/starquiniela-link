@@ -186,6 +186,10 @@ export function useRooms() {
     await putData(`statusRanking/${value.id}`, data);
   };
 
+  const putLinkWsGrpoup = async (payload: any) => {
+    await putData(`v2/room-user/${payload.id}/linkWsGrpoup`, payload);
+  };
+
   return {
     loading,
     dialog,
@@ -211,5 +215,6 @@ export function useRooms() {
     search,
     postUpgradePremium,
     showRanking,
+    putLinkWsGrpoup,
   };
 }

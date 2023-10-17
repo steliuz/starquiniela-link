@@ -37,6 +37,7 @@ const {
   buyRoom,
   deleteRoom,
   showRanking,
+  putLinkWsGrpoup,
 } = useRooms();
 const router = useRouter();
 const popup = ref();
@@ -68,6 +69,26 @@ const clipboard = (row: any) => {
         position: 'center',
       });
     });
+};
+
+const roomData = ref();
+const dialogLink = ref(false);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const openDialogLink = (room_user: any) => {
+  roomData.value = room_user;
+  dialogLink.value = true;
+};
+
+const saveLinkWsGroup = async () => {
+  let data = {
+    id: roomData.value.id,
+    enable_link: roomData.value.enable_link,
+    link_ws_groups: roomData.value.link_ws_groups,
+  };
+
+  await putLinkWsGrpoup(data).then(() => {
+    dialogLink.value = false;
+  });
 };
 </script>
 
@@ -150,6 +171,18 @@ const clipboard = (row: any) => {
                   <div class="flex">
                     <i class="q-mr-md fa-solid fa-shield text-orange-5"></i>
                     <span>Enfrentamientos</span>
+                  </div>
+                </q-item-section>
+              </q-item>
+              <q-item
+                clickable
+                v-close-popup
+                @click="openDialogLink(scope.props.row.room_user)"
+              >
+                <q-item-section>
+                  <div class="flex">
+                    <i class="q-mr-md fa-solid fa-shield text-orange-5"></i>
+                    <span>Link del Whatsapp grupo</span>
                   </div>
                 </q-item-section>
               </q-item>
@@ -245,6 +278,38 @@ const clipboard = (row: any) => {
         </q-tab-panel>
       </q-tab-panels>
     </div>
+
+    <q-dialog v-model="dialogLink" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <div>
+            <p>Activar Link</p>
+            <q-toggle
+              v-model="roomData.enable_link"
+              :true-value="1"
+              :false-value="0"
+              color="green"
+            />
+          </div>
+          <div>
+            <q-input
+              v-model="roomData.link_ws_groups"
+              type="text"
+              label="Link del grupo WhatsApp"
+            />
+          </div>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+          <q-btn
+            flat
+            label="Guardar"
+            color="primary"
+            @click="saveLinkWsGroup"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </section>
 </template>
 

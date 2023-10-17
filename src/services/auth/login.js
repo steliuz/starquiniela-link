@@ -30,9 +30,6 @@ export const login = async (value) => {
 export const logout = async () => {
   try {
     await api.post('logout');
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('auth');
-    // localStorage.removeItem("user");
     handleMessages({
       message: 'Esperamos regreses pronto',
       color: 'positive',
@@ -45,6 +42,10 @@ export const logout = async () => {
       icon: 'sentiment_dissatisfied',
     });
     throw error;
+  } finally {
+    var auth = localStorage.getItem('auth');
+    localStorage.clear();
+    localStorage.setItem('auth', auth);
   }
 };
 

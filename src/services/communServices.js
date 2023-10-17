@@ -4,10 +4,11 @@ import { handleMessages } from './notifys';
 const handleError = (error) => {
   let msg =
     'Oops, hubo un problema durante el proceso, por favor intente mas tarde';
-  if (error.response.data.error) {
-    msg = error.response.data.error;
-  } else if (error.response.data.errors) {
-    let errors = Object.values(error.response.data.errors);
+  let response = error.response.data;
+  if (response.error) {
+    msg = response.error;
+  } else if (response.errors || response.data) {
+    let errors = Object.values(response.errors || response.data);
     errors.forEach((element) => {
       handleMessages({
         message: element,
