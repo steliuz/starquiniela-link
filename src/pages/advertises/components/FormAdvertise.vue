@@ -71,7 +71,12 @@ watch(
     >
       <q-card-section class=" ">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-          <p>Imagen</p>
+          <p
+            class="text-h5"
+            :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
+          >
+            Imagen
+          </p>
           <CropperImage class="q-mt-sm" :img="img" @onCropper="onCropper">
             <template v-slot:form>
               <BaseInput

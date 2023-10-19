@@ -1,8 +1,8 @@
 <template>
   <q-table
-    class="font-table bg-table text-white full-width"
+    class="font-table bg-table full-width"
     tableHeaderClass="bg-primary text-white"
-    dark
+    :dark="$q.dark.isActive"
     separator="cell"
     flat
     bordered
@@ -37,8 +37,7 @@
     <template v-slot:top-right>
       <div class="column">
         <q-input
-          dark
-          class=""
+          :dark="$q.dark.isActive"
           borderless
           dense
           v-model="filter"
@@ -89,7 +88,12 @@
     </template>
     <template #body-cell-opt="props">
       <q-td style="width: 10%" :props="props" class="no-wrap text-center">
-        <q-btn class="q-pa-sm" color="white" flat icon="more_vert">
+        <q-btn
+          class="q-pa-sm"
+          :color="$q.dark.isActive ? 'white' : 'primary'"
+          flat
+          icon="more_vert"
+        >
           <q-menu class="bg-header-dark">
             <q-list style="min-width: 140px">
               <slot name="opt" :props="props"></slot>

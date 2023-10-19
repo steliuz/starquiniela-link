@@ -157,7 +157,7 @@ const upgradePremium = async (id: number) => {
 };
 </script>
 <template>
-  <section class="q-mt-md q-px-sm">
+  <section class="q-mt-md q-px-sm q-pb-xl">
     <div class="flex justify-end">
       <q-btn
         class="px-3"
@@ -272,21 +272,25 @@ const upgradePremium = async (id: number) => {
 
     <div class="row q-mt-xl">
       <div
-        class=""
         :class="
           auth.role_id == 1
             ? 'col-12'
             : 'col-12 col-md-6 offset-md-1 q-px-md-md'
         "
       >
-        <div class="name-quiniela">
+        <div
+          class="name-quiniela"
+          :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
+        >
           <div>
             <p class="q-mb-none text-body2 text-weight-bold ellipsis">
               {{ room.name || '' }}
             </p>
             <p class="q-mb-none text-caption" v-if="auth.role_id == 3">
               Autorizados:
-              <span class="text-orange-5">
+              <span
+                :class="$q.dark.isActive ? 'text-orange-5' : 'text-primary'"
+              >
                 {{ room.count_player || 0 }} /
                 {{ room.room_user?.limit_player ?? '--' }}
               </span>
@@ -300,14 +304,14 @@ const upgradePremium = async (id: number) => {
               color="orange-5"
               @click="$router.push('/admin/rooms/ranking')"
             >
-              <i class="fa-solid fa-trophy text-orange-5 fa-xl"></i>
+              <i class="fa-solid fa-trophy fa-xl text-orange-5"></i>
             </q-btn>
 
             <q-btn color="primary" size="lg" class="" flat>
               <i
                 class="fa-solid fa-xl"
                 :class="
-                  statusAll ? 'fa-lock text-orange-5' : ' fa-unlock text-white'
+                  statusAll ? 'fa-lock text-orange-5' : ' fa-unlock text-dark'
                 "
               >
               </i>
@@ -390,7 +394,7 @@ const upgradePremium = async (id: number) => {
 
         <q-input
           dense
-          dark
+          :dark="$q.dark.isActive"
           filled
           v-model="search"
           type="text"
@@ -432,7 +436,7 @@ const upgradePremium = async (id: number) => {
               </q-item-section>
             </q-item>
 
-            <q-separator dark inset />
+            <q-separator :dark="$q.dark.isActive" inset />
           </div>
         </q-list>
       </div>
@@ -462,7 +466,6 @@ const upgradePremium = async (id: number) => {
   align-items: center;
   max-width: 700px;
   margin: 10px auto;
-  color: #fff;
 
   @media screen and (max-width: 567px) {
     justify-content: space-around;

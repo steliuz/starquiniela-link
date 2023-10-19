@@ -14,41 +14,66 @@
         <q-toolbar-title class="flex items-center">
           <div>
             <p class="q-mb-none">{{ auth.name }}</p>
-            <p class="text-caption text-secondary q-mb-none">{{ role }}</p>
+            <p
+              class="text-caption q-mb-none"
+              :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'"
+            >
+              {{ role }}
+            </p>
           </div>
         </q-toolbar-title>
 
-        <div class="flex flex-center" v-if="auth.role_id != 1">
-          <span class="text-orange-5 text-h6">{{ auth.credits }}</span>
+        <div class="flex flex-center">
+          <div v-if="auth.role_id != 1">
+            <span class="text-orange-5 text-h6">{{ auth.credits }}</span>
 
-          <q-img
-            v-if="showGif"
-            class="q-ml-sm"
-            width="35px"
-            src="~assets/icons/coin.gif"
-            :ratio="1 / 1"
-            spinner-color="primary"
-            spinner-size="82px"
-          />
-          <q-img
-            v-else
-            width="45px"
-            src="~assets/icons/coin.png"
-            :ratio="1 / 1"
-          />
+            <q-img
+              v-if="showGif"
+              class="q-ml-sm"
+              width="35px"
+              src="~assets/icons/coin.gif"
+              :ratio="1 / 1"
+              spinner-color="primary"
+              spinner-size="82px"
+            />
+            <q-img
+              v-else
+              width="45px"
+              src="~assets/icons/coin.png"
+              :ratio="1 / 1"
+            />
+          </div>
+
+          <div>
+            <q-toggle
+              v-model="modeDark"
+              color="secondary"
+              checked-icon="dark_mode"
+              unchecked-icon="lightbulb"
+              icon-color="yellow"
+              size="lg"
+              @click="handleDark()"
+            >
+            </q-toggle>
+          </div>
         </div>
       </q-toolbar>
     </q-header>
 
     <q-drawer
-      style="background-color: #010a0f; color: #fff"
+      class="bg-menu"
       v-model="leftDrawerOpen"
       show-if-above
       bordered
       :width="240"
     >
       <q-list>
-        <q-item-label class="text-white" header> Essential Links </q-item-label>
+        <q-item-label
+          :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
+          header
+        >
+          StarQuiniela
+        </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -85,12 +110,15 @@ import EssentialLink, {
 import { useAuthStore } from 'src/stores/auth';
 import { useMatch } from 'src/composables/useMatch';
 import { storeToRefs } from 'pinia';
+import { useQuasar } from 'quasar';
 
-const showGif = ref(true);
-
+const $q = useQuasar();
 const router = useRouter();
-const { room_id: roomID, auth } = storeToRefs(useAuthStore());
+const showGif = ref(true);
+const modeDark = ref($q.dark.isActive);
+const leftDrawerOpen = ref(false);
 
+const { room_id: roomID, auth } = storeToRefs(useAuthStore());
 const {} = useMatch(roomID);
 
 const essentialLinks: EssentialLinkProps[] = [
@@ -150,7 +178,6 @@ const role = computed(() => {
   if (auth.value.role_id == 3) name = 'Organizador';
   return name;
 });
-const leftDrawerOpen = ref(false);
 
 const handleLogout = async () => {
   try {
@@ -166,6 +193,12 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
+const handleDark = () => {
+  $q.dark.toggle();
+
+  localStorage.setItem('mode-dark', modeDark.value.toString());
+};
+
 onMounted(() => {
   setTimeout(() => {
     showGif.value = !showGif.value;
@@ -173,41 +206,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.bg-all-section {
-  background-color: #010a0f;
-  color: #fff;
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-    background: transparent;
-    z-index: 12;
-    overflow: visible;
-    cursor: pointer;
-  }
-
-  &::-webkit-scrollbar-track {
-    border-radius: 0px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    width: 10px;
-    background-color: $secondary;
-    border-radius: 10px;
-    z-index: 12;
-    transition: background-color 0.32s ease-in-out;
-    min-height: 32px;
-    min-width: 32px;
-  }
-}
-
-.bg-menu {
-  background-color: #010a0f;
-  color: #fff;
-}
-</style>
+<style lang="scss" scoped></style>

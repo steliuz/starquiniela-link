@@ -15,6 +15,113 @@ $font-weight: (
   wbold: bold,
 );
 
+.bg-all-section {
+  background-color: #010a0f;
+  color: #fff;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+    background: transparent;
+    z-index: 12;
+    overflow: visible;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: $secondary;
+    border-radius: 10px;
+    z-index: 12;
+    transition: background-color 0.32s ease-in-out;
+    min-height: 32px;
+    min-width: 32px;
+  }
+}
+
+.body--light {
+  .bg-all-section {
+    background-color: #ebe9e9;
+    color: #222;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      height: 8px;
+      width: 8px;
+      background: transparent;
+      z-index: 12;
+      overflow: visible;
+      cursor: pointer;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 0px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 10px;
+      background-color: $secondary;
+      border-radius: 10px;
+      z-index: 12;
+      transition: background-color 0.32s ease-in-out;
+      min-height: 32px;
+      min-width: 32px;
+    }
+  }
+
+  .bg-menu {
+    background-color: #f0f0f0;
+    color: #222;
+  }
+
+  .bg-header-dark {
+    background-color: #f0f0f0;
+    color: #222;
+  }
+  .bg-new-dark {
+    background-color: #d8d9da;
+    color: #222;
+  }
+
+  .bg-table {
+    background-color: #ebe9e9;
+    color: #222;
+  }
+}
+
+.body--dark {
+  .bg-menu {
+    background-color: #010a0f;
+    color: #fff;
+  }
+
+  .bg-header-dark {
+    background-color: #001e28;
+    color: #fff;
+  }
+
+  .bg-new-dark {
+    background-color: #010a0f;
+    color: #fff;
+  }
+
+  .bg-table {
+    background-color: #00141e;
+    color: #fff;
+  }
+}
+
 .form_login_no_cuenta {
   font-size: map-get($font-sizes, font20);
   font-weight: map-get($font-weight, w400);
@@ -73,7 +180,6 @@ p.label-input {
 
 .shield-plan {
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-  // cursor: pointer;
 
   &:hover {
     animation: pulse 1.2s infinite;

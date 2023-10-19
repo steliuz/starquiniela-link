@@ -107,9 +107,9 @@ const resetMatch = (id: number) => {
               v-model="match.goalsTeam1"
               type="number"
               style="max-width: 50px"
-              input-class="text-white text-center"
+              input-class="text-center"
               dense
-              dark
+              :dark="$q.dark.isActive"
               filled
               class="q-pb-xs hide-number-arrows"
             />
@@ -117,9 +117,9 @@ const resetMatch = (id: number) => {
               v-model="match.goalsTeam2"
               type="number"
               style="max-width: 50px"
-              input-class="text-white text-center"
+              input-class="text-center"
               dense
-              dark
+              :dark="$q.dark.isActive"
               filled
               class="hide-number-arrows"
             />
@@ -152,11 +152,11 @@ const resetMatch = (id: number) => {
                 v-model="match.predictTeam1"
                 type="number"
                 color="secondary"
-                dark
+                :dark="$q.dark.isActive"
                 style="max-width: 50px"
                 dense
                 filled
-                input-class="text-white text-center"
+                input-class="text-center"
                 class="q-pb-xs hide-number-arrows"
                 :disable="match.status == 0 && player"
                 :min="0"
@@ -165,8 +165,8 @@ const resetMatch = (id: number) => {
                 v-model="match.predictTeam2"
                 type="number"
                 color="secondary"
-                input-class="text-white text-center"
-                dark
+                input-class="text-center"
+                :dark="$q.dark.isActive"
                 style="max-width: 50px"
                 dense
                 filled
@@ -195,10 +195,12 @@ const resetMatch = (id: number) => {
             />
           </div>
           <div v-else>
-            <!-- <q-btn padding="8px" flat color="primary" @click="showPredict(index)" v-if="player">
-              <i class="fa-solid fa-futbol text-primary fa-xl"></i>
-            </q-btn> -->
-            <q-btn class="q-pa-xs" color="white" flat icon="more_vert">
+            <q-btn
+              class="q-pa-xs"
+              :color="$q.dark.isActive ? 'white' : 'primary'"
+              flat
+              icon="more_vert"
+            >
               <q-menu class="bg-header-dark">
                 <q-list style="min-width: 150px">
                   <q-item clickable v-close-popup @click="emitResult(index)">
@@ -294,13 +296,25 @@ const resetMatch = (id: number) => {
   margin: 10px auto;
   color: #646464;
 }
+.body--light {
+  .card-matchs {
+    background-color: #d8d9da;
+    color: #222;
+
+    .box-matchs {
+      color: #222;
+
+      .border-r {
+        border-right: 1px solid #b4b4b4;
+      }
+    }
+  }
+}
 
 .card-matchs {
   max-width: 500px;
   margin: 0 auto;
   background-color: #00141e;
-  // outline: 3px solid #fff;
-  // outline-offset: 3px;
 
   .q-field--dense .q-field__control,
   .q-field--dense .q-field__marginal {

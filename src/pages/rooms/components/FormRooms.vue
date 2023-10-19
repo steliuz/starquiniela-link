@@ -54,7 +54,10 @@ watch(
           </div>
           <div class="title">
             <p class="q-mb-none text-h6 text-grey-7">
-              <i class="fa-regular fa-futbol q-mr-xs text-secondary"></i>
+              <i
+                class="fa-regular fa-futbol q-mr-xs"
+                :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'"
+              ></i>
               Datos
             </p>
           </div>
@@ -64,7 +67,10 @@ watch(
           </div>
           <div class="title">
             <p class="q-mb-none text-h6 text-grey-7">
-              <i class="fa-solid fa-gear q-mr-xs text-secondary"></i>
+              <i
+                class="fa-solid fa-gear q-mr-xs"
+                :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'"
+              ></i>
               Reglas
             </p>
           </div>
@@ -74,13 +80,6 @@ watch(
               v-model="formRooms.type"
               :optionsData="optionsRules"
             ></OptionGroup>
-            <!-- <q-select
-              dense
-              filled
-              v-model="formRooms.type"
-              :options="optionsRules"
-              behavior="menu"
-            /> -->
           </div>
           <div>
             <p class="label-input">Categoría</p>
@@ -88,29 +87,7 @@ watch(
               v-model="formRooms.category_room_id"
               :optionsData="optionsCategory"
             ></OptionGroup>
-            <!-- <q-select
-              dense
-              filled
-              v-model="formRooms.category_room_id"
-              :options="optionsCategory"
-              behavior="menu"
-              map-options
-            /> -->
           </div>
-          <!-- <div class="">
-            <p class="label-input">Tipo de quinielas</p>
-            <q-select
-              dense
-              filled
-              v-model="formRooms.type"
-              :options="optionsType"
-              behavior="menu"
-            />
-          </div> -->
-          <!-- <div class="">
-            <BaseInput label="Precio" v-model="formRooms.price" required>
-            </BaseInput>
-          </div> -->
           <q-btn
             class="q-mx-xs"
             outline

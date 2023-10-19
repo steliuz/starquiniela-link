@@ -30,7 +30,10 @@
             accept="image/*"
             hidden
           />
-          <i class="fa-solid fa-image text-secondary"></i>
+          <i
+            class="fa-solid fa-image"
+            :class="$q.dark.isActive ? 'text-secondary' : 'text-white'"
+          ></i>
         </button>
         <!-- <button class="button" @click="cropImage()">Crop image</button> -->
       </div>
@@ -143,6 +146,47 @@ watch(
   height: 300px;
   width: 300px;
   background: #00141e;
+}
+
+.body--light {
+  .cropper {
+    height: 300px;
+    width: 300px;
+    background: #ebe9e9;
+  }
+
+  .circle-previuw {
+    background-color: #f0f0f0;
+    outline: 2px solid #5c00be;
+    outline-offset: 4px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+
+  .button {
+    color: white;
+
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #5c00be;
+    cursor: pointer;
+    transition: background 0.5s;
+    border: none;
+
+    &:not(:last-of-type) {
+      margin-right: 10px;
+    }
+
+    &:hover {
+      background: #2f2f2f;
+    }
+
+    input {
+      display: none;
+    }
+  }
 }
 
 .button-wrapper {

@@ -1,7 +1,10 @@
 <template>
   <q-item clickable tag="a" :href="link" v-if="roles.includes(auth.role_id)">
     <q-item-section v-if="icon" avatar>
-      <q-icon color="secondary" :name="icon" />
+      <q-icon
+        :color="$q.dark.isActive ? 'secondary' : 'primary'"
+        :name="icon"
+      />
     </q-item-section>
 
     <q-item-section>

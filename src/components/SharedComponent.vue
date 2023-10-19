@@ -1,8 +1,13 @@
 <template>
   <div class="text-center q-mx-sm">
     <q-btn color="secondary" label="Link para compartir" @click="clipboard" />
-    <q-separator spaced inset dark />
-    <p class="q-mb-sm text-white text-center">Escanera código QR</p>
+    <q-separator spaced inset :dark="$q.dark.isActive" />
+    <p
+      class="q-mb-sm text-center"
+      :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
+    >
+      Escanera código QR
+    </p>
     <div v-html="decodedSVG"></div>
     <div>
       <q-btn
@@ -14,42 +19,6 @@
       />
     </div>
   </div>
-  <!-- <q-btn-dropdown unelevated flat icon="share" color="secondary">
-    <q-list class="bg-header-dark q-pa-xs">
-      <q-item clickable v-close-popup>
-        <q-item-section>
-          <q-item-label @click="clipboard">
-            <q-btn
-              color="secondary"
-              label="Link para compartir"
-              @click="clipboard"
-            />
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-separator spaced inset dark />
-      <q-item>
-        <q-item-section>
-          <q-item-label>
-            <p class="q-mb-sm text-white text-center">Escanera código QR</p>
-            <div v-html="decodedSVG"></div>
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item clickable @click="downloadImg" v-close-popup>
-        <q-item-section>
-          <q-item-label>
-            <q-btn
-              class="full-width"
-              size="sm"
-              color="primary"
-              label="Descargar QR"
-            />
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
-  </q-btn-dropdown> -->
 </template>
 
 <script setup lang="ts">

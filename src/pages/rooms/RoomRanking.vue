@@ -1,9 +1,15 @@
 <template>
-  <section class="row">
+  <section class="row q-mt-lg">
     <div class="col-12 col-md-10 offset-md-1 q-px-md">
-      <div class="flex justify-end">
+      <div class="flex justify-between">
         <div v-if="auth.role_id == 3">
-          <span class="text-orange-5">
+          <p
+            class="q-mb-none"
+            :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
+          >
+            Autorizados
+          </p>
+          <span :class="$q.dark.isActive ? 'text-orange-6' : 'text-primary'">
             {{ room.count_player || 0 }} /
             {{ room.room_user?.limit_player ?? '--' }}
           </span>
@@ -125,19 +131,31 @@
                 <td class="name1 text-name-player">
                   <div class="">
                     {{ player?.user?.name || '' }}
-                    <p class="text-caption text-orange-5 no-margin">
+                    <p
+                      class="text-caption no-margin"
+                      :class="
+                        $q.dark.isActive ? 'text-orange-5' : 'text-primary'
+                      "
+                    >
                       {{ `(${player.ticket_factura})` }}
                     </p>
                   </div>
                 </td>
-                <td class="name2 bg-orange-6 text-black text-bold">
+                <td
+                  class="name2 text-bold"
+                  :class="
+                    $q.dark.isActive
+                      ? 'bg-orange-5 text-black'
+                      : 'bg-primary text-white'
+                  "
+                >
                   <div class="flex flex-center">
                     {{ player.max_points }}
                   </div>
                 </td>
 
                 <template v-for="match in matches" :key="match.id">
-                  <td class="roomNormal r">
+                  <td class="roomNormal">
                     <div class="text-center">
                       {{ getPoint(match.id, player.user_id, player.index) }}
                     </div>
@@ -285,6 +303,63 @@ const getLEV = (
 </script>
 
 <style lang="scss" scoped>
+.body--light {
+  table {
+    color: #222;
+    background-color: #ebe9e9;
+  }
+
+  thead {
+    background-color: #ebe9e9;
+  }
+
+  h {
+    border: 1px solid #d1d1d1;
+    text-align: left;
+    padding: 3px;
+  }
+
+  th:nth-child(3n + 3) {
+    background-color: #c8c8c9;
+    color: #222;
+    font-weight: 500;
+    width: 30px;
+  }
+  td.roomNormal:nth-child(3n + 3) {
+    background-color: #c8c8c9;
+    color: #222;
+    font-weight: 500;
+    width: 30px;
+  }
+
+  td.lev:nth-child(odd) {
+    background-color: #c8c8c9;
+    color: #222;
+    font-weight: 500;
+  }
+
+  .name1:nth-of-type(2n + 1) {
+    position: sticky;
+    height: 20px;
+    left: 0;
+    text-transform: capitalize;
+    z-index: 1;
+    background-color: #c8c8c9;
+  }
+
+  .name2:nth-of-type(2n) {
+    position: sticky;
+    width: 50px;
+    height: 20px;
+    left: 68px;
+    background-color: #c8c8c9;
+    z-index: 1;
+  }
+
+  .gols {
+    color: #222;
+  }
+}
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -325,10 +400,6 @@ th {
   text-align: left;
   padding: 3px;
 }
-
-// tr:nth-child(even) {
-//   background-color: #001e28;
-// }
 
 th:nth-child(3n + 3) {
   background-color: #001e28;

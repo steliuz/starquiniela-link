@@ -50,55 +50,28 @@ watch(
       style="width: 80%; max-width: 900px; height: 85%"
     >
       <q-card-section class=" ">
-        <q-form class="user_dialog_form full-width" @submit="onSubmit">
+        <q-form
+          class="user_dialog_form full-width"
+          @submit="onSubmit"
+          autocomplete="off"
+        >
           <div class="title">
-            <p class="text-h5 text-white">
-              <!-- <i class="fa-solid fa-user-plus q-mr-xs text-white"></i> -->
+            <p
+              class="text-h5"
+              :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
+            >
               Crear nuevo usuario
             </p>
           </div>
-          <!-- <div class="title q-pl-sm">
-            <p class="q-mb-none text-h6 text-white">
-              <i class="fa-solid fa-envelope q-mr-xs text-secondary"></i>
-              Correo
-            </p>
-          </div> -->
-
-          <!-- <div>
-            <BaseInput
-              label="Subfijo correo"
-              :disable="type_disabled"
-              v-model="formUser.prefix"
-              hint="Crea un subfijo para tus correos"
-              bottom-slots
-              required
-            >
-              <template v-slot:before>
-                <q-checkbox
-                  color="secondary"
-                  left-label
-                  v-model="type_disabled"
-                />
-              </template>
-            </BaseInput>
-          </div> -->
-          <!-- <div>
-            <BaseInput
-              label="Dato de correo"
-              v-model="formUser.emailUser"
-              type="text"
-              required
-            >
-              <template v-slot:after>
-                <span class="hint_email">
-                  {{ formUser.prefix }}
-                </span>
-              </template>
-            </BaseInput>
-          </div> -->
           <div class="title q-pl-sm">
-            <p class="q-mb-none text-h6 text-white">
-              <i class="fa-solid fa-user q-mr-xs text-secondary"></i>
+            <p
+              class="q-mb-none text-h6"
+              :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
+            >
+              <i
+                class="fa-solid fa-user q-mr-xs"
+                :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'"
+              ></i>
               Datos
             </p>
           </div>
@@ -122,7 +95,11 @@ watch(
           <div>
             <BaseInput label="Teléfono" v-model="formUser.phone" type="text">
               <template v-slot:span>
-                <span class="text-caption text-secondary">(opcional)</span>
+                <span
+                  class="text-caption"
+                  :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'"
+                  >(opcional)</span
+                >
               </template>
             </BaseInput>
           </div>
@@ -133,6 +110,7 @@ watch(
               v-model="formUser.password"
               :type="!isPwd ? 'password' : 'text'"
               :required="formUser.id ? false : true"
+              autocomplete="off"
             >
               <template v-slot:append>
                 <q-icon
@@ -161,7 +139,10 @@ watch(
           </div>
           <div class="title q-pl-sm" v-if="admin">
             <p class="q-mb-none text-h6">
-              <i class="fa-solid fa-user-tag q-mr-xs text-secondary"></i>
+              <i
+                class="fa-solid fa-user-tag q-mr-xs"
+                :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'"
+              ></i>
               Rol del usuario
             </p>
             <div class="q-gutter-sm">

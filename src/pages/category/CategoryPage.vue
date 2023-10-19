@@ -1,8 +1,11 @@
 <template>
   <div>
     <div class="title q-mt-md q-ml-md">
-      <p class="text-h5 text-white">
-        <i class="fa-solid fa-coins q-mr-xs text-secondary"></i>
+      <p class="text-h5" :class="$q.dark.isActive ? 'text-white' : 'text-dark'">
+        <i
+          class="fa-solid fa-coins q-mr-xs"
+          :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'"
+        ></i>
         Precio de Quinielas
       </p>
     </div>
@@ -17,7 +20,12 @@
             <div class="row">
               <div class="col-12">
                 <p
-                  class="text-center bg-header-dark text-uppercase q-my-sm q-py-sm"
+                  class="text-center text-uppercase q-my-sm q-py-sm"
+                  :class="
+                    $q.dark.isActive
+                      ? 'bg-header-dark'
+                      : 'bg-primary text-white'
+                  "
                 >
                   organizador {{ subscribe.name }}
                 </p>
@@ -31,7 +39,7 @@
                   {{ credit.category_room.name }}
                 </p>
                 <q-input
-                  dark
+                  :dark="$q.dark.isActive"
                   class="text-center q-pb-2 input-w hide-number-arrows"
                   input-class="text-center text-bold"
                   outlined

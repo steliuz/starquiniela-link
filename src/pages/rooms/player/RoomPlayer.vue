@@ -8,6 +8,11 @@ import { handleMessages } from 'src/services/notifys';
 import sharedComponent from 'src/components/SharedComponent.vue';
 import { useRooms } from 'src/composables/useRooms';
 import { useAuthStore } from 'src/stores/auth';
+import { useQuasar } from 'quasar';
+
+const $q = useQuasar();
+
+const modeDark = ref($q.dark.isActive);
 
 const openDialog = () => {
   dialog.value = true;
@@ -91,16 +96,6 @@ const goToTickets = (ticketID: number) => {
   window.open(route.href, '_blank');
 };
 
-onMounted(async () => {
-  await getRoomByCode(`${router.params.code}`);
-  await getQrRoom(`${room.value.room_user?.cod_compartir}`);
-  setRoom(room.value.id);
-
-  tickets.value = JSON.parse(
-    localStorage.getItem('user_tickets_' + room.value.id) || '[]'
-  );
-});
-
 const checkResult = () => {
   let check = true;
   room.value.matches?.forEach((item) => {
@@ -118,22 +113,52 @@ const checkStatusMatch = () => {
 
   return check;
 };
+
+const handleDark = () => {
+  $q.dark.toggle();
+
+  localStorage.setItem('mode-dark', modeDark.value.toString());
+};
+
 checkStatusMatch();
+
+onMounted(async () => {
+  await getRoomByCode(`${router.params.code}`);
+  await getQrRoom(`${room.value.room_user?.cod_compartir}`);
+  setRoom(room.value.id);
+
+  tickets.value = JSON.parse(
+    localStorage.getItem('user_tickets_' + room.value.id) || '[]'
+  );
+});
 </script>
 
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header style="background-color: transparent">
+    <q-header
+      :class="$q.dark.isActive ? '' : 'bg-primary'"
+      style="background-color: transparent"
+    >
       <q-toolbar>
         <q-toolbar-title class="q-pa-sm">
           <q-img
+            v-if="$q.dark.isActive"
             width="50px"
             src="/src/assets/logo/logo-white.png"
             spinner-color="primary"
             spinner-size="82px"
           />
+          <q-img
+            v-else
+            width="50px"
+            src="/src/assets/logo-white.png"
+            spinner-color="primary"
+            spinner-size="82px"
+          />
         </q-toolbar-title>
-        <div></div>
+        <div>
+          <q-toggle v-model="modeDark" color="green" @click="handleDark()" />
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -142,7 +167,10 @@ checkStatusMatch();
         <div class="container-box">
           <div class="box-room">
             <div class="title-cardMatchs">
-              <p class="text-h6 text-white text-left">
+              <p
+                class="text-h6 text-left"
+                :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
+              >
                 {{ room.name || '' }}
               </p>
               <div
@@ -193,27 +221,43 @@ checkStatusMatch();
               </div>
             </div>
           </div>
-          <sharedComponent
-            class="q-md-ml-xl"
-            :code="router.params.code"
-            :imgBase64="qrcode.encode"
-            :key="loadingRoom ? 1 : 0"
-            :download="qrcode.path"
-          />
+          <div>
+            <sharedComponent
+              class="q-md-ml-xl"
+              :code="router.params.code"
+              :imgBase64="qrcode.encode"
+              :key="loadingRoom ? 1 : 0"
+              :download="qrcode.path"
+            />
 
-          <div v-if="tickets" class="text-white">
-            Lista de Tickets
-            <q-list bordered>
-              <q-item
-                clickable
-                v-ripple
-                v-for="ticket in tickets"
-                :key="ticket.id"
-                @click="goToTickets(ticket.id)"
+            <div
+              v-if="tickets"
+              class="q-mt-md bg-header-dark"
+              :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
+            >
+              <p
+                class="q-mb-xs text-bold text-center q-pa-sm"
+                :class="$q.dark.isActive ? 'text-orange-5 ' : 'text-primary'"
               >
-                <q-item-section>{{ ticket.ticket_factura }}</q-item-section>
-              </q-item>
-            </q-list>
+                Lista de Tickets
+              </p>
+              <div class="box-list-roomplayer">
+                <q-list bordered>
+                  <q-item
+                    clickable
+                    v-ripple
+                    v-for="ticket in tickets"
+                    :key="ticket.id"
+                    @click="goToTickets(ticket.id)"
+                    class="border-item-list"
+                  >
+                    <q-item-section>
+                      {{ ticket.ticket_factura }}
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -222,6 +266,35 @@ checkStatusMatch();
 </template>
 
 <style lang="scss" scoped>
+.body--light {
+  .box-list-roomplayer {
+    .border-item-list {
+      border-bottom: 1px solid #b8b8b8;
+    }
+  }
+}
+.box-list-roomplayer {
+  height: 100%;
+  max-height: 400px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.4em;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $secondary;
+    border-radius: 500px;
+  }
+
+  .border-item-list {
+    border-bottom: 1px solid #fff;
+  }
+}
 .bg-img {
   // background-color: #010A0F;
   background-image: url('src/assets/bg-4.png');
@@ -229,6 +302,7 @@ checkStatusMatch();
   background-position: center;
   background-size: cover;
   height: 100vh;
+  padding-bottom: 100px;
   width: 100vw;
   position: fixed;
   overflow-y: scroll;
@@ -264,6 +338,9 @@ checkStatusMatch();
   }
 }
 
-@media screen and (max-width: 700px) {
+.body--light {
+  .bg-img {
+    background-image: url('src/assets/bg-white.png');
+  }
 }
 </style>

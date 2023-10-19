@@ -11,7 +11,7 @@
               <q-input
                 v-model="formPlayer.name"
                 dense
-                dark
+                :dark="$q.dark.isActive"
                 filled
                 type="text"
                 placeholder="Nombre"
@@ -25,7 +25,7 @@
               <q-input
                 v-model="formPlayer.phone"
                 dense
-                dark
+                :dark="$q.dark.isActive"
                 filled
                 type="text"
                 placeholder="Teléfono"
@@ -42,7 +42,7 @@
               <q-input
                 v-model="formPlayer.email"
                 dense
-                dark
+                :dark="$q.dark.isActive"
                 filled
                 type="text"
               />

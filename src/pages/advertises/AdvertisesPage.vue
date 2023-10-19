@@ -24,7 +24,7 @@ const columns = [nameColumn, optColumn];
       <div class="col-12 flex justify-end q-my-md">
         <q-btn
           class="q-mr-lg"
-          color="primary"
+          color="secondary"
           unelevated
           square
           label="Registrar Publicidad"

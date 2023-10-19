@@ -100,7 +100,7 @@ const saveLinkWsGroup = async () => {
         class="q-ml-md"
         align="center"
         active-bg-color="transparent"
-        activeClass="text-white"
+        :activeClass="$q.dark.isActive ? 'text-white' : 'text-primary'"
         indicator-color="secondary"
       >
         <q-tab name="1" label="Adquiridas" @click="handlerTab(tab)" />
