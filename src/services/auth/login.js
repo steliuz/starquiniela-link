@@ -44,8 +44,10 @@ export const logout = async () => {
     throw error;
   } finally {
     var auth = localStorage.getItem('auth');
+    var mode = localStorage.getItem('mode-dark');
     localStorage.clear();
     localStorage.setItem('auth', auth);
+    localStorage.setItem('mode-dark', mode);
   }
 };
 

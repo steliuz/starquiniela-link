@@ -96,6 +96,10 @@ const goToTickets = (ticketID: number) => {
   window.open(route.href, '_blank');
 };
 
+const wsGroup = () => {
+  window.open(room.value.room_user?.link_ws_groups, '_blank');
+};
+
 const checkResult = () => {
   let check = true;
   room.value.matches?.forEach((item) => {
@@ -228,6 +232,8 @@ onMounted(async () => {
               :imgBase64="qrcode.encode"
               :key="loadingRoom ? 1 : 0"
               :download="qrcode.path"
+              @wsGroup="wsGroup"
+              :hasWsGroup="room.room_user?.link_ws_groups"
             />
 
             <div

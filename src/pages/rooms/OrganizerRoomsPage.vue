@@ -181,8 +181,10 @@ const saveLinkWsGroup = async () => {
               >
                 <q-item-section>
                   <div class="flex">
-                    <i class="q-mr-md fa-solid fa-shield text-orange-5"></i>
-                    <span>Link del Whatsapp grupo</span>
+                    <i
+                      class="q-mr-md fa-solid fa-brands fa-whatsapp text-green-7"
+                    ></i>
+                    <span>Grupo WhatsApp</span>
                   </div>
                 </q-item-section>
               </q-item>
@@ -282,31 +284,36 @@ const saveLinkWsGroup = async () => {
     <q-dialog v-model="dialogLink" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <div>
-            <p>Activar Link</p>
-            <q-toggle
-              v-model="roomData.enable_link"
-              :true-value="1"
-              :false-value="0"
-              color="green"
-            />
+          <div class="col-12">
+            <div class="flex flex-center">
+              <p
+                class="q-mb-none text-bold"
+                :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'"
+              >
+                Activar Link
+              </p>
+              <q-toggle
+                v-model="roomData.enable_link"
+                :true-value="1"
+                :false-value="0"
+                color="secondary"
+              />
+            </div>
           </div>
-          <div>
-            <q-input
-              v-model="roomData.link_ws_groups"
-              type="text"
-              label="Link del grupo WhatsApp"
-            />
-          </div>
+          <div class="col-12"></div>
+          <q-input
+            class="full-width"
+            :dark="$q.dark.isActive"
+            v-model="roomData.link_ws_groups"
+            filled
+            type="text"
+            label="Link del grupo WhatsApp"
+          />
+          <div></div>
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn flat label="Cancelar" color="primary" v-close-popup />
-          <q-btn
-            flat
-            label="Guardar"
-            color="primary"
-            @click="saveLinkWsGroup"
-          />
+          <q-btn outline label="Cancelar" color="red-5" v-close-popup />
+          <q-btn label="Guardar" color="secondary" @click="saveLinkWsGroup" />
         </q-card-actions>
       </q-card>
     </q-dialog>

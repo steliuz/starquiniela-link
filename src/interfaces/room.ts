@@ -25,4 +25,5 @@ export interface RoomUser {
   cod_compartir?: string;
   limit_player?: number | undefined;
   show_ranking?: number;
+  link_ws_groups?: string;
 }

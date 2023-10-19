@@ -18,6 +18,15 @@
         @click="downloadImg"
       />
     </div>
+    <div>
+      <q-btn
+        class="full-width q-mt-sm"
+        color="secondary"
+        label="Grupo WhatsApp"
+        @click="wsGroup"
+        v-if="hasWsGroup"
+      />
+    </div>
   </div>
 </template>
 
@@ -30,9 +39,10 @@ import { useImage } from 'src/composables/useImage';
 
 const { getImage } = useImage();
 
-const props = defineProps(['code', 'imgBase64', 'download']);
+const props = defineProps(['code', 'imgBase64', 'download', 'hasWsGroup']);
+const emit = defineEmits(['wsGroup']);
 let decodedSVG = ref('');
-
+const hasWsGroup = ref(props.hasWsGroup);
 const clipboard = () => {
   let url = `${vue_url}/rooms/${props.code}`;
   copyToClipboard(url)
@@ -61,12 +71,23 @@ watch(
   }
 );
 
+watch(
+  () => props.hasWsGroup,
+  (newVal) => {
+    console.log('true');
+    hasWsGroup.value = newVal;
+  }
+);
+
+const wsGroup = () => {
+  emit('wsGroup');
+};
+
 const codificar = () => {
   decodedSVG.value = atob(props.imgBase64);
 };
 
 const downloadImg = async () => {
-  // const url = window.URL.createObjectURL(new Blob([props.download]));
   let base64code = await getImage(props.download);
   const link = document.createElement('a');
   link.href = /* url */ `${base64code}`;
@@ -79,27 +100,6 @@ const downloadImg = async () => {
     color: 'secondary',
     icon: 'check',
   });
-  // fetch(props.download, {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer ' + <your access token if need>
-  //   },
-  // })
-  //   .then((response) => response.blob())
-  //   .then((blob) => {
-  //     // 2. Create blob link to download
-  //     const url = window.URL.createObjectURL(new Blob([blob]));
-  //     const link = document.createElement('a');
-  //     link.href = url;
-  //     link.setAttribute('download', 'qrcode.png');
-  //     // 3. Append to html page
-  //     document.body.appendChild(link);
-  //     // 4. Force download
-  //     link.click();
-  //     // 5. Clean up and remove the link
-  //     link.parentNode?.removeChild(link);
-  //   });
 };
 </script>
 
