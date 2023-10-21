@@ -8,7 +8,7 @@ declare module '@vue/runtime-core' {
   }
 }
 
-const production = 0;
+const production = 1;
 const baseURL = production ? process.env.API_URL_PROD : process.env.API_URL;
 const token = LocalStorage.getItem('access_token');
 
@@ -39,7 +39,7 @@ const api = axios.create({
 const file_url = production ? process.env.FILE_URL_PROD : process.env.FILE_URL;
 const vue_url = production
   ? 'https://dev.starquiniela.com'
-  : 'http://localhost:9000';
+  : 'http://localhost:9200';
 export default boot(({ app }) => {
   app.config.globalProperties.$axios = axios;
   app.config.globalProperties.$api = api;

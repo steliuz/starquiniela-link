@@ -30,6 +30,10 @@ const dialogSuccess = ref(false);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const tickets: Ref<Array<any>> = ref([]);
+
+const tempPlayer = ref();
+const error_bet = ref(false);
+
 const onSave = async (player: object) => {
   let check = false;
   room.value.matches?.map((match) => {
@@ -50,20 +54,9 @@ const onSave = async (player: object) => {
     return;
   }
 
-  await registerPlayer({ ...player, cod_compartir: router.params.code }).then(
-    (resp) => {
-      let data = {
-        user_id: resp.userData.uid,
-        room_id: room.value.id,
-        bets: room.value.matches?.map((match) => {
-          return {
-            match_id: match.id,
-            goalsTeam1: match.predictTeam1,
-            goalsTeam2: match.predictTeam2,
-          };
-        }),
-      };
-      postBet(data).then((resp) => {
+  if (error_bet.value == true) {
+    postBet(tempPlayer.value)
+      .then((resp) => {
         room.value.matches = room.value.matches?.map((match) => {
           return {
             ...match,
@@ -83,12 +76,63 @@ const onSave = async (player: object) => {
           'user_tickets_' + room.value.id,
           JSON.stringify(array_tickets)
         );
+        error_bet.value = false;
 
         // let route = routes.resolve(`/ticket/${ticket.id}/pdf`);
         // window.open(route.href, '_blank');
+      })
+      .catch(() => {
+        error_bet.value = true;
       });
-    }
-  );
+  } else {
+    await registerPlayer({ ...player, cod_compartir: router.params.code }).then(
+      (resp) => {
+        let data = {
+          user_id: resp.userData.uid,
+          room_id: room.value.id,
+          bets: room.value.matches?.map((match) => {
+            return {
+              match_id: match.id,
+              goalsTeam1: match.predictTeam1,
+              goalsTeam2: match.predictTeam2,
+            };
+          }),
+        };
+
+        tempPlayer.value = data;
+
+        postBet(data)
+          .then((resp) => {
+            room.value.matches = room.value.matches?.map((match) => {
+              return {
+                ...match,
+                predictTeam1: null,
+                predictTeam2: null,
+              };
+            });
+            dialogSuccess.value = true;
+
+            let ticket = resp.ticket;
+
+            let array_tickets = tickets.value;
+
+            array_tickets.push(ticket);
+
+            localStorage.setItem(
+              'user_tickets_' + room.value.id,
+              JSON.stringify(array_tickets)
+            );
+
+            error_bet.value = false;
+            // let route = routes.resolve(`/ticket/${ticket.id}/pdf`);
+            // window.open(route.href, '_blank');
+          })
+          .catch(() => {
+            error_bet.value = true;
+          });
+      }
+    );
+  }
 };
 
 const goToTickets = (ticketID: number) => {

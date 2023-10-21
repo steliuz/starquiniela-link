@@ -39,8 +39,9 @@ export function useRoomPlayer() {
     });
   };
 
-  const getTicketPdf = async (id: number) => {
-    const data = await getData(`v2/tickets/${id}/pdf`);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getTicketPdf = async (id: number, params: any, options: any) => {
+    const data = await getData(`v2/tickets/${id}/pdf`, params, options);
     return data;
   };
 

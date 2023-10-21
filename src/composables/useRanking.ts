@@ -22,8 +22,9 @@ export function useRanking(roomID: number | string | undefined) {
   });
 
   const getRanking = async (role_id = 0) => {
+    const token = localStorage.getItem('access_token');
     const url =
-      role_id == 3
+      role_id == 3 && token
         ? `rooms/${roomID}/ranking`
         : `v2/rooms/${roomID}/players/ranking`;
     await getData(url).then((resp) => {
