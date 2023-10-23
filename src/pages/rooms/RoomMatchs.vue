@@ -429,7 +429,7 @@ const upgradePremium = async (id: number) => {
                   </p>
                   <a
                     class="no-ancla"
-                    :href="`https://api.whatsapp.com/send?phone=${player.phone}&text=%20`"
+                    :href="`https://api.whatsapp.com/send?phone=+52${player.phone}&text=%20`"
                     target="_blank"
                   >
                     <q-chip
