@@ -300,6 +300,7 @@ const resetMatch = (id: number) => {
   .card-matchs {
     background-color: #d8d9da;
     color: #222;
+    margin-bottom: 50px;
 
     .box-matchs {
       color: #222;

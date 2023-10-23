@@ -174,7 +174,7 @@ const upgradePremium = async (id: number) => {
             <div class="col-6 col-md-5 q-px-sm">
               <q-select
                 dense
-                dark
+                :dark="$q.dark.isActive"
                 filled
                 v-model="formMatch.team1"
                 :options="options"
@@ -216,7 +216,7 @@ const upgradePremium = async (id: number) => {
             </div>
             <div class="col-6 col-md-5 q-px-sm">
               <q-select
-                dark
+                :dark="$q.dark.isActive"
                 dense
                 filled
                 v-model="formMatch.team2"
@@ -417,13 +417,37 @@ const upgradePremium = async (id: number) => {
               <q-item-section>
                 <q-item-label>
                   <p class="q-mb-none text-subtitle1">
-                    {{ player.ticket_factura }}
+                    {{ player.ticket_factura }} -
+
+                    <span
+                      class="text-caption text-capitalize"
+                      :class="
+                        $q.dark.isActive ? 'text-orange-5' : 'text-primary'
+                      "
+                      >{{ player.name }}
+                    </span>
                   </p>
-                  <span class="text-caption text-orange-5"
-                    >{{ player.name }}
-                  </span>
+                  <a
+                    class="no-ancla"
+                    :href="`https://api.whatsapp.com/send?phone=${player.phone}&text=%20`"
+                    target="_blank"
+                  >
+                    <q-chip
+                      color="grey-5"
+                      class="cursor-pointer no-padding"
+                      dense
+                    >
+                      <q-avatar>
+                        <img src="~assets/icons/whatsapp.png" />
+                      </q-avatar>
+                      <span class="q-pr-sm">
+                        {{ player.phone }}
+                      </span>
+                    </q-chip>
+                  </a>
                 </q-item-label>
               </q-item-section>
+
               <q-separator spaced inset vertical dark />
               <q-item-section avatar>
                 <q-toggle

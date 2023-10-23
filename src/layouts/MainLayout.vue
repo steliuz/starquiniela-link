@@ -14,47 +14,96 @@
         <q-toolbar-title class="flex items-center">
           <div>
             <p class="q-mb-none">{{ auth.name }}</p>
-            <p
+            <!-- <p
               class="text-caption q-mb-none"
               :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'"
             >
               {{ role }}
-            </p>
+            </p> -->
           </div>
         </q-toolbar-title>
 
         <div class="flex flex-center">
-          <div v-if="auth.role_id != 1">
-            <span class="text-orange-5 text-h6">{{ auth.credits }}</span>
-
-            <q-img
-              v-if="showGif"
-              class="q-ml-sm"
-              width="35px"
-              src="~assets/icons/coin.gif"
-              :ratio="1 / 1"
-              spinner-color="primary"
-              spinner-size="82px"
-            />
-            <q-img
-              v-else
-              width="45px"
-              src="~assets/icons/coin.png"
-              :ratio="1 / 1"
-            />
+          <div class="q-mr-md flex flex-center">
+            <p class="q-mb-none q-mr-sm">Modo Oscuro</p>
+            <ToggleComponent />
           </div>
-
           <div>
-            <q-toggle
-              v-model="modeDark"
-              color="secondary"
-              checked-icon="dark_mode"
-              unchecked-icon="lightbulb"
-              icon-color="yellow"
-              size="lg"
-              @click="handleDark()"
-            >
-            </q-toggle>
+            <q-avatar class="cursor-pointer">
+              <img class="border-white" src="~assets/icons/default.png" />
+              <q-menu
+                style="min-width: 200px"
+                class="flex justify-center hide-scrollbar q-px-sm"
+                square
+                max-width="170px"
+              >
+                <div class="row no-wrap q-pa-md">
+                  <div class="column items-center">
+                    <q-avatar size="80px">
+                      <img src="~assets/icons/default.png" />
+                    </q-avatar>
+                    <div
+                      class="flex justify-center items-center"
+                      style="margin-top: -10px; z-index: 1200"
+                    >
+                      <q-badge
+                        class="q-py-xs q-px-sm"
+                        :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                        rounded
+                      >
+                        <span class="text-bold text-white">
+                          {{ role }}
+                        </span>
+                      </q-badge>
+                    </div>
+
+                    <!-- <div class="text-subtitle2 q-mt-xs">
+                  <p class="ellipsis q-mt-sm q-mb-xs" style="max-width: 150px">
+                    {{ store.$state.user.name }}
+                  </p>
+                </div> -->
+                    <div class="column items-center q-mt-xs">
+                      <div class="flex flex-center">
+                        <div
+                          class="flex flex-center text-center q-mx-sm"
+                          v-if="auth.role_id != 1"
+                        >
+                          <span class="text-orange-5 text-h6">
+                            {{ auth.credits }}
+                          </span>
+
+                          <!-- <q-img
+                            v-if="showGif"
+                            class="q-ml-sm"
+                            width="35px"
+                            src="~assets/icons/coin.gif"
+                            :ratio="1 / 1"
+                            spinner-color="primary"
+                            spinner-size="82px"
+                          /> -->
+                          <q-img
+                            width="30px"
+                            src="~assets/icons/coin.png"
+                            :ratio="1 / 1"
+                          />
+                        </div>
+                      </div>
+
+                      <q-btn
+                        class="q-mt-md"
+                        color="negative"
+                        icon="logout"
+                        label="Salir"
+                        size="xs"
+                        unelevated
+                        v-close-popup
+                        @click="handleLogout"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </q-menu>
+            </q-avatar>
           </div>
         </div>
       </q-toolbar>
@@ -80,7 +129,7 @@
           :key="link.title"
           v-bind="link"
         />
-        <q-item class="absolute-bottom" tag="a">
+        <!-- <q-item class="absolute-bottom">
           <q-item-section>
             <q-btn
               outline
@@ -90,7 +139,7 @@
               @click="handleLogout"
             />
           </q-item-section>
-        </q-item>
+        </q-item> -->
       </q-list>
     </q-drawer>
 
@@ -107,6 +156,8 @@ import { useRouter } from 'vue-router';
 import EssentialLink, {
   EssentialLinkProps,
 } from 'components/EssentialLink.vue';
+
+import ToggleComponent from 'src/components/ToggleDarkComponent.vue';
 import { useAuthStore } from 'src/stores/auth';
 import { useMatch } from 'src/composables/useMatch';
 import { storeToRefs } from 'pinia';
@@ -115,7 +166,7 @@ import { useQuasar } from 'quasar';
 const $q = useQuasar();
 const router = useRouter();
 const showGif = ref(true);
-const modeDark = ref($q.dark.isActive);
+// const modeDark = ref($q.dark.isActive);
 const leftDrawerOpen = ref(false);
 
 const { room_id: roomID, auth } = storeToRefs(useAuthStore());
@@ -193,11 +244,11 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-const handleDark = () => {
-  $q.dark.toggle();
+// const handleDark = () => {
+//   $q.dark.toggle();
 
-  localStorage.setItem('mode-dark', modeDark.value.toString());
-};
+//   localStorage.setItem('mode-dark', modeDark.value.toString());
+// };
 
 onMounted(() => {
   setTimeout(() => {
