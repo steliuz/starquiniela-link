@@ -16,6 +16,7 @@ import { PaidBet } from 'src/interfaces/bet';
 import sharedComponent from 'src/components/SharedComponent.vue';
 import DialogUpgrade from 'src/components/DialogUpgrade.vue';
 import { handleMessages } from 'src/services/notifys';
+import { useRouter } from 'vue-router';
 
 // const confirmTickets = ref(false);
 // const infoPlayer = ref();
@@ -46,6 +47,7 @@ const {
   resetMatch,
 } = useMatch(roomID);
 const dialogUpgrade = ref(false);
+const routes = useRouter();
 
 onMounted(async () => {
   if (auth.role_id === 1) await selectTeams();
@@ -155,7 +157,12 @@ const upgradePremium = async (id: number) => {
     await getRoomById(roomID);
   });
 };
+const showPDF = (id: number) => {
+  let route = routes.resolve(`/ticket/${id}/pdf`);
+  window.open(route.href, '_blank');
+};
 </script>
+
 <template>
   <section class="q-mt-md q-px-sm q-pb-xl">
     <div class="flex justify-end">
@@ -456,6 +463,17 @@ const upgradePremium = async (id: number) => {
                   :true-value="1"
                   :false-value="0"
                   @update:model-value="statusPaid(player)"
+                />
+              </q-item-section>
+
+              <q-separator spaced inset vertical dark />
+              <q-item-section>
+                <q-btn
+                  padding="2px 10px"
+                  flat
+                  color="red-5"
+                  icon="picture_as_pdf"
+                  @click="showPDF(player.id)"
                 />
               </q-item-section>
             </q-item>

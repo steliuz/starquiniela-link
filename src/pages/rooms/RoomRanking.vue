@@ -14,6 +14,7 @@
             {{ room.room_user?.limit_player ?? '--' }}
           </span>
         </div>
+        <q-btn color="primary" icon="check" @click="goToRankingPDF" />
         <q-btn
           class="q-my-sm"
           flat
@@ -210,12 +211,14 @@ import { useRanking } from 'src/composables/useRanking';
 import { useAuthStore } from 'src/stores/auth';
 import { onMounted, ref } from 'vue';
 import { file_url } from 'src/boot/axios';
+import { useRouter } from 'vue-router';
 
 const { room_id: roomID, auth } = useAuthStore();
 const { getRanking, room, players, matches } = useRanking(roomID);
 const containerTable = ref<HTMLElement | null>(null);
 
 const typeRoom = ref(room.value.type != 3 ? true : false);
+const router = useRouter();
 
 onMounted(() => {
   getRanking(auth.role_id);
@@ -299,6 +302,11 @@ const getLEV = (
   }
 
   return lev;
+};
+
+const goToRankingPDF = () => {
+  let route = router.resolve(`/ranking/${roomID}/pdf`);
+  window.open(route.href, '_blank');
 };
 </script>
 

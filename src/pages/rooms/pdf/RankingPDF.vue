@@ -8,18 +8,16 @@
 <script setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useRoomPlayer } from 'src/composables/useRoomPlayer';
+import { useRanking } from 'src/composables/useRanking';
 
 const src = ref('');
 const route = useRoute();
 const type = ref('html5');
-const { getTicketPdf } = useRoomPlayer();
+const { getTicketPdf } = useRanking(route.params.id);
 
 const getPdfHtml = async () => {
-  let id = route.params.id;
   // type.value = 'pdfjs';
   await getTicketPdf(
-    id,
     {
       type: type.value,
     },

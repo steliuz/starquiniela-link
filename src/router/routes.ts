@@ -22,6 +22,12 @@ const routes: RouteRecordRaw[] = [
     path: '/ticket/:id/pdf',
     component: () => import('pages/rooms/pdf/TicketPDF.vue'),
   },
+
+  {
+    name: 'ranking-pdf',
+    path: '/ranking/:id/pdf',
+    component: () => import('pages/rooms/pdf/RankingPDF.vue'),
+  },
   {
     name: 'ticket-status',
     path: '/invoices/:id/tickets/status',

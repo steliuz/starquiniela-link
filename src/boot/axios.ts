@@ -8,7 +8,7 @@ declare module '@vue/runtime-core' {
   }
 }
 
-const production = 1;
+const production = 0;
 const baseURL = production ? process.env.API_URL_PROD : process.env.API_URL;
 const token = LocalStorage.getItem('access_token');
 

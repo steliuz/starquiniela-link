@@ -34,10 +34,17 @@ export function useRanking(roomID: number | string | undefined) {
       // players.value = players.value.sort((a, b) => b.max_points - a.max_points);
     });
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getTicketPdf = async (params: any, options: any) => {
+    const data = await getData(`v2/ranking/${roomID}/pdf`, params, options);
+    return data;
+  };
+
   return {
     getRanking,
     matches,
     players,
     room,
+    getTicketPdf,
   };
 }
