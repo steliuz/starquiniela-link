@@ -19,11 +19,11 @@ const {
   getRoom,
   editRoom,
   statusRoom,
+  putWsNotify,
 } = useRooms();
 const router = useRouter();
 
 const goToMatch = (roomID: number) => {
-  console.log('click');
   setRoom(roomID);
   setTimeout(() => {
     router.push({ path: '/admin/rooms/matchs' });
@@ -98,6 +98,23 @@ const goToMatch = (roomID: number) => {
                 <div class="flex">
                   <i class="q-mr-md fa-solid fa-shield text-red-5"></i>
                   <span>Enfrentamientos</span>
+                </div>
+              </q-item-section>
+            </q-item>
+            <q-item>
+              <q-item-section>
+                <div class="flex">
+                  <i class="q-mr-md fa-solid fa-shield text-red-5"></i>
+                  <span>WhatsApp Notificaciones</span>
+                  <q-toggle
+                    unchecked-icon="clear"
+                    checked-icon="check"
+                    color="green"
+                    :false-value="0"
+                    :true-value="1"
+                    v-model="scope.props.row.room_user.is_active_ws_notify"
+                    @update:model-value="putWsNotify(scope.props.row.room_user)"
+                  />
                 </div>
               </q-item-section>
             </q-item>
