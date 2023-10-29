@@ -130,6 +130,7 @@ export function useRooms() {
   };
 
   const filteredTicket = computed(() => {
+    console.log('tickets.value: ', tickets.value);
     return tickets.value.filter(
       (val: any) =>
         val.name.toLowerCase().includes(search.value.toLowerCase()) ||

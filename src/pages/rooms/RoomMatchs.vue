@@ -435,12 +435,13 @@ const showPDF = (id: number) => {
                     </span>
                   </p>
                   <a
+                    v-if="player.phone"
                     class="no-ancla"
                     :href="`https://api.whatsapp.com/send?phone=+52${player.phone}&text=%20`"
                     target="_blank"
                   >
                     <q-chip
-                      color="grey-5"
+                      :color="$q.dark.isActive ? 'grey-7' : 'grey-5'"
                       class="cursor-pointer no-padding"
                       dense
                     >
