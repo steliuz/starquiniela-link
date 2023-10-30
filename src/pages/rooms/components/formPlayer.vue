@@ -27,9 +27,12 @@
                 dense
                 :dark="$q.dark.isActive"
                 filled
-                type="text"
+                type="tel"
                 placeholder="Teléfono"
                 required
+                mask="############"
+                prefix="+52"
+                unmasked-value
               />
             </div>
           </div>

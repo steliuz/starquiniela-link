@@ -34,7 +34,8 @@ const tickets: Ref<Array<any>> = ref([]);
 const tempPlayer = ref();
 const error_bet = ref(false);
 
-const onSave = async (player: object) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const onSave = async (player: any) => {
   let check = false;
   room.value.matches?.map((match) => {
     if (
@@ -85,6 +86,7 @@ const onSave = async (player: object) => {
         error_bet.value = true;
       });
   } else {
+    player.phone = '+52' + player.phone;
     await registerPlayer({ ...player, cod_compartir: router.params.code }).then(
       (resp) => {
         let data = {
@@ -222,7 +224,11 @@ onMounted(async () => {
                 {{ room.name || '' }}
               </p>
               <div
-                v-if="room.matches?.length != 0 && !checkResult()"
+                v-if="
+                  room.matches?.length != 0 &&
+                  !checkResult() &&
+                  checkStatusMatch()
+                "
                 @click="$router.push('/players/rooms/ranking')"
               >
                 <q-icon
@@ -239,7 +245,11 @@ onMounted(async () => {
             </div>
             <div
               class="box-inside rooms"
-              v-if="room.matches?.length != 0 && !checkResult()"
+              v-if="
+                room.matches?.length != 0 &&
+                !checkResult() &&
+                checkStatusMatch()
+              "
             >
               <cardMatchsComponents :dataMatch="room.matches" :player="true" />
               <div class="q-mt-sm box-button">
@@ -252,7 +262,7 @@ onMounted(async () => {
                 />
               </div>
             </div>
-            <div v-if="room.matches?.length != 0 && checkResult()">
+            <div v-if="room.matches?.length != 0 && !checkStatusMatch()">
               <div class="flex justify-center">
                 <p class="text-white text-h5 text-center">
                   Esta quiniela ya ha finalizado Puedes ver los resultados en la
