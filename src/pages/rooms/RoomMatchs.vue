@@ -437,12 +437,12 @@ const showPDF = (id: number) => {
                   <a
                     v-if="player.phone"
                     class="no-ancla"
-                    :href="`https://api.whatsapp.com/send?phone=+52${player.phone}&text=%20`"
+                    :href="`https://api.whatsapp.com/send?phone=${player.phone}&text=%20`"
                     target="_blank"
                   >
                     <q-chip
-                      :color="$q.dark.isActive ? 'grey-7' : 'grey-5'"
-                      class="cursor-pointer no-padding"
+                      :color="$q.dark.isActive ? 'grey-3' : 'grey-5'"
+                      class="cursor-pointer no-padding text-black"
                       dense
                     >
                       <q-avatar>
@@ -457,25 +457,23 @@ const showPDF = (id: number) => {
               </q-item-section>
 
               <q-separator spaced inset vertical dark />
-              <q-item-section avatar>
-                <q-toggle
-                  v-model="player.paid"
-                  color="secondary"
-                  :true-value="1"
-                  :false-value="0"
-                  @update:model-value="statusPaid(player)"
-                />
-              </q-item-section>
-
-              <q-separator spaced inset vertical dark />
               <q-item-section>
-                <q-btn
-                  padding="2px 10px"
-                  flat
-                  color="red-5"
-                  icon="picture_as_pdf"
-                  @click="showPDF(player.id)"
-                />
+                <div class="flex flex-center">
+                  <q-toggle
+                    v-model="player.paid"
+                    color="secondary"
+                    :true-value="1"
+                    :false-value="0"
+                    @update:model-value="statusPaid(player)"
+                  />
+                  <q-btn
+                    padding="2px 10px"
+                    flat
+                    color="red-5"
+                    icon="picture_as_pdf"
+                    @click="showPDF(player.id)"
+                  />
+                </div>
               </q-item-section>
             </q-item>
 
