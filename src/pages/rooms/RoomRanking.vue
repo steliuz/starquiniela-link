@@ -1,20 +1,31 @@
 <template>
   <section class="row q-mt-lg">
     <div class="col-12 col-md-10 offset-md-1 q-px-md">
-      <div class="flex justify-between">
+      <div class="flex justify-between q-mb-md">
         <div v-if="auth.role_id == 3">
+          <h6 class="text-h6 no-margin">{{ room.name }}</h6>
           <p
             class="q-mb-none"
             :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
           >
-            Autorizados
+            Autorizados:
+            <span
+              class="q-ml-xs"
+              :class="$q.dark.isActive ? 'text-orange-6' : 'text-primary'"
+            >
+              {{ room.count_player || 0 }} /
+              {{ room.room_user?.limit_player ?? '--' }}
+            </span>
           </p>
-          <span :class="$q.dark.isActive ? 'text-orange-6' : 'text-primary'">
-            {{ room.count_player || 0 }} /
-            {{ room.room_user?.limit_player ?? '--' }}
-          </span>
+          <q-btn
+            class="q-mt-sm"
+            outline
+            :color="$q.dark.isActive ? 'secondary' : 'Primary'"
+            label="Descargar"
+            @click="goToRankingPDF"
+          />
         </div>
-        <q-btn color="primary" icon="check" @click="goToRankingPDF" />
+
         <q-btn
           class="q-my-sm"
           flat
