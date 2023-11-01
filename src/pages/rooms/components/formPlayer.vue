@@ -16,6 +16,7 @@
                 type="text"
                 placeholder="Nombre"
                 required
+                :rules="[(val) => val.length >= 3]"
               />
             </div>
             <div class="col-6 q-pa-xs">
@@ -30,9 +31,10 @@
                 type="tel"
                 placeholder="Teléfono"
                 required
-                mask="############"
+                mask="##############"
                 prefix="+52"
                 unmasked-value
+                :rules="[(val) => val.length >= 8]"
               />
             </div>
           </div>
