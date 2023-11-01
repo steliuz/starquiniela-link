@@ -78,9 +78,6 @@ const onSave = async (player: any) => {
           JSON.stringify(array_tickets)
         );
         error_bet.value = false;
-
-        // let route = routes.resolve(`/ticket/${ticket.id}/pdf`);
-        // window.open(route.href, '_blank');
       })
       .catch(() => {
         error_bet.value = true;
@@ -137,7 +134,7 @@ const onSave = async (player: any) => {
   }
 };
 
-const goToTickets = (ticketID: number) => {
+const goToTickets = (ticketID: string) => {
   let route = routes.resolve(`/ticket/${ticketID}/pdf`);
   window.open(route.href, '_blank');
 };
@@ -308,7 +305,7 @@ onMounted(async () => {
                     v-ripple
                     v-for="ticket in tickets"
                     :key="ticket.id"
-                    @click="goToTickets(ticket.id)"
+                    @click="goToTickets(ticket.ticket_factura)"
                     class="border-item-list"
                   >
                     <q-item-section>

@@ -59,7 +59,7 @@
                       flat
                       color="red-5"
                       icon="picture_as_pdf"
-                      @click="showPDF(item.id)"
+                      @click="showPDF(item.ticket_factura)"
                     />
                   </q-item-section>
                 </q-item>
@@ -90,7 +90,7 @@ defineProps(['infoPlayer']);
 const emit = defineEmits(['onPaid']);
 
 const routes = useRouter();
-const showPDF = (id: number) => {
+const showPDF = (id: string) => {
   let route = routes.resolve(`/ticket/${id}/pdf`);
   window.open(route.href, '_blank');
 };

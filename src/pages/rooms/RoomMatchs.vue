@@ -157,7 +157,7 @@ const upgradePremium = async (id: number) => {
     await getRoomById(roomID);
   });
 };
-const showPDF = (id: number) => {
+const showPDF = (id: string) => {
   let route = routes.resolve(`/ticket/${id}/pdf`);
   window.open(route.href, '_blank');
 };
@@ -471,7 +471,7 @@ const showPDF = (id: number) => {
                     flat
                     color="red-5"
                     icon="picture_as_pdf"
-                    @click="showPDF(player.id)"
+                    @click="showPDF(player.ticket_factura)"
                   />
                 </div>
               </q-item-section>
