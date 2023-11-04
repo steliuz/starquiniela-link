@@ -318,7 +318,9 @@ const showPDF = (id: string) => {
               <i
                 class="fa-solid fa-xl"
                 :class="
-                  statusAll ? 'fa-lock text-orange-5' : ' fa-unlock text-dark'
+                  statusAll
+                    ? 'fa-lock text-orange-5'
+                    : ' fa-unlock text-primary'
                 "
               >
               </i>
@@ -423,7 +425,7 @@ const showPDF = (id: string) => {
             <q-item>
               <q-item-section>
                 <q-item-label>
-                  <p class="q-mb-none text-subtitle1">
+                  <p class="q-mb-none">
                     {{ player.ticket_factura }} -
 
                     <span

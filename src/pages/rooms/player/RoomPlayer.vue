@@ -9,6 +9,7 @@ import sharedComponent from 'src/components/SharedComponent.vue';
 import { useRooms } from 'src/composables/useRooms';
 import { useAuthStore } from 'src/stores/auth';
 import { useQuasar } from 'quasar';
+import ToggleDarkComponent from 'src/components/ToggleDarkComponent.vue';
 
 const $q = useQuasar();
 
@@ -33,6 +34,12 @@ const tickets: Ref<Array<any>> = ref([]);
 
 const tempPlayer = ref();
 const error_bet = ref(false);
+const playerForm = ref({
+  name: '',
+  phone: '',
+  email: '',
+  tel: '',
+});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSave = async (player: any) => {
@@ -78,6 +85,12 @@ const onSave = async (player: any) => {
           JSON.stringify(array_tickets)
         );
         error_bet.value = false;
+        playerForm.value = {
+          name: '',
+          phone: '',
+          email: '',
+          tel: '',
+        };
       })
       .catch(() => {
         error_bet.value = true;
@@ -123,6 +136,12 @@ const onSave = async (player: any) => {
             );
 
             error_bet.value = false;
+            playerForm.value = {
+              name: '',
+              phone: '',
+              email: '',
+              tel: '',
+            };
             // let route = routes.resolve(`/ticket/${ticket.id}/pdf`);
             // window.open(route.href, '_blank');
           })
@@ -161,12 +180,6 @@ const checkStatusMatch = () => {
   return check;
 };
 
-const handleDark = () => {
-  $q.dark.toggle();
-
-  localStorage.setItem('mode-dark', modeDark.value.toString());
-};
-
 checkStatusMatch();
 
 onMounted(async () => {
@@ -203,8 +216,9 @@ onMounted(async () => {
             spinner-size="82px"
           />
         </q-toolbar-title>
-        <div>
-          <q-toggle v-model="modeDark" color="green" @click="handleDark()" />
+        <div class="q-mr-md flex flex-center">
+          <p class="q-mb-none q-mr-sm">Modo Oscuro</p>
+          <ToggleDarkComponent />
         </div>
       </q-toolbar>
     </q-header>
@@ -238,7 +252,11 @@ onMounted(async () => {
               </div>
             </div>
             <div class="box-inside form">
-              <formPlayer v-model="dialog" @savePlayer="onSave" />
+              <formPlayer
+                v-model="dialog"
+                @savePlayer="onSave"
+                :playerForm="playerForm"
+              />
             </div>
             <div
               class="box-inside rooms"
