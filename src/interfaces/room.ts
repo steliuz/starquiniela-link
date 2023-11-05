@@ -1,5 +1,5 @@
 import { Match } from 'src/interfaces/match';
-import { Player } from './user';
+import { Player, user } from './user';
 export interface Room {
   name: string;
   type: number;
@@ -26,4 +26,5 @@ export interface RoomUser {
   limit_player?: number | undefined;
   show_ranking?: number;
   link_ws_groups?: string;
+  user?: user | null;
 }

@@ -3,7 +3,12 @@
     <div class="col-12 col-md-10 offset-md-1 q-px-md">
       <div class="flex justify-between q-mb-md">
         <div v-if="auth.role_id == 3">
-          <h6 class="text-h6 no-margin">{{ room.name }}</h6>
+          <h6
+            class="text-h6 no-margin"
+            :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
+          >
+            {{ room.name }}
+          </h6>
           <p
             class="q-mb-none"
             :class="$q.dark.isActive ? 'text-white' : 'text-dark'"

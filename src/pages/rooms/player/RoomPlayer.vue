@@ -12,9 +12,6 @@ import { useQuasar } from 'quasar';
 import ToggleDarkComponent from 'src/components/ToggleDarkComponent.vue';
 
 const $q = useQuasar();
-
-const modeDark = ref($q.dark.isActive);
-
 const openDialog = () => {
   dialog.value = true;
 };
@@ -197,7 +194,7 @@ onMounted(async () => {
   <q-layout view="lHh Lpr lFf">
     <q-header
       :class="$q.dark.isActive ? '' : 'bg-primary'"
-      style="background-color: transparent"
+      style="background-color: #010a0f"
     >
       <q-toolbar>
         <q-toolbar-title class="q-pa-sm">
@@ -336,6 +333,26 @@ onMounted(async () => {
           </div>
         </div>
       </section>
+      <div
+        style="position: fixed; bottom: 5%; right: 5%"
+        v-if="room.room_user?.user?.phone"
+      >
+        <a
+          class="no-ancla"
+          :href="`https://api.whatsapp.com/send?phone=${room.room_user?.user?.phone}&text=%20`"
+          target="_blank"
+        >
+          <q-chip
+            :color="$q.dark.isActive ? 'grey-3' : 'grey-5'"
+            class="cursor-pointer no-padding text-black"
+          >
+            <q-avatar size="40px">
+              <img src="~assets/icons/whatsapp2.png" />
+            </q-avatar>
+            <span class="q-pr-sm text-bold"> ¡Escribe al Organizador!</span>
+          </q-chip>
+        </a>
+      </div>
     </q-page-container>
   </q-layout>
 </template>
