@@ -8,7 +8,7 @@ import { useAuthStore } from 'src/stores/auth';
 const { auth } = useAuthStore();
 
 const showInputsResult: Ref<null | number> = ref(null);
-defineProps(['dataMatch', 'player']);
+defineProps(['dataMatch', 'player', 'type']);
 const emit = defineEmits([
   'emitSave',
   'emitDelete',
@@ -46,21 +46,29 @@ const resetMatch = (id: number) => {
 <template>
   <q-card bordered class="card-matchs">
     <q-card-section>
-      <div
-        class="box-matchs"
-        :class="player ? 'box-matchs-player' : 'box-matchs'"
-      >
+      <div :class="player ? 'box-matchs ' : 'box-matchs-player'">
         <div class="index-number"></div>
         <div class="bg-orange-5"></div>
-        <div class="box-result q-mb-xs" :class="player ? '' : 'results-admin'">
+        <div
+          v-if="type != 3"
+          class="box-result q-mb-xs"
+          :class="player ? '' : 'results-admin'"
+        >
           <p class="text-center text-weight-bold q-mb-none">R</p>
           <p class="text-center text-weight-bold q-mb-none" v-if="player">Pr</p>
+        </div>
+        <div
+          v-else
+          class="box-result q-mb-xs"
+          :class="player ? '' : 'results-admin'"
+        >
+          <p class="text-center text-weight-bold q-mb-none" v-if="player">Pr</p>
+          <p class="text-center text-weight-bold q-mb-none">R</p>
         </div>
       </div>
 
       <div
-        class="box-matchs"
-        :class="player ? 'box-matchs-player' : 'box-matchs'"
+        :class="player ? 'box-matchs ' : 'box-matchs-player'"
         v-for="(match, index) in dataMatch"
         :key="match.id ?? 0"
       >
@@ -77,7 +85,9 @@ const resetMatch = (id: number) => {
                 "
                 alt="team1"
               />
-              <p>{{ match.team1?.name }}</p>
+              <p :class="type != 3 ? '' : 'no-show-name'">
+                {{ match.team1?.name }}
+              </p>
             </div>
             <div>
               <img
@@ -89,7 +99,9 @@ const resetMatch = (id: number) => {
                 "
                 alt="team1"
               />
-              <p>{{ match.team2?.name }}</p>
+              <p :class="type != 3 ? '' : 'no-show-name'">
+                {{ match.team2?.name }}
+              </p>
             </div>
           </div>
 
@@ -102,6 +114,39 @@ const resetMatch = (id: number) => {
         </div>
 
         <div class="box-result" :class="player ? '' : 'border-r results-admin'">
+          <template v-if="player">
+            <template v-if="showInputsResult == index || player">
+              <div class="" v-if="type == 3">
+                <q-radio
+                  name="shape"
+                  v-model="match.predictteam1"
+                  val="1"
+                  label="L"
+                  size="md"
+                  left-label
+                  color="negative"
+                />
+                <q-radio
+                  name="shape"
+                  v-model="match.predictteam1"
+                  val="2"
+                  label="E"
+                  size="sm"
+                  left-label
+                  color="white"
+                />
+                <q-radio
+                  name="shape"
+                  v-model="match.predictteam1"
+                  val="3"
+                  label="V"
+                  size="sm"
+                  left-label
+                  color="secondary"
+                />
+              </div>
+            </template>
+          </template>
           <div class="" v-if="showInputsResult == index">
             <q-input
               v-model="match.goalsTeam1"
@@ -148,32 +193,43 @@ const resetMatch = (id: number) => {
           </div>
           <template v-if="player">
             <div class="" v-if="showInputsResult == index || player">
-              <q-input
-                v-model="match.predictTeam1"
-                type="number"
-                color="secondary"
-                :dark="$q.dark.isActive"
-                style="max-width: 50px"
-                dense
-                filled
-                input-class="text-center"
-                class="q-pb-xs hide-number-arrows"
-                :disable="match.status == 0 && player"
-                :min="0"
-              />
-              <q-input
-                v-model="match.predictTeam2"
-                type="number"
-                color="secondary"
-                input-class="text-center"
-                :dark="$q.dark.isActive"
-                style="max-width: 50px"
-                dense
-                filled
-                class="hide-number-arrows"
-                :disable="match.status == 0 && player"
-                :min="0"
-              />
+              <div v-if="type != 3">
+                <q-input
+                  v-model="match.predictTeam1"
+                  type="number"
+                  color="secondary"
+                  :dark="$q.dark.isActive"
+                  style="max-width: 50px"
+                  dense
+                  filled
+                  input-class="text-center"
+                  class="q-pb-xs hide-number-arrows"
+                  :disable="match.status == 0 && player"
+                  :min="0"
+                />
+
+                <q-input
+                  v-model="match.predictTeam2"
+                  type="number"
+                  color="secondary"
+                  input-class="text-center"
+                  :dark="$q.dark.isActive"
+                  style="max-width: 50px"
+                  dense
+                  filled
+                  class="hide-number-arrows"
+                  :disable="match.status == 0 && player"
+                  :min="0"
+                />
+              </div>
+              <!-- <div v-else>
+                <q-option-group
+                  :options="options"
+                  size="xs"
+                  type="radio"
+                  v-model="match.predictteam1"
+                />
+              </div> -->
             </div>
           </template>
         </div>
@@ -330,7 +386,7 @@ const resetMatch = (id: number) => {
 
   .box-matchs {
     display: grid;
-    grid-template-columns: 0.3fr repeat(1, minmax(100px, 3fr)) 100px 30px;
+    grid-template-columns: 0.3fr repeat(1, minmax(50px, 3fr)) 200px 30px;
     align-items: center;
     gap: 5px;
     padding: 8px;
@@ -339,7 +395,8 @@ const resetMatch = (id: number) => {
     font-size: 14px;
 
     @media screen and (max-width: 500px) {
-      grid-template-columns: repeat(1, minmax(100px, 3fr)) 100px 30px;
+      display: grid;
+      grid-template-columns: repeat(1, minmax(20px, 0.8fr)) 0.3fr;
     }
 
     &:first-child {
@@ -385,6 +442,12 @@ const resetMatch = (id: number) => {
           text-transform: capitalize;
         }
 
+        @media screen and (max-width: 500px) {
+          p.no-show-name {
+            display: none;
+          }
+        }
+
         img.img-team {
           margin: 3px 0px;
           width: 18px;
@@ -401,7 +464,7 @@ const resetMatch = (id: number) => {
 
     .box-result {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 180px 50px;
       align-items: center;
       gap: 5px;
       place-items: center;
@@ -427,10 +490,106 @@ const resetMatch = (id: number) => {
   }
 
   .box-matchs-player {
-    grid-template-columns: 0.3fr repeat(1, minmax(100px, 2.7fr)) 100px;
+    display: grid;
+    align-items: center;
+    gap: 5px;
+    padding: 8px;
+    border-bottom: 1px solid #e6e6e6;
+    color: #fff;
+    font-size: 14px;
+    grid-template-columns: 0.3fr repeat(1, minmax(100px, 2.7fr)) 100px 30px;
 
     @media screen and (max-width: 500px) {
-      grid-template-columns: repeat(1, minmax(100px, 2.7fr)) 100px;
+      grid-template-columns: repeat(1, minmax(100px, 2.7fr)) 100px 30px;
+    }
+
+    &:first-child {
+      border-bottom: 0px solid transparent;
+      padding-bottom: 0;
+      padding-top: 0;
+    }
+
+    &:nth-of-type(2) {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: 0px solid transparent;
+    }
+
+    .index-number {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+      font-size: 1.2rem;
+      font-weight: bold;
+
+      @media screen and (max-width: 500px) {
+        display: none;
+      }
+    }
+
+    .box-team {
+      display: flex;
+
+      & .divTeams div {
+        display: flex;
+
+        p {
+          line-height: 18px;
+          padding-left: 10px;
+          font-size: 14px;
+          margin-bottom: 0;
+          padding-top: 2px;
+          padding-bottom: 2px;
+          text-transform: capitalize;
+
+          @media screen and (max-width: 500px) {
+            p.no-show-name {
+              display: none;
+            }
+          }
+        }
+
+        img.img-team {
+          margin: 3px 0px;
+          width: 18px;
+          height: 18px;
+          border-radius: 4px;
+          box-shadow: 2px 2px 3px rgba($color: #000000, $alpha: 0.1);
+        }
+      }
+    }
+
+    .border-r {
+      border-right: 1px solid #e6e6e6;
+    }
+
+    .box-result {
+      display: grid;
+      grid-template-columns: 180px 50px;
+      align-items: center;
+      gap: 5px;
+      place-items: center;
+      // padding-right: 15px;
+
+      &.results-admin {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .mt-negative {
+        margin-top: -30px;
+      }
+
+      .input-first {
+        padding-right: 4px;
+      }
+    }
+
+    .box-options {
+      display: flex;
+      justify-content: center;
     }
   }
 }

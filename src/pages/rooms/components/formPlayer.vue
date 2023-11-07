@@ -5,9 +5,6 @@
         <q-form @submit="onSubmit">
           <div class="row">
             <div class="col-6 q-pa-xs">
-              <!-- <p class="label-input">
-          Nombre
-        </p> -->
               <q-input
                 v-model="formPlayer.name"
                 dense
@@ -19,10 +16,7 @@
                 :rules="[(val) => val.length >= 3]"
               />
             </div>
-            <div class="col-6 q-pa-xs">
-              <!-- <p class="label-input">
-          Teléfono
-        </p> -->
+            <div class="col-12 col-md-6 q-pa-xs">
               <q-input
                 v-model="formPlayer.tel"
                 dense

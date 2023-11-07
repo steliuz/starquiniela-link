@@ -363,6 +363,7 @@ const showPDF = (id: string) => {
         <cardMatchsComponents
           v-if="room.matches?.length != 0"
           :dataMatch="room.matches"
+          :type="room.type"
           @emitSave="onSave"
           @emitStatus="onStatus"
           @emitDelete="onDelete"

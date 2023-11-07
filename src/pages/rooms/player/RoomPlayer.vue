@@ -93,7 +93,7 @@ const onSave = async (player: any) => {
         error_bet.value = true;
       });
   } else {
-    player.phone = '+52' + player.phone;
+    player.phone = player.phone;
     await registerPlayer({ ...player, cod_compartir: router.params.code }).then(
       (resp) => {
         let data = {
@@ -263,7 +263,11 @@ onMounted(async () => {
                 checkStatusMatch()
               "
             >
-              <cardMatchsComponents :dataMatch="room.matches" :player="true" />
+              <cardMatchsComponents
+                :type="room.type"
+                :dataMatch="room.matches"
+                :player="true"
+              />
               <div class="q-mt-sm box-button">
                 <q-btn
                   class="full-width"
