@@ -53,7 +53,7 @@
                       {{ index + 1 }}
                     </div>
                   </th>
-                  <th v-if="typeRoom" class="text-center th-custom">
+                  <th v-if="room.type != 3" class="text-center th-custom">
                     <div class="m-0 q-pa-none text-center">
                       <q-avatar size="30px">
                         <img
@@ -76,7 +76,7 @@
                       </div>
                     </div>
                   </th>
-                  <th v-if="typeRoom" class="text-center th-custom2">
+                  <th v-if="room.type != 3" class="text-center th-custom2">
                     <div class="m-0 q-pa-none text-center">
                       <q-avatar size="30px">
                         <img
@@ -99,7 +99,7 @@
                       </div>
                     </div>
                   </th>
-                  <th v-if="!typeRoom">
+                  <th v-if="room.type == 3">
                     <div class="flex justify-center" style="width: 80px">
                       <div class="q-mx-xs">
                         <q-avatar size="30px">
@@ -140,7 +140,7 @@
                 </template>
               </tr>
             </thead>
-            <tbody v-if="typeRoom">
+            <tbody v-if="room.type != 3">
               <tr v-for="(player, rowIndex) in players" :key="rowIndex">
                 <td class="name1 text-name-player">
                   <div class="">
@@ -230,11 +230,13 @@ const { room_id: roomID, auth } = useAuthStore();
 const { getRanking, room, players, matches } = useRanking(roomID);
 const containerTable = ref<HTMLElement | null>(null);
 
-const typeRoom = ref(room.value.type != 3 ? true : false);
 const router = useRouter();
+
+const typeRoom = ref(false);
 
 onMounted(() => {
   getRanking(auth.role_id);
+  typeRoom.value = room.value.type == 3;
 });
 
 const getPoint = (
@@ -310,7 +312,7 @@ const getLEV = (
       lev = 'V';
       break;
     default:
-      lev = '';
+      lev = '-';
       break;
   }
 

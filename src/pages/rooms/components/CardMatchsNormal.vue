@@ -52,14 +52,6 @@ const resetMatch = (id: number) => {
           <p class="text-center text-weight-bold q-mb-none">R</p>
           <p class="text-center text-weight-bold q-mb-none" v-if="player">Pr</p>
         </div>
-        <div
-          v-else
-          class="box-result q-mb-xs"
-          :class="player ? '' : 'results-admin'"
-        >
-          <p class="text-center text-weight-bold q-mb-none" v-if="player">Pr</p>
-          <p class="text-center text-weight-bold q-mb-none">R</p>
-        </div>
       </div>
 
       <div
@@ -80,7 +72,7 @@ const resetMatch = (id: number) => {
                 "
                 alt="team1"
               />
-              <p :class="type != 3 ? '' : 'no-show-name'">
+              <p>
                 {{ match.team1?.name }}
               </p>
             </div>
@@ -94,7 +86,7 @@ const resetMatch = (id: number) => {
                 "
                 alt="team1"
               />
-              <p :class="type != 3 ? '' : 'no-show-name'">
+              <p>
                 {{ match.team2?.name }}
               </p>
             </div>
@@ -109,39 +101,6 @@ const resetMatch = (id: number) => {
         </div>
 
         <div class="box-result" :class="player ? '' : 'border-r results-admin'">
-          <template v-if="player">
-            <template v-if="showInputsResult == index || player">
-              <div class="" v-if="type == 3">
-                <q-radio
-                  name="shape"
-                  v-model="match.predictteam1"
-                  val="1"
-                  label="L"
-                  size="md"
-                  left-label
-                  color="negative"
-                />
-                <q-radio
-                  name="shape"
-                  v-model="match.predictteam1"
-                  val="2"
-                  label="E"
-                  size="sm"
-                  left-label
-                  color="white"
-                />
-                <q-radio
-                  name="shape"
-                  v-model="match.predictteam1"
-                  val="3"
-                  label="V"
-                  size="sm"
-                  left-label
-                  color="secondary"
-                />
-              </div>
-            </template>
-          </template>
           <div class="" v-if="showInputsResult == index">
             <q-input
               v-model="match.goalsTeam1"
@@ -188,7 +147,7 @@ const resetMatch = (id: number) => {
           </div>
           <template v-if="player">
             <div class="" v-if="showInputsResult == index || player">
-              <div v-if="type != 3">
+              <div>
                 <q-input
                   v-model="match.predictTeam1"
                   type="number"
@@ -217,14 +176,6 @@ const resetMatch = (id: number) => {
                   :min="0"
                 />
               </div>
-              <!-- <div v-else>
-                <q-option-group
-                  :options="options"
-                  size="xs"
-                  type="radio"
-                  v-model="match.predictteam1"
-                />
-              </div> -->
             </div>
           </template>
         </div>

@@ -66,14 +66,6 @@ const getResult = (match: Match | undefined) => {
         :key="match.id ?? 0"
       >
         <div class="index-number">{{ index + 1 }}</div>
-        <!-- <div class="box-team">
-          <div class="box-block flex flex-center q-px-sm">
-            <i
-              class="fa-solid fa-md"
-              :class="match.status ? 'hidden ' : 'fa-lock text-orange-5'"
-            ></i>
-          </div>
-        </div> -->
 
         <div class="box-result" :class="player ? '' : 'border-r results-admin'">
           <div>
@@ -90,19 +82,23 @@ const getResult = (match: Match | undefined) => {
                       "
                       alt="team1"
                     />
-                    <!-- <p :class="type != 3 ? '' : 'no-show-name'">
+                    <p
+                      class="ellipsis"
+                      style="max-width: 60px"
+                      v-show="!player"
+                    >
                       {{ match.team1?.name }}
-                    </p> -->
-                    <div class="flex column items-center">
+                    </p>
+                    <div class="flex column items-center" v-show="player">
                       <div for="">L</div>
                       <q-radio
                         name="shape"
-                        v-model="match.predictteam1"
+                        v-model="match.predictTeam1"
                         val="1"
                         size="md"
                         left-label
                         color="negative"
-                        :disable="match.status != 1"
+                        :disable="match.status == 0"
                       />
                     </div>
                   </div>
@@ -115,19 +111,19 @@ const getResult = (match: Match | undefined) => {
                           match.status ? 'invisible ' : 'fa-lock text-orange-5'
                         "
                       ></i>
-                      <!-- <p :class="type != 3 ? '' : 'no-show-name'">&nbsp;</p> -->
+                      <p v-show="!player">VS</p>
                     </div>
-                    <div class="flex column items-center">
+                    <div class="flex column items-center" v-show="player">
                       <div for="">E</div>
                       <q-radio
                         class="q-px-sm"
                         name="shape"
-                        v-model="match.predictteam1"
+                        v-model="match.predictTeam1"
                         val="2"
                         size="md"
                         left-label
                         color="negative"
-                        :disable="match.status != 1"
+                        :disable="match.status == 0"
                       />
                     </div>
                   </div>
@@ -141,19 +137,23 @@ const getResult = (match: Match | undefined) => {
                       "
                       alt="team1"
                     />
-                    <!-- <p :class="type != 3 ? '' : 'no-show-name'">
+                    <p
+                      class="ellipsis"
+                      style="max-width: 60px"
+                      v-show="!player"
+                    >
                       {{ match.team2?.name }}
-                    </p> -->
-                    <div class="flex column items-center">
+                    </p>
+                    <div class="flex column items-center" v-show="player">
                       <div for="">V</div>
                       <q-radio
                         name="shape"
-                        v-model="match.predictteam1"
+                        v-model="match.predictTeam1"
                         val="3"
                         size="md"
                         left-label
                         color="negative"
-                        :disable="match.status != 1"
+                        :disable="match.status == 0"
                       />
                     </div>
                   </div>

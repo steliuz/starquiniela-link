@@ -44,11 +44,25 @@ const onSave = async (player: any) => {
   room.value.matches?.map((match) => {
     if (
       (match.predictTeam1 == null || match.predictTeam2 == null) &&
-      match.status == 1
-    )
+      match.status == 1 &&
+      room.value.type != 3
+    ) {
+      console.log('1');
       check = true;
+    } else if (
+      match.predictTeam1 == null &&
+      match.status == 1 &&
+      room.value.type == 3
+    ) {
+      console.log('2', match.predictTeam1);
+      check = true;
+    }
   });
 
+  console.log(
+    '🚀 ~ file: RoomPlayer.vue:61 ~ room.value.matches?.map ~ check:',
+    check
+  );
   if (check) {
     handleMessages({
       message: 'Debes llenar todas las predicciones',

@@ -2,11 +2,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Ref } from 'vue';
-import { useAuthStore } from 'src/stores/auth';
+// import { useAuthStore } from 'src/stores/auth';
 import CardMatchsLev from './CardMatchsLev.vue';
 import CardMatchsNormal from './CardMatchsNormal.vue';
 
-const { auth } = useAuthStore();
+// const { auth } = useAuthStore();
 
 const showInputsResult: Ref<null | number> = ref(null);
 defineProps(['dataMatch', 'player', 'type']);
