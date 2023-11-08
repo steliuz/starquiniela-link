@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header style="background-color: transparent">
+    <q-header :style="$q.dark.isActive ? 'background-color: transparent' : ''">
       <q-toolbar>
         <q-toolbar-title class="q-pa-sm">
           <q-img
@@ -10,7 +10,10 @@
             spinner-size="82px"
           />
         </q-toolbar-title>
-        <div></div>
+        <div class="q-mr-md flex flex-center">
+          <p class="q-mb-none q-mr-sm">Modo Oscuro</p>
+          <ToggleComponent />
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -20,7 +23,9 @@
   </q-layout>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ToggleComponent from 'src/components/ToggleDarkComponent.vue';
+</script>
 
 <style lang="scss" scoped>
 .bg-img {
@@ -39,6 +44,12 @@
   display: flex;
   justify-content: space-between;
   padding: 0 20px;
+}
+
+.body--light {
+  .bg-img {
+    background-image: url('src/assets/bg-white.png');
+  }
 }
 
 .container-box {

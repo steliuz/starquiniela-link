@@ -48,8 +48,10 @@
                   <div class="q-px-xs">Pts</div>
                 </th>
                 <template v-for="(team, index) of matches" :key="index">
-                  <th>
-                    <div class="full-width full-height flex flex-center">
+                  <th class="bg-gray-custom-table">
+                    <div
+                      class="full-width full-height flex flex-center bg-gray-custom-table"
+                    >
                       {{ index + 1 }}
                     </div>
                   </th>
@@ -99,7 +101,7 @@
                       </div>
                     </div>
                   </th>
-                  <th v-if="room.type == 3">
+                  <th v-if="room.type == 3" class="bg-gray-2-custom-table">
                     <div class="flex justify-center" style="width: 80px">
                       <div class="q-mx-xs">
                         <q-avatar size="30px">
@@ -192,13 +194,18 @@
                 <td class="name1">
                   <div class="text-name-player">
                     {{ player?.user?.name || '' }}
-                    <p class="text-caption text-orange-5 no-margin">
+                    <p
+                      class="text-caption no-margin"
+                      :class="
+                        $q.dark.isActive ? ' text-orange-5' : 'text-primary'
+                      "
+                    >
                       {{ `(${player.ticket_factura})` }}
                     </p>
                   </div>
                 </td>
                 <td class="name2 bg-orange-6 text-black text-bold">
-                  <div class="flex flex-center">9</div>
+                  <div class="flex flex-center">{{ player.max_points }}</div>
                 </td>
                 <template v-for="(match, index) in matches" :key="index">
                   <td class="lev">
@@ -252,6 +259,7 @@ const getPoint = (
     return bet.match_id == matchID && bet.index == index;
   }, {});
 
+  console.log('bet:', bet);
   return bet?.points ? bet.points : 0;
 };
 const getBet = (
@@ -336,18 +344,22 @@ const goToRankingPDF = () => {
     background-color: #ebe9e9;
   }
 
+  .bg-gray-custom-table {
+    background-color: #c8c8c9;
+    color: #222;
+    width: 15px;
+  }
+  .bg-gray-2-custom-table {
+    background-color: #ebe9e9;
+    color: #222;
+  }
+
   h {
     border: 1px solid #d1d1d1;
     text-align: left;
     padding: 3px;
   }
 
-  th:nth-child(3n + 3) {
-    background-color: #c8c8c9;
-    color: #222;
-    font-weight: 500;
-    width: 30px;
-  }
   td.roomNormal:nth-child(3n + 3) {
     background-color: #c8c8c9;
     color: #222;
@@ -381,6 +393,10 @@ const goToRankingPDF = () => {
 
   .gols {
     color: #222;
+  }
+
+  .bg-img {
+    background-image: url('src/assets/bg-white.png');
   }
 }
 

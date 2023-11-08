@@ -82,11 +82,7 @@ const getResult = (match: Match | undefined) => {
                       "
                       alt="team1"
                     />
-                    <p
-                      class="ellipsis"
-                      style="max-width: 60px"
-                      v-show="!player"
-                    >
+                    <p class="ellipsis nameLev text-orange-5" v-show="!player">
                       {{ match.team1?.name }}
                     </p>
                     <div class="flex column items-center" v-show="player">
@@ -111,7 +107,7 @@ const getResult = (match: Match | undefined) => {
                           match.status ? 'invisible ' : 'fa-lock text-orange-5'
                         "
                       ></i>
-                      <p v-show="!player">VS</p>
+                      <div class="q-mx-sm" v-show="!player">VS</div>
                     </div>
                     <div class="flex column items-center" v-show="player">
                       <div for="">E</div>
@@ -137,11 +133,7 @@ const getResult = (match: Match | undefined) => {
                       "
                       alt="team1"
                     />
-                    <p
-                      class="ellipsis"
-                      style="max-width: 60px"
-                      v-show="!player"
-                    >
+                    <p class="ellipsis nameLev text-orange-5" v-show="!player">
                       {{ match.team2?.name }}
                     </p>
                     <div class="flex column items-center" v-show="player">
@@ -472,6 +464,16 @@ const getResult = (match: Match | undefined) => {
       border-bottom: 0px solid transparent;
     }
 
+    .nameLev {
+      max-width: 80px;
+      @media screen and (max-width: 400px) {
+        display: none;
+      }
+      @media screen and (min-width: 600px) {
+        max-width: 120px;
+      }
+    }
+
     .index-number {
       display: flex;
       justify-content: center;
@@ -491,10 +493,12 @@ const getResult = (match: Match | undefined) => {
       & .divTeams {
         display: flex;
         justify-content: space-between;
+        @media screen and (max-width: 400px) {
+          align-items: flex-end;
+        }
 
         p {
           line-height: 18px;
-          padding-left: 10px;
           font-size: 14px;
           margin-bottom: 0;
           padding-top: 2px;
@@ -514,6 +518,10 @@ const getResult = (match: Match | undefined) => {
           height: 24px;
           border-radius: 4px;
           box-shadow: 2px 2px 3px rgba($color: #000000, $alpha: 0.1);
+
+          @media screen and (max-width: 400px) {
+            margin: 0px 10px;
+          }
         }
       }
     }

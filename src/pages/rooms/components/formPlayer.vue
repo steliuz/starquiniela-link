@@ -25,7 +25,7 @@
                 type="tel"
                 placeholder="Teléfono"
                 required
-                mask="##############"
+                mask="#############"
                 :prefix="codeCountry.value"
                 unmasked-value
                 :rules="[(val) => val.length >= 8]"
