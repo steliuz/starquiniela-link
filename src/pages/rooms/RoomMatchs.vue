@@ -369,6 +369,7 @@ const showPDF = (id: string) => {
           @emitDelete="onDelete"
           :key="loadingRoom ? 1 : 0"
           @resetMatch="onResetMatch"
+          :player="false"
         />
       </div>
       <div class="col-12 col-md-3 q-px-md" v-if="auth.role_id != 1">
