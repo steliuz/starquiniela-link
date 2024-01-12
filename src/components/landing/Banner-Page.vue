@@ -107,7 +107,7 @@
         <q-img class="lt-sm" src="vertical2.jpg" />
         <!-- <div class="lt-md" style="height: 400px"></div> -->
         <!-- <q-img class="lt-md" src="@/assets/images/login/vertical.jpg" /> -->
-        <q-img class="gt-xs" src="wall.jpg" />
+        <q-img class="gt-xs height-banner" src="wall.jpg" />
       </div>
     </section>
   </div>
@@ -119,12 +119,14 @@
 .bg {
   position: relative;
 }
+.height-banner {
+}
 
 .bg-header {
   margin-top: 0px;
   /* background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)),
         url('~@/assets/images/login/copas.jpg'); */
-  height: 100%;
+  height: 435px;
 }
 
 .h3-banner {
@@ -175,7 +177,7 @@
   padding-left: 1.2em;
   font-size: 17px;
   font-weight: 500;
-  border-radius: 0.9em;
+  border-radius: 30px;
   border: none;
   letter-spacing: 0.05em;
   display: flex;
@@ -199,7 +201,7 @@
 }
 
 .btn-in .icon {
-  background: white;
+  background: $white;
   margin-left: 1em;
   position: absolute;
   display: flex;
@@ -211,6 +213,7 @@
   box-shadow: 0.1em 0.1em 0.6em 0.2em #00a050;
   right: 0.3em;
   transition: all 0.3s;
+  border-radius: 30px;
 }
 
 .btn-in:hover .icon {

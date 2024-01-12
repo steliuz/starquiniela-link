@@ -3,8 +3,13 @@ import { ref } from 'vue';
 import Banner from 'src/components/landing/Banner-Page.vue';
 import Cards from 'src/components/landing/Cards-Section.vue';
 import { useRouter } from 'vue-router';
+import Vip from 'src/components/landing/Vip-Section.vue';
+import Whatsapp from 'src/components/landing/Whatsapp-Buttom.vue';
+import CardBanner from 'src/components/landing/Card-Banner.vue';
+import GenerateSection from 'src/components/landing/Generate-Section.vue';
 
 import { scroll } from 'quasar';
+import whatsapp from 'src/components/landing/Whatsapp-Buttom.vue';
 const { getScrollTarget, setScrollPosition } = scroll;
 
 const valueScroll = ref(false);
@@ -96,6 +101,18 @@ const onScroll = (position: number) => {
     </q-header>
     <Banner />
     <Cards />
+    
+      <!-- <section id="seccion1" class="q-my-md">
+        <CardBanner />
+      </section> -->
+
+      <section id="seccion2" class="q-my-md">
+        <GenerateSection />
+      </section>
+
+    <Whatsapp />
+
+    <Vip />
   </q-layout>
 </template>
 
@@ -108,18 +125,22 @@ const onScroll = (position: number) => {
   background-color: #fff;
   color: $primary;
   padding: 0px 16px;
-  border-radius: 7px;
+  border-radius: 30px;
   transition: all 0.3s ease-out;
 
   &:hover {
+    background-color: $primary;
+    color: $white;
     transform: scale(1.05);
-    background-color: $secondary;
-    color: #222;
+    border: 1px solid $white;
   }
 }
 
 .btn-flat:hover {
-  color: $secondary;
+  border: 1px solid $white;
+  border-radius: 30px;
+  background-color: $primary;
+  color: $white;
 }
 
 .bg-nav {

@@ -147,6 +147,7 @@
       <router-view />
     </q-page-container>
   </q-layout>
+  
 </template>
 
 <script setup lang="ts">
@@ -156,6 +157,7 @@ import { useRouter } from 'vue-router';
 import EssentialLink, {
   EssentialLinkProps,
 } from 'components/EssentialLink.vue';
+
 
 import ToggleComponent from 'src/components/ToggleDarkComponent.vue';
 import { useAuthStore } from 'src/stores/auth';
