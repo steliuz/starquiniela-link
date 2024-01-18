@@ -6,10 +6,14 @@ import { useRouter } from 'vue-router';
 import Vip from 'src/components/landing/Vip-Section.vue';
 import Whatsapp from 'src/components/landing/Whatsapp-Buttom.vue';
 import CardBanner from 'src/components/landing/Card-Banner.vue';
-import GenerateSection from 'src/components/landing/Generate-Section.vue';
+import CarouselSection from 'src/components/landing/Carousel-Section.vue';
+import CardOrganizer from 'src/components/landing/Card-Banner-2.vue';
+import GenerateSection from 'src/components/landing/Generate-section.vue';
+import StepsSection from 'src/components/landing/Steps-Section.vue';
+import FooterSection from 'src/components/landing/Footer-Section.vue';
+import ArrowUp from 'src/components/landing/Arrow-Up.vue';
 
 import { scroll } from 'quasar';
-import whatsapp from 'src/components/landing/Whatsapp-Buttom.vue';
 const { getScrollTarget, setScrollPosition } = scroll;
 
 const valueScroll = ref(false);
@@ -72,8 +76,10 @@ const onScroll = (position: number) => {
         <div
           class="col-6 col-md-3 flex justify-start items-center q-pl-lg q-pt-xs"
         >
-          <q-avatar class=""> </q-avatar>
-          <p class="text-white pt-1 mb-0 pl-3 text-h6 text-weight-bolder gt-xs">
+          <q-avatar class=""
+            ><img src="/src/assets/logo/logo-white.png" alt="" />
+          </q-avatar>
+          <p class="text-white q-mb-none pl-3 text-h6 text-weight-bolder gt-xs">
             StarQuiniela
           </p>
         </div>
@@ -99,48 +105,72 @@ const onScroll = (position: number) => {
         </div>
       </div>
     </q-header>
+
     <Banner />
     <Cards />
-    
-      <!-- <section id="seccion1" class="q-my-md">
-        <CardBanner />
-      </section> -->
+    <ArrowUp />
 
-      <section id="seccion2" class="q-my-md">
-        <GenerateSection />
-      </section>
+    <section id="seccion1" class="q-my-md q-pb-lg">
+      <CardBanner />
+    </section>
+
+    <section id="seccion3" class="q-mt-lg">
+      <StepsSection />
+    </section>
+
+    <section id="seccion6" class="">
+      <GenerateSection />
+    </section>
+
+    <section id="seccion5" class="">
+      <Vip />
+    </section>
+
+    <section id="seccion2" class="q-my-md">
+      <CarouselSection />
+    </section>
+
+    <section id="seccion3" class="q-my-lg q-pb-lg">
+      <CardOrganizer />
+    </section>
+
+    <section id="seccion5" class="">
+      <FooterSection />
+    </section>
 
     <Whatsapp />
-
-    <Vip />
   </q-layout>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" scope>
 .hg-nav {
   height: 68px;
 }
 
 .btn-login {
-  background-color: #fff;
-  color: $primary;
-  padding: 0px 16px;
-  border-radius: 30px;
+  background-color: $secondary;
+  color: #000;
+  padding: 0 16px;
+  border-radius: 8px;
   transition: all 0.3s ease-out;
 
   &:hover {
     background-color: $primary;
     color: $white;
     transform: scale(1.05);
-    border: 1px solid $white;
   }
 }
 
-.btn-flat:hover {
-  border: 1px solid $white;
-  border-radius: 30px;
-  background-color: $primary;
+.btn-flat {
   color: $white;
+  font-weight: 400;
+}
+.btn-flat:hover {
+  border-bottom: 1px solid $white;
+  color: $white;
+  font-weight: 700;
+  border-radius: 0%;
+  background-color: transparent !important;
 }
 
 .bg-nav {

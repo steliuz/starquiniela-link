@@ -1,11 +1,13 @@
 <template>
-  <div class="bg-primary text-white py-5 container-height">
+  <div class="bg-primary text-white q-py-lg container-height">
     <section class="padding-container margin-x">
       <div class="row">
         <div class="col-12 col-sm-6 mt-2">
           <q-list>
             <q-item-label header>
-              <h5 class="text-yellow text-bold q-my-none">Niveles de Quiniela</h5>
+              <h5 class="text-yellow text-bold q-my-none">
+                Niveles de Quiniela
+              </h5>
               <!-- <p class="text-white mb-0">Quiniela</p> -->
             </q-item-label>
             <div v-for="(item, index) of plans" :key="index">
@@ -117,9 +119,7 @@ const plans = [
 ];
 </script>
 
-<style lang="scss" scoped>
-
-
+<style lang="scss" scope>
 .padding-container {
   padding-right: 34px;
   padding-left: 34px;

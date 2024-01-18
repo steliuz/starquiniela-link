@@ -1,125 +1,78 @@
 <template>
-  <div class="bg-white text-black py-5 container-height">
-    <section class="padding-container margin-x" id="income">
-      <div class="row">
-         <div class="text-center">
-          <img class="img-cellphone" src="/src/assets/cellphone.png" />
+  <!-- <div >
+    <q-parallax>
+      <template v-slot:media>
+        <img src="/src/assets/parallax1.jpg">
+      </template>
+
+      <template v-slot:content="scope">
+        <div
+          class="absolute column items-center justify-start"
+          :style="{
+            opacity: 0.95 + (1 - scope.percentScrolled) * 0.85,
+            top: (scope.percentScrolled * 50) + '%',
+            left: 0,
+            right: 0,
+          }"
+        >
+          <div class="text-h3 text-white text-center text-bold text-shadow">¿Como generar ingresos?</div>
+         
+          <ul class="text-list">
+            <li><i class="fa-regular fa-circle-check fa-beat q-pr-md fa-lg" style="color:yellow"></i>Invita a tus amigos</li>
+            <li><i class="fas fa-share-alt fa-beat q-pr-md fa-lg" style="color:yellow"></i>Comparteles la manera de jugar</li>
+            <li><i class="fas fa-crosshairs fa-beat q-pr-md fa-lg" style="color:yellow"></i>tu eliges tu recaudación, nosotros te brindamos la app</li>
+            <li><i class="fas fa-percent fa-beat q-pr-md fa-lg" style="color:yellow"></i>Coloca el % de ingreso o ganancia y listo.</li>
+          </ul>
         </div>
-        <div class="col-12 col-sm-6 mt-2">
-          <q-list>
-            <q-item-label header>
-              <h5 class="text-gray text-bold q-my-none">Como generar ingresos</h5>
-              <!-- <p class="text-white mb-0">Quiniela</p> -->
-            </q-item-label>
-            <q-item>
-              <q-item-section>
-                <q-item-label class="text-bold">Quiniela normal</q-item-label>
-                <q-item-label lines="7" class="line">
-                  <b class="text-yellow">Regla de 1 y 3 puntos</b> , esta regla
-                  consiste en que el jugador llenan sus pronósticos, si acierta
-                  <b>GANADOR</b> y <b>MARCADOR</b> se le dan 3 puntos, si solo
-                  acierta al GANADOR recibe 1 punto.
-                </q-item-label>
-              </q-item-section>
-            </q-item>
+      </template>
+    </q-parallax>
+  </div> -->
 
-            <q-separator class="bg-white" spaced inset />
+  <div class="q-">
+    <q-parallax>
+      <template v-slot:media>
+        <img class="q-mb-lg" src="/src/assets/parallax4.jpg">
+      </template>
 
-            <q-item>
-              <q-item-section>
-                <q-item-label class="text-bold">Quiniela Avanzada</q-item-label>
-                <q-item-label lines="7" class="line">
-                  <b class="text-yellow">Regla de 15 puntos</b>, los jugadores
-                  colocan sus pronósticos, el jugador acierta el marcador,
-                  recibe 15 puntos, si solo acierta al ganador es en base a 10
-                  puntos, y se le restará 1 punto por diferencia de goles entre
-                  el Resultado final y pronósticos.
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-separator class="bg-white" spaced inset />
-
-            <q-item>
-              <q-item-section>
-                <q-item-label class="text-bold">Quiniela LEV</q-item-label>
-                <q-item-label lines="7" class="line">
-                  <b class="text-yellow">Regla de 1 punto</b>, Consiste en
-                  acertar al ganador de local, visitante o al empate.
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
+      <template v-slot:content="scope">
+        <div
+          class="absolute column items-center"
+          :style="{
+            opacity: 0.95 + (1 - scope.percentScrolled) * 0.55,
+            top: (scope.percentScrolled * 60) + '%',
+            left: 0,
+            right: 0
+          }"
+        >
+          <div class="text-h3 text-white text-center text-bold text-shadow">¿Como generar ingresos?</div>
+         
+          <ul class="text-list">
+            <li><i class="fa-regular fa-circle-check fa-beat q-pr-md fa-lg" style="color:#f2c037"></i>Invita a tus amigos</li>
+            <li><i class="fas fa-share-alt fa-beat q-pr-md fa-lg" style="color:#f2c037"></i>Comparteles la manera de jugar</li>
+            <li><i class="fas fa-crosshairs fa-beat q-pr-md fa-lg" style="color:#f2c037"></i>Tu eliges tu recaudación, nosotros te brindamos la app</li>
+            <li><i class="fas fa-percent fa-beat q-pr-md fa-lg" style="color:#f2c037"></i>Coloca el % de ingreso o ganancia y listo.</li>
+          </ul>
         </div>
-      </div>
-    </section>
+      </template>
+    </q-parallax>
   </div>
 </template>
 
-<script setup>
-const plans = [
-  {
-    name: 'Quiniela Básica',
-    tickets: '20 tickets',
-    stars: 1,
-  },
-  {
-    name: 'Quiniela Bronce',
-    tickets: '50 tickets',
-    stars: 2,
-  },
-  {
-    name: 'Quiniela Plata',
-    tickets: '100 tickets',
-    stars: 3,
-  },
-  {
-    name: 'Quiniela Oro',
-    tickets: '300 tickets',
-    stars: 4,
-  },
-  {
-    name: 'Quiniela Platino',
-    tickets: 'Ilimitados',
-    stars: 5,
-  },
-];
-</script>
-
-<style lang="scss" scoped>
-
-.img-cellphone {
-    width: 400px;
-}
-.padding-container {
-  padding-right: 34px;
-  padding-left: 34px;
+<style scoped>
+.text-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
 }
 
-.margin-x {
-  margin-left: 2rem;
-  margin-right: 2rem;
+.text-list li {
+  margin: 15px 0;
+  font-size: 1.6rem;
+  color: #fff;
+   text-shadow: 0px 2px 1px rgba(10, 0, 0, 1);
 }
 
-.line {
-  line-height: 1.5 !important;
-}
-
-/*------ Entre a 600px y 1023px ------*/
-
-@media screen and (min-width: 601px) and (max-width: 1023px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-}
-
-/*------ Menor a 600px ------*/
-
-@media screen and (max-width: 600px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
+.text-shadow {
+  text-shadow: 0px 2px 1px rgba(10, 0, 0, 1);
 }
 </style>

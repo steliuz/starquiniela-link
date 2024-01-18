@@ -182,6 +182,37 @@ p.label-input {
   color: #fff;
 }
 
+.q-stepper__title {
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 0.1px;
+}
+
+.q-stepper__dot {
+  width: 3rem !important;
+  height: 3rem !important;
+
+  span > i {
+    font-size: 1rem;
+  }
+}
+.q-focus-helper,
+.q-focusable,
+.q-manual-focusable,
+.q-hoverable {
+  outline: 0;
+  border-radius: 8px;
+}
+
+.q-stepper--vertical .q-stepper__step-inner {
+  padding: 0 24px 32px 18%;
+}
+
+.q-stepper--vertical .q-stepper__tab {
+  padding: 12px 24px;
+  margin: 2.5rem 0;
+}
+
 .shield-plan {
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 

@@ -1,6 +1,5 @@
-import { copyToClipboard } from 'quasar';
 <template>
-  <section class="q-mt-md q-mx-lg" id="top">
+  <section class="q-mt-xl q-mx-lg" id="top">
     <div class="container">
 
     <div class="row">
@@ -63,7 +62,7 @@ const arrayAdvantages = [
 ];
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scope>
 
 
 .m-section {
@@ -163,7 +162,7 @@ const arrayAdvantages = [
 }
 
 .card:hover {
-  border: 1px solid $primary;
+  border: 1px solid $secondary;
   transform: scale(1.05);
   opacity: 0.9;
 }
@@ -208,7 +207,7 @@ const arrayAdvantages = [
 
 .container .card:hover .imgBox {
   scale: 1.1;
-  color:$primary;
+  color: $secondary;
 }
 
 

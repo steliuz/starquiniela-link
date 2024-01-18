@@ -177,7 +177,7 @@
   padding-left: 1.2em;
   font-size: 17px;
   font-weight: 500;
-  border-radius: 30px;
+  border-radius: 8px;
   border: none;
   letter-spacing: 0.05em;
   display: flex;
@@ -213,7 +213,7 @@
   box-shadow: 0.1em 0.1em 0.6em 0.2em #00a050;
   right: 0.3em;
   transition: all 0.3s;
-  border-radius: 30px;
+  border-radius: 8px;
 }
 
 .btn-in:hover .icon {
