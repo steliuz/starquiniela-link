@@ -14,7 +14,6 @@ import FooterSection from 'src/components/landing/Footer-Section.vue';
 import ArrowUp from 'src/components/landing/Arrow-Up.vue';
 
 import { scroll } from 'quasar';
-const { getScrollTarget, setScrollPosition } = scroll;
 
 const valueScroll = ref(false);
 
@@ -25,23 +24,23 @@ const arrayButtons = [
     class: 'btn-flat',
     idSection: 'top',
   },
-  {
-    icon: 'sports_soccer',
-    label: 'Ventajas',
-    class: 'btn-flat',
-    idSection: 'advantages',
-  },
+  // {
+  //   icon: 'sports_soccer',
+  //   label: 'Ventajas',
+  //   class: 'btn-flat',
+  //   idSection: 'advantages',
+  // },
   {
     icon: 'important_devices',
     label: '¿Cómo Jugar?',
     class: 'btn-flat',
-    idSection: 'play',
+    idSection: 'steps',
   },
   {
     icon: 'monetization_on',
-    label: 'Ingresos',
+    label: 'Reglas',
     class: 'btn-flat',
-    idSection: 'income',
+    idSection: 'rules',
   },
 ];
 
@@ -50,25 +49,27 @@ const router = useRouter();
 const goLogin = () => {
   router.push('/login');
 };
+const scrollToElement = (idSection: string) => {
+  const targetSection = document.getElementById(idSection);
+  const offset = 50;
 
-const scrollToElement = (nameClass: string) => {
-  let el = document.querySelector(`.${nameClass}`);
-  let target = getScrollTarget(el);
-  let offset = el.offsetTop - 80;
-  let duration = 1000;
-  setScrollPosition(target, offset, duration);
+  if (targetSection) {
+    window.scrollTo({
+      top: targetSection.offsetTop - offset,
+      behavior: 'smooth',
+    });
+  }
 };
 
 const onScroll = (position: number) => {
   position > 200 ? (valueScroll.value = true) : (valueScroll.value = false);
+  console.log(valueScroll.value);
 };
 </script>
 <template>
-  <q-layout class="bg-white" v-scroll="onScroll">
-    <!-- <NavBar /> -->
-
+  <q-layout class="bg-white" id="top" v-scroll="onScroll">
     <q-header
-      class="fixed hg-nav"
+      class="hg-nav"
       :elevated="valueScroll ? true : false"
       :class="valueScroll ? 'bg-nav' : 'transparent'"
     >
@@ -114,15 +115,15 @@ const onScroll = (position: number) => {
       <CardBanner />
     </section>
 
-    <section id="seccion3" class="q-mt-lg">
-      <StepsSection />
+    <section id="seccion2" class="q-mt-lg">
+      <StepsSection id="steps" />
     </section>
 
     <section id="seccion6" class="">
       <GenerateSection />
     </section>
 
-    <section id="seccion5" class="">
+    <section id="rules" class="">
       <Vip />
     </section>
 
@@ -145,6 +146,7 @@ const onScroll = (position: number) => {
 <style lang="scss" scope>
 .hg-nav {
   height: 68px;
+  position: fixed !important;
 }
 
 .btn-login {

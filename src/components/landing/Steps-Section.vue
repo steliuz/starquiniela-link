@@ -215,28 +215,13 @@ const step2 = ref(1);
 
 <style lang="scss" scoped>
 .padding-container-step {
-  padding-right: 10%;
-  padding-left: 10%;
+  padding: 5% 10%;
 }
 
 .q-stepper {
   border-radius: 4px;
   background: #fff;
   box-shadow: none;
-}
-
-.text-tittle {
-  color: #5c00be;
-  font-weight: 700;
-  font-size: 3rem;
-  line-height: 2.5rem;
-}
-
-.subtittle-black {
-  color: #000;
-  font-weight: 300;
-  font-size: 1.2rem;
-  line-height: 2.5rem;
 }
 
 .text-style {
