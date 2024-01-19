@@ -20,7 +20,7 @@ const valueScroll = ref(false);
 const arrayButtons = [
   {
     icon: 'home',
-    label: 'Inicio',
+    label: 'Iniciossss',
     class: 'btn-flat',
     idSection: 'top',
   },
