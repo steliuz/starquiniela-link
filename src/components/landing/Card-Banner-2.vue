@@ -12,7 +12,12 @@
           class="col-12 col-sm-2 flex justify-center align-center content-center"
         >
           <div class="btn-play mt-3">
-            <button class="btn-in" @click="$router.push('/pages/login')">
+            <button
+              class="btn-in"
+              @click="$router.push('/pages/login')"
+              @mouseenter="addClass"
+              @mouseleave="removeClass"
+            >
               ¡Contactar!
               <div class="icon">
                 <img class="balon-icon" src="balon.png" alt="" />
@@ -55,10 +60,6 @@ const colorBtn = computed(() => {
   position: absolute;
   right: -30px;
   bottom: -10px;
-}
-.padding-container {
-  padding-right: 114px;
-  padding-left: 114px;
 }
 
 .bg-box {
@@ -108,17 +109,21 @@ const colorBtn = computed(() => {
   padding-left: 1.2em;
   font-size: 20px;
   font-weight: 500;
-  border-radius: 30px;
+  border-radius: 4px;
   border: none;
   letter-spacing: 0.05em;
   display: flex;
   align-items: center;
-  box-shadow: inset 0 0 1.6em -0.6em #714da6;
   overflow: hidden;
   position: relative;
   height: 2.8em;
   padding-right: 3.3em;
   cursor: pointer;
+
+  &:hover {
+    color: #fff;
+    background: #7b52b9;
+  }
 }
 
 .balon-icon {
@@ -140,10 +145,9 @@ const colorBtn = computed(() => {
   height: 2.2em;
   width: 2.2em;
   border-radius: 0.7em;
-  box-shadow: 0.1em 0.1em 0.6em 0.2em #00a050;
   right: 0.3em;
   transition: all 0.3s;
-  border-radius: 30px;
+  border-radius: 4px;
 }
 
 .btn-in:hover .icon {
@@ -182,11 +186,6 @@ const colorBtn = computed(() => {
 /*------ Entre a 600px y 1023px ------*/
 
 @media screen and (min-width: 601px) and (max-width: 1023px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-
   .bg-box {
     padding: 20px 15px;
     color: #fff;
@@ -201,11 +200,6 @@ const colorBtn = computed(() => {
 /*------ Menor a 600px ------*/
 
 @media screen and (max-width: 600px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-
   .bg-box {
     background-color: #5c00bf;
     padding: 20px 10px;

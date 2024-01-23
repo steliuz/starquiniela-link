@@ -93,11 +93,6 @@ const arrayAdvantages = [
   font-size: 1.1rem;
 }
 
-.padding-container {
-  padding-right: 34px;
-  padding-left: 34px;
-}
-
 .font-title {
   font-size: 5rem;
 }
@@ -209,11 +204,6 @@ const arrayAdvantages = [
 /*------ Entre a 600px y 1023px ------*/
 
 @media screen and (min-width: 601px) and (max-width: 1023px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-
   .bg-box {
     padding: 20px 15px;
     color: #fff;

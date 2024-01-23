@@ -202,7 +202,7 @@ const onScroll = (position: number) => {
   margin-top: -300px;
 
   @media (max-width: 600px) {
-    margin-top: 200px;
+    margin-top: 20px;
   }
 }
 </style>

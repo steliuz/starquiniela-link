@@ -1,5 +1,5 @@
 <template>
-  <div class="padding-container-carousel">
+  <div class="padding-container">
     <div class="">
       <p class="text-center text-tittle q-mb-md">Juega tu primera QUINIELA</p>
       <p class="text-center subtittle-black">
@@ -226,11 +226,6 @@ formatCommentsCarousel(arrayBack);
     }
   }
 }
-
-.padding-container-carousel {
-  padding: 5% 10%;
-}
-
 .box-cards {
   width: 100%;
   display: grid;

@@ -15,6 +15,10 @@ $font-weight: (
   wbold: bold,
 );
 
+.padding-container {
+  padding: 5% 10%;
+}
+
 .no-ancla {
   text-decoration: none;
 }
@@ -23,7 +27,7 @@ $font-weight: (
   color: #5c00be;
   font-weight: 700;
   font-size: 3rem;
-  line-height: 2.5rem;
+  line-height: normal;
 }
 
 .subtittle-black {

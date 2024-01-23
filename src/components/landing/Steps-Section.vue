@@ -1,5 +1,5 @@
 <template>
-  <div class="padding-container-step">
+  <div class="padding-container">
     <div>
       <p class="text-center text-tittle q-mb-md">Juega tu primera QUINIELA</p>
       <p class="text-center subtittle-black">
@@ -225,7 +225,7 @@
               con tus seres queridos. ¡Que empiece el juego!"
             </p>
             <q-stepper-navigation>
-              <q-btn color="secondary" label="Adquiere tu organizador" />
+              <q-btn color="negative" label="Adquiere tu organizador" />
             </q-stepper-navigation>
           </q-step>
         </q-stepper>
@@ -242,10 +242,6 @@ const step2 = ref(2);
 </script>
 
 <style lang="scss" scoped>
-.padding-container-step {
-  padding: 5% 10%;
-}
-
 .q-stepper {
   border-radius: 4px;
   background: #fff;

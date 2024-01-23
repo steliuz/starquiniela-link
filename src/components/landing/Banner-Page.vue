@@ -4,8 +4,17 @@
       <div class="column position-title absolute">
         <div class="lt-sm">
           <div class="flex justify-center mb-5">
-            <button class="btn-in" @click="$router.push('/pages/login')">
-              ¡JUGAR!
+            <button
+              class="btn-in q-mr-xs"
+              @click="$router.push('/pages/login')"
+            >
+              ¡StarQuiniela!
+              <div class="icon">
+                <img class="balon-icon" src="balon.png" alt="" />
+              </div>
+            </button>
+            <button class="btn-in-2" @click="$router.push('/pages/login')">
+              Jugar 2.0!
               <div class="icon">
                 <img class="balon-icon" src="balon.png" alt="" />
               </div>
@@ -38,13 +47,13 @@
           </div> -->
         </div>
         <div class="gt-sm text-white">
-          <h3 class="h3-banner text-right text-warning">
+          <h2 class="h3-banner text-right text-warning">
             JUEGA
             <br />
             COMPITE
             <br />
             Y DIVIÉRTETE
-          </h3>
+          </h2>
           <p class="pb-2 lt-sm text-right q-mt-xs text-subtitle1">
             Descubre la emoción de participar en quinielas online con tus
             amigos, <strong class="">¡nunca fue tan fácil y divertido!</strong>"
@@ -82,7 +91,21 @@
             </div> -->
         </div>
         <!-- <div class="gt-ms">
-            <h3 class="text-white h3-banner">JUEGA , COMPITE Y DIVIÉRTETE</h3>
+            <h3 class="text-white h3-b <button
+              class="btn-in q-mr-xs"
+              @click="$router.push('/pages/login')"
+            >
+              ¡StarQuiniela!
+              <div class="icon">
+                <img class="balon-icon" src="balon.png" alt="" />
+              </div>
+            </button>
+            <button class="btn-in-2" @click="$router.push('/pages/login')">
+              Jugar 2.0!
+              <div class="icon">
+                <img class="balon-icon" src="balon.png" alt="" />
+              </div>
+            </button>anner">JUEGA , COMPITE Y DIVIÉRTETE</h3>
             <h4 class="text-white pb-2 lt-sm">
               ¡Nunca fue tan sencillo jugar con tus amigos!
             </h4>
@@ -122,7 +145,7 @@
         </div>
       </div> -->
       <div class="bg-header">
-        <q-img class="lt-sm" src="vertical2.jpg" />
+        <!-- <q-img class="lt-sm" src="wall-4.png" /> -->
         <q-img class="gt-xs height-banner" src="wall-4.png" />
       </div>
     </section>
@@ -135,8 +158,23 @@
 .bg {
   position: relative;
 }
+
+.bg-header {
+  margin-top: 0px;
+  height: 70%;
+}
 .height-banner {
-  height: 700px;
+  height: auto;
+  max-height: 850px;
+}
+
+.position-title {
+  text-align: center;
+  max-width: 450px;
+  margin: auto;
+  top: 15%;
+  right: 5%;
+  z-index: 2;
 }
 
 .h3-banner {
@@ -164,15 +202,6 @@
 .title-font {
   font-size: 4rem;
   font-weight: bold;
-}
-
-.position-title {
-  text-align: center;
-  max-width: 450px;
-  margin: auto;
-  top: 20%;
-  right: 5%;
-  z-index: 2;
 }
 
 .btn-in {
@@ -430,6 +459,13 @@
 
   .btn-play {
     justify-content: center;
+  }
+
+  .bg-header {
+    margin-top: 0px;
+    height: 100%;
+    min-height: 700px;
+    background-image: linear-gradient(to top, #050b1a, #5c00b7);
   }
 }
 </style>

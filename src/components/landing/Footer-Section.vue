@@ -1,6 +1,6 @@
 <template>
   <div class="bg-dark text-white q-py-lg container-height">
-    <section class="padding-container margin-x">
+    <section class="padding-container-footer q-py-xs margin-x">
       <div class="row">
         <div class="col-12 col-md-3 mt-2">
           <div class="flex items-center justify-center full-height">
@@ -11,10 +11,13 @@
           <div class="flex justify-center items-center">
             <ul class="footer-list text-rigth text-lg-right">
               <li>
-                <a href="#" class="footer-link text-bold text-h6">Descargar</a>
+                <a href="#" class="footer-link text-bold text-h6"
+                  >Descargalo Pronto</a
+                >
               </li>
               <q-btn
-                color="secondary"
+                color="grey-5"
+                disable
                 class="footer-link text-bold text-h6"
                 label="Google Play"
                 outline
@@ -143,10 +146,14 @@ const arrayButtons = [
 ];
 </script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
+.padding-container-footer {
+  padding: 2% 10%;
+}
+
 .google-play-icon {
-  width: 24px; /* Ajusta el tamaño según sea necesario */
-  height: 24px; /* Ajusta el tamaño según sea necesario */
+  width: 24px;
+  height: 24px;
 }
 
 .icon-footer {
@@ -160,11 +167,6 @@ const arrayButtons = [
 
 .logo-style {
   width: 150px;
-}
-
-.padding-container {
-  padding-right: 34px;
-  padding-left: 34px;
 }
 
 .margin-x {
@@ -214,18 +216,10 @@ const arrayButtons = [
 /*------ Entre a 600px y 1023px ------*/
 
 @media screen and (min-width: 601px) and (max-width: 1023px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
 }
 
 /*------ Menor a 600px ------*/
 
 @media screen and (max-width: 600px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
 }
 </style>

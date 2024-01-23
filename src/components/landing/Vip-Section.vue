@@ -119,12 +119,7 @@ const plans = [
 ];
 </script>
 
-<style lang="scss" scope>
-.padding-container {
-  padding-right: 7%;
-  padding-left: 7%;
-}
-
+<style lang="scss" scoped>
 .margin-x {
   margin-left: 2rem;
   margin-right: 2rem;

@@ -68,9 +68,4 @@
 
 <script setup></script>
 
-<style lang="scss" scope>
-.padding-container {
-  padding-right: 114px;
-  padding-left: 114px;
-}
-</style>
+<style lang="scss" scoped></style>

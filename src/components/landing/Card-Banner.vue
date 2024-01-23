@@ -61,10 +61,6 @@ const colorBtn = computed(() => {
   right: -30px;
   bottom: -10px;
 }
-.padding-container {
-  padding-right: 114px;
-  padding-left: 114px;
-}
 
 .bg-box {
   background-color: #5c00bf;
@@ -108,11 +104,6 @@ const colorBtn = computed(() => {
 /*------ Entre a 600px y 1023px ------*/
 
 @media screen and (min-width: 601px) and (max-width: 1023px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-
   .bg-box {
     padding: 20px 15px;
     color: #fff;
@@ -122,11 +113,6 @@ const colorBtn = computed(() => {
 /*------ Menor a 600px ------*/
 
 @media screen and (max-width: 600px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-
   .bg-box {
     background-color: #5c00bf;
     padding: 20px 10px;
