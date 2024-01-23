@@ -12,6 +12,7 @@ import GenerateSection from 'src/components/landing/Generate-section.vue';
 import StepsSection from 'src/components/landing/Steps-Section.vue';
 import FooterSection from 'src/components/landing/Footer-Section.vue';
 import ArrowUp from 'src/components/landing/Arrow-Up.vue';
+import FormSection from 'src/components/landing/Form-Section.vue';
 
 import { scroll } from 'quasar';
 
@@ -20,7 +21,7 @@ const valueScroll = ref(false);
 const arrayButtons = [
   {
     icon: 'home',
-    label: 'Iniciossss',
+    label: 'Inicio',
     class: 'btn-flat',
     idSection: 'top',
   },
@@ -101,6 +102,8 @@ const onScroll = (position: number) => {
             class="q-mx-xs btn-login"
             size="md"
             label="Entrar"
+            unelevated
+            square
             @click="goLogin()"
           />
         </div>
@@ -108,7 +111,7 @@ const onScroll = (position: number) => {
     </q-header>
 
     <Banner />
-    <Cards />
+    <Cards class="position-cards-banner" />
     <ArrowUp />
 
     <section id="seccion1" class="q-my-md q-pb-lg">
@@ -135,6 +138,10 @@ const onScroll = (position: number) => {
       <CardOrganizer />
     </section>
 
+    <section class="q-my-lg q-pb-lg">
+      <FormSection />
+    </section>
+
     <section id="seccion5" class="">
       <FooterSection />
     </section>
@@ -153,11 +160,11 @@ const onScroll = (position: number) => {
   background-color: $secondary;
   color: #000;
   padding: 0 16px;
-  border-radius: 8px;
+  border-radius: 0px;
   transition: all 0.3s ease-out;
 
   &:hover {
-    background-color: $primary;
+    background-color: $negative;
     color: $white;
     transform: scale(1.05);
   }
@@ -189,5 +196,13 @@ const onScroll = (position: number) => {
   width: 25px;
   margin-right: 5px;
   height: auto;
+}
+
+.position-cards-banner {
+  margin-top: -300px;
+
+  @media (max-width: 600px) {
+    margin-top: 200px;
+  }
 }
 </style>

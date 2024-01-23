@@ -13,9 +13,10 @@
           </div>
           <h3 class="text-white h3-banner">JUEGA , COMPITE Y DIVIÉRTETE</h3>
           <h4 class="text-white pb-2 lt-sm">
-            ¡Nunca fue tan sencillo jugar con tus amigos!
+            Descubre la emoción de participar en quinielas online con tus
+            amigos, <strong>¡nunca fue tan fácil y divertido!</strong>"
           </h4>
-          <div class="text-center">
+          <!-- <div class="text-center">
             <q-btn
               class="bg-contact mx-2 my-1 p-0"
               color="dark"
@@ -34,19 +35,36 @@
               @click="$router.push('/pages/register')"
             >
             </q-btn>
-          </div>
+          </div> -->
         </div>
-        <div class="gt-sm">
-          <h3 class="text-white h3-banner">JUEGA , COMPITE Y DIVIÉRTETE</h3>
-          <h4 class="text-white pb-2 lt-sm">
-            ¡Nunca fue tan sencillo jugar con tus amigos!
-          </h4>
-          <h4 class="text-white pb-2 gt-sm">
-            ¡Nunca fue tan sencillo jugar con tus amigos!
-          </h4>
-          <div class="btn-play mt-3 gt-xs">
-            <button class="btn-in" @click="$router.push('/pages/login')">
-              ¡JUGAR!
+        <div class="gt-sm text-white">
+          <h3 class="h3-banner text-right text-warning">
+            JUEGA
+            <br />
+            COMPITE
+            <br />
+            Y DIVIÉRTETE
+          </h3>
+          <p class="pb-2 lt-sm text-right q-mt-xs text-subtitle1">
+            Descubre la emoción de participar en quinielas online con tus
+            amigos, <strong class="">¡nunca fue tan fácil y divertido!</strong>"
+          </p>
+          <p class="pb-2 gt-sm text-right q-mt-xs text-subtitle1">
+            Descubre la emoción de participar en quinielas online con tus
+            amigos, <strong class="">¡nunca fue tan fácil y divertido!</strong>"
+          </p>
+          <div class="mt-3 gt-xs flex justify-end">
+            <button
+              class="btn-in q-mr-xs"
+              @click="$router.push('/pages/login')"
+            >
+              ¡StarQuiniela!
+              <div class="icon">
+                <img class="balon-icon" src="balon.png" alt="" />
+              </div>
+            </button>
+            <button class="btn-in-2" @click="$router.push('/pages/login')">
+              Jugar 2.0!
               <div class="icon">
                 <img class="balon-icon" src="balon.png" alt="" />
               </div>
@@ -105,9 +123,7 @@
       </div> -->
       <div class="bg-header">
         <q-img class="lt-sm" src="vertical2.jpg" />
-        <!-- <div class="lt-md" style="height: 400px"></div> -->
-        <!-- <q-img class="lt-md" src="@/assets/images/login/vertical.jpg" /> -->
-        <q-img class="gt-xs height-banner" src="wall.jpg" />
+        <q-img class="gt-xs height-banner" src="wall-4.png" />
       </div>
     </section>
   </div>
@@ -120,13 +136,7 @@
   position: relative;
 }
 .height-banner {
-}
-
-.bg-header {
-  margin-top: 0px;
-  /* background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)),
-        url('~@/assets/images/login/copas.jpg'); */
-  height: 435px;
+  height: 700px;
 }
 
 .h3-banner {
@@ -134,12 +144,8 @@
   border-radius: 10px;
   padding: 5px 0px;
   font-weight: bold;
+  margin-bottom: 0px;
 }
-
-.btn-play {
-  justify-content: left;
-}
-
 .btn-entrar {
   width: 100px;
   padding: 10px;
@@ -165,13 +171,33 @@
   max-width: 450px;
   margin: auto;
   top: 20%;
-  left: 5%;
+  right: 5%;
   z-index: 2;
 }
 
 .btn-in {
   background: $secondary;
   color: #222;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #714da6;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+  cursor: pointer;
+}
+.btn-in-2 {
+  background: $negative;
+  color: #fff;
   font-family: inherit;
   padding: 0.35em;
   padding-left: 1.2em;
@@ -216,6 +242,29 @@
   border-radius: 8px;
 }
 
+.btn-in-2:hover .icon {
+  width: calc(100% - 0.6em);
+}
+
+.btn-in-2:hover .balon-icon {
+  animation-name: rotate;
+  animation-duration: 2s;
+}
+.btn-in-2 .icon {
+  background: $white;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  right: 0.3em;
+  transition: all 0.3s;
+  border-radius: 8px;
+}
+
 .btn-in:hover .icon {
   width: calc(100% - 0.6em);
 }
@@ -246,6 +295,19 @@
 }
 
 .btn-in:active .icon {
+  transform: scale(0.95);
+}
+.btn-in-2 .icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #7b52b9;
+}
+
+.btn-in-2:hover .icon svg {
+  transform: translateX(0.1em);
+}
+
+.btn-in-2:active .icon {
   transform: scale(0.95);
 }
 

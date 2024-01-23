@@ -121,8 +121,8 @@ const plans = [
 
 <style lang="scss" scope>
 .padding-container {
-  padding-right: 34px;
-  padding-left: 34px;
+  padding-right: 7%;
+  padding-left: 7%;
 }
 
 .margin-x {
@@ -132,23 +132,5 @@ const plans = [
 
 .line {
   line-height: 1.5 !important;
-}
-
-/*------ Entre a 600px y 1023px ------*/
-
-@media screen and (min-width: 601px) and (max-width: 1023px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-}
-
-/*------ Menor a 600px ------*/
-
-@media screen and (max-width: 600px) {
-  .padding-container {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
 }
 </style>

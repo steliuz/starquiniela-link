@@ -68,60 +68,6 @@
 import { ref } from 'vue';
 const slide = ref(0);
 const arrayCarousel = ref([]);
-
-// const comments = [
-//   {
-//     cards: [
-//       {
-//         avatar: '/src/assets/icons/avatar.png',
-//         name: 'Rafael Garcia',
-//         rating: 4,
-//         comment:
-//           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas veritatis sunt nisi error quaerat voluptas dolorum quod labore.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas veritatis sunt nisi error quaerat voluptas dolorum quod labore.',
-//       },
-//       {
-//         avatar: '/src/assets/icons/avatar.png',
-//         name: 'Jesus Rosales',
-//         rating: 4,
-//         comment:
-//           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas  ',
-//       },
-//       {
-//         avatar: '/src/assets/icons/avatar.png',
-//         name: 'Alirio Guerra',
-//         rating: 5,
-//         comment:
-//           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas veritatis sunt nisi error quaerat voluptas dolorum quod labore.',
-//       },
-//     ],
-//   },
-//   {
-//     cards: [
-//       {
-//         avatar: '/src/assets/icons/avatar.png',
-//         name: 'Rafael Garcia',
-//         rating: 4,
-//         comment:
-//           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas veritatis sunt nisi error quaerat voluptas dolorum quod labore.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas veritatis sunt nisi error quaerat voluptas dolorum quod labore.',
-//       },
-//       {
-//         avatar: '/src/assets/icons/avatar.png',
-//         name: 'Jesus Rosales',
-//         rating: 4,
-//         comment:
-//           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas  ',
-//       },
-//       {
-//         avatar: '/src/assets/icons/avatar.png',
-//         name: 'Alirio Guerra',
-//         rating: 5,
-//         comment:
-//           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas veritatis sunt nisi error quaerat voluptas dolorum quod labore.',
-//       },
-//     ],
-//   },
-// ];
-
 const arrayBack = [
   {
     avatar: '/src/assets/icons/avatar.png',
@@ -291,5 +237,9 @@ formatCommentsCarousel(arrayBack);
   gap: 10px;
   grid-template-columns: repeat(3, auto);
   place-content: center;
+
+  @media screen and (max-width: 600px) {
+    grid-template-columns: repeat(1, auto);
+  }
 }
 </style>

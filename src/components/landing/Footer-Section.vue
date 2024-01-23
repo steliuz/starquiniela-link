@@ -9,7 +9,7 @@
         </div>
         <div class="col-12 col-md-3 mt-2">
           <div class="flex justify-center items-center">
-            <ul class="footer-list text-center text-lg-right">
+            <ul class="footer-list text-rigth text-lg-right">
               <li>
                 <a href="#" class="footer-link text-bold text-h6">Descargar</a>
               </li>
@@ -61,17 +61,21 @@
 
         <div class="col-12 col-md-3">
           <div class="flex justify-center items-center">
-            <ul class="footer-list text-center">
+            <ul class="footer-list">
               <li>
                 <a href="#" class="footer-link text-bold text-h6"> Contacto </a>
               </li>
               <li>
-                <a href="#" class="footer-link flex items-center">
+                <a
+                  href="https://api.whatsapp.com/send?phone=+528184624203&text=Saludos,%20quisiera%20obtener%20m%C3%A1s%20informaci%C3%B3n%20de%20como%20ser%20un%20organizador%20"
+                  target="_blank"
+                  class="footer-link flex items-center"
+                >
                   <img
                     src="/src/assets/icons/whatsapp.png"
                     class="icon-footer q-mr-sm"
                   />
-                  +58 424 531 9348
+                  +52 81 8462 4203
                 </a>
               </li>
               <li>
