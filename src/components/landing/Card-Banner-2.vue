@@ -14,7 +14,7 @@
           <div class="btn-play mt-3">
             <button
               class="btn-in"
-              @click="$router.push('/pages/login')"
+              @click="$router.push('/login')"
               @mouseenter="addClass"
               @mouseleave="removeClass"
             >
@@ -32,11 +32,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref /* , computed */ } from 'vue';
 // const props = defineProps(["title", "subtitle"]);
 
 const box = ref(false);
-console.log('box: ', box.value);
 
 const addClass = () => {
   box.value = true;
@@ -45,9 +44,9 @@ const removeClass = () => {
   box.value = false;
 };
 
-const colorBtn = computed(() => {
-  return box.value ? 'primary transition' : 'secondary transition';
-});
+// const colorBtn = computed(() => {
+//   return box.value ? 'primary transition' : 'secondary transition';
+// });
 </script>
 
 <style lang="scss" scoped>

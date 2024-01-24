@@ -144,6 +144,10 @@ const arrayButtons = [
     idSection: 'play',
   },
 ];
+
+const redirectToGooglePlay = () => {
+  console.log('google play');
+};
 </script>
 
 <style lang="scss" scoped>

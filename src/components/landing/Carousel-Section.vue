@@ -46,7 +46,7 @@
                 {{ card.comment }}
               </div>
             </q-card-section>
-            <q-card-actions align="start" class="q-ml-xs q-mt-xs q-py-none">
+            <q-card-actions align="center" class="q-ml-xs q-mt-xs q-py-none">
               <div class="row no-wrap flex flex-center full-width">
                 <q-rating
                   color="orange-5"

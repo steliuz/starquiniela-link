@@ -4,16 +4,16 @@
       <div class="column position-title absolute">
         <div class="lt-sm">
           <div class="flex justify-center mb-5">
-            <button
+            <a
+              href="https://private.starquiniela.com/pages/login"
               class="btn-in q-mr-xs"
-              @click="$router.push('/pages/login')"
             >
               ¡StarQuiniela!
               <div class="icon">
                 <img class="balon-icon" src="balon.png" alt="" />
               </div>
-            </button>
-            <button class="btn-in-2" @click="$router.push('/pages/login')">
+            </a>
+            <button class="btn-in-2" @click="$router.push('/login')">
               Jugar 2.0!
               <div class="icon">
                 <img class="balon-icon" src="balon.png" alt="" />
@@ -63,15 +63,15 @@
             amigos, <strong class="">¡nunca fue tan fácil y divertido!</strong>"
           </p>
           <div class="mt-3 gt-xs flex justify-end">
-            <button
+            <a
               class="btn-in q-mr-xs"
-              @click="$router.push('/pages/login')"
+              href="https://private.starquiniela.com/pages/login"
             >
               ¡StarQuiniela!
               <div class="icon">
                 <img class="balon-icon" src="balon.png" alt="" />
               </div>
-            </button>
+            </a>
             <button class="btn-in-2" @click="$router.push('/pages/login')">
               Jugar 2.0!
               <div class="icon">

@@ -18,6 +18,7 @@
             outline
             color="secondary"
             label="Jugar ahora"
+            @click="goToV1"
           />
         </div>
 
@@ -135,6 +136,7 @@
             color="negative"
             label="Jugar ahora"
             square
+            @click="$router.push('/login')"
           />
         </div>
         <q-stepper
@@ -239,6 +241,10 @@ import { ref } from 'vue';
 
 const step = ref(1);
 const step2 = ref(2);
+
+const goToV1 = () => {
+  window.location.href = 'https://private.starquiniela.com/pages/login';
+};
 </script>
 
 <style lang="scss" scoped>

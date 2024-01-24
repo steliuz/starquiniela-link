@@ -14,7 +14,7 @@ import FooterSection from 'src/components/landing/Footer-Section.vue';
 import ArrowUp from 'src/components/landing/Arrow-Up.vue';
 import FormSection from 'src/components/landing/Form-Section.vue';
 
-import { scroll } from 'quasar';
+// import { scroll } from 'quasar';
 
 const valueScroll = ref(false);
 
@@ -64,7 +64,6 @@ const scrollToElement = (idSection: string) => {
 
 const onScroll = (position: number) => {
   position > 200 ? (valueScroll.value = true) : (valueScroll.value = false);
-  console.log(valueScroll.value);
 };
 </script>
 <template>

@@ -32,21 +32,31 @@
       </div>
       <div class="col-12 col-md">
         <div class="q-pa-md">
-          <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-            <q-input filled type="name" placeholder="Nombre">
+          <q-form @submit="onSubmit" class="q-gutter-md">
+            <q-input
+              filled
+              type="text"
+              v-model="contact.name"
+              placeholder="Nombre"
+            >
               <template v-slot:append>
                 <q-icon name="person" />
               </template>
             </q-input>
 
-            <q-input filled type="search" placeholder="Correo Electronico">
+            <q-input
+              filled
+              type="email"
+              v-model="contact.email"
+              placeholder="Correo Electronico"
+            >
               <template v-slot:append>
                 <q-icon name="email" />
               </template>
             </q-input>
             <q-input
               placeholder="Mensaje"
-              v-model="text"
+              v-model="contact.message"
               filled
               type="textarea"
             />
@@ -66,6 +76,14 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup lang="ts">
+import { useContact } from 'src/composables/useContact';
+
+const { postContact, contact } = useContact();
+
+const onSubmit = async () => {
+  await postContact();
+};
+</script>
 
 <style lang="scss" scoped></style>

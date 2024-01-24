@@ -36,7 +36,6 @@ import { ref, computed } from 'vue';
 // const props = defineProps(["title", "subtitle"]);
 
 const box = ref(false);
-console.log('box: ', box.value);
 
 const addClass = () => {
   box.value = true;
