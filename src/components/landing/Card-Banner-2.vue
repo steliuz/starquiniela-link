@@ -25,7 +25,7 @@
             </button>
           </div>
         </div>
-        <q-img class="tarjetas" src="/src/assets/copa.png" />
+        <q-img class="tarjetas" src="~assets/copa.png" />
       </div>
     </div>
   </div>

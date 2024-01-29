@@ -78,7 +78,7 @@ const getResult = (match: Match | undefined) => {
                       :src="
                         match.team1 && match.team1.image
                           ? file_url + match.team1.image
-                          : '/src/assets/team1.jpg'
+                          : '~assets/team1.jpg'
                       "
                       alt="team1"
                     />
@@ -129,7 +129,7 @@ const getResult = (match: Match | undefined) => {
                       :src="
                         match.team2 && match.team2.image
                           ? file_url + match.team2.image
-                          : '/src/assets/team2.jpg'
+                          : '~assets/team2.jpg'
                       "
                       alt="team1"
                     />

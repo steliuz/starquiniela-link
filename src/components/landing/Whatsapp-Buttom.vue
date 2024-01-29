@@ -5,7 +5,7 @@
       href="https://api.whatsapp.com/send?phone=+528184624203&text=Saludos,%20quisiera%20obtener%20m%C3%A1s%20informaci%C3%B3n%20de%20como%20ser%20un%20organizador%20"
       target="_blank"
     >
-      <img class="whatsapp-icon" src="/src/assets/whatsapp.png" />
+      <img class="whatsapp-icon" src="~assets/whatsapp.png" />
     </a>
   </div>
 </template>
@@ -56,7 +56,7 @@ export default {
 }
 
 .btn-whatsapp:hover::after {
-  content: "Contáctanos";
+  content: 'Contáctanos';
   position: absolute;
   top: 8px;
   right: 0px;

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+ <script setup lang="ts">
 import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import { Team } from 'src/interfaces/team';

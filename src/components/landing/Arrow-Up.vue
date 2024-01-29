@@ -1,7 +1,7 @@
 <template>
   <div>
     <a class="btn-arrow" @click="scrollToTop" v-if="showArrow" target="_blank">
-      <img class="arrow-icon" src="/src/assets/icons/arrow-up.png" />
+      <img class="arrow-icon" src="~assets/icons/arrow-up.png" />
     </a>
   </div>
 </template>

@@ -5,7 +5,7 @@
         <q-toolbar-title class="q-pa-sm">
           <q-img
             width="50px"
-            src="/src/assets/logo/logo-white.png"
+            src="~assets/logo/logo-white.png"
             spinner-color="primary"
             spinner-size="82px"
           />

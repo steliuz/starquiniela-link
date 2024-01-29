@@ -72,7 +72,7 @@
                 <img class="balon-icon" src="balon.png" alt="" />
               </div>
             </a>
-            <button class="btn-in-2" @click="$router.push('/pages/login')">
+            <button class="btn-in-2" @click="$router.push('/login')">
               Jugar 2.0!
               <div class="icon">
                 <img class="balon-icon" src="balon.png" alt="" />

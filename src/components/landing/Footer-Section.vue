@@ -24,7 +24,7 @@
                 @click="redirectToGooglePlay"
               >
                 <img
-                  src="/src/assets/icons/google-play.png"
+                  src="~assets/icons/google-play.png"
                   class="google-play-icon q-ml-sm"
                 />
               </q-btn>
@@ -42,7 +42,7 @@
               <li>
                 <a href="#" class="footer-link flex items-center">
                   <img
-                    src="/src/assets/icons/facebook.png"
+                    src="~assets/icons/facebook.png"
                     class="icon-footer q-mr-sm"
                   />
                   Facebook
@@ -52,7 +52,7 @@
               <li>
                 <a href="#" class="footer-link flex items-center">
                   <img
-                    src="/src/assets/icons/instagram.png"
+                    src="~assets/icons/instagram.png"
                     class="icon-footer q-mr-sm"
                   />
                   Instagram
@@ -75,7 +75,7 @@
                   class="footer-link flex items-center"
                 >
                   <img
-                    src="/src/assets/icons/whatsapp.png"
+                    src="~assets/icons/whatsapp.png"
                     class="icon-footer q-mr-sm"
                   />
                   +52 81 8462 4203
@@ -84,7 +84,7 @@
               <li>
                 <a href="#" class="footer-link flex items-center">
                   <img
-                    src="/src/assets/icons/gmail.png"
+                    src="~assets/icons/gmail.png"
                     class="icon-footer q-mr-sm"
                   />
                   CorreoElectronico@gmail.com

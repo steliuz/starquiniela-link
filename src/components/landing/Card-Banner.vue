@@ -25,7 +25,7 @@
           >
           </q-btn>
         </div>
-        <q-img class="tarjetas" src="/src/assets/coin.png" />
+        <q-img class="tarjetas" src="~assets/coin.png" />
       </div>
     </div>
   </div>

@@ -215,14 +215,14 @@ onMounted(async () => {
           <q-img
             v-if="$q.dark.isActive"
             width="50px"
-            src="/src/assets/logo/logo-white.png"
+            src="~assets/logo/logo-white.png"
             spinner-color="primary"
             spinner-size="82px"
           />
           <q-img
             v-else
             width="50px"
-            src="/src/assets/logo-white.png"
+            src="~assets/logo-white.png"
             spinner-color="primary"
             spinner-size="82px"
           />

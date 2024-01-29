@@ -78,7 +78,7 @@ const onScroll = (position: number) => {
           class="col-6 col-md-3 flex justify-start items-center q-pl-lg q-pt-xs"
         >
           <q-avatar class=""
-            ><img src="/src/assets/logo/logo-white.png" alt="" />
+            ><img src="~assets/logo/logo-white.png" alt="" />
           </q-avatar>
           <p class="text-white q-mb-none pl-3 text-h6 text-weight-bolder gt-xs">
             StarQuiniela
