@@ -1,7 +1,7 @@
 <template>
   <div class="padding-container">
     <div>
-      <p class="text-center text-tittle q-mb-md">Juega tu primera QUINIELA</p>
+      <p class="text-center text-tittle q-mb-md">Organiza tu quiniela</p>
       <p class="text-center subtittle-black">
         Obtén tu usuario <b>ORGANIZADOR</b> comunicándote con
         <a href="#">NOSOTROS</a> o consigue un <b>RESELLER</b> autorizado.
@@ -43,7 +43,7 @@
             </p>
             <p class="text-style q-mt-md">
               ¡Sumérgete en la emoción de las apuestas y compite por grandes
-              premios con amigos y seguidores!"
+              premios con amigos y seguidores!
             </p>
           </q-step>
           <q-step
@@ -55,12 +55,11 @@
             <p class="text-style">
               <strong>¡Hazlo social! </strong> Crea usuarios personalizados para
               tus amigos, familiares o compañeros de tu grupo social. Tú eres el
-              encargado de proporcionarles acceso a tu quiniela exclusiva. Solo
-              podrán visualizar las quinielas que tú selecciones.
+              encargado de proporcionarles acceso.
             </p>
             <p class="text-style">
               Comparte la emoción del juego y compite junto a tus seres
-              queridos. ¡La diversión es aún mejor cuando se comparte!"
+              queridos. ¡La diversión es aún mejor cuando se comparte!
             </p>
 
             <q-stepper-navigation>
@@ -83,7 +82,13 @@
             <p class="text-style">
               Facilitamos el proceso para que te enfoques en la emoción del
               juego. ¡Disfruta de una experiencia sin complicaciones y juega con
-              confianza!"
+              confianza!
+            </p>
+            <p class="text-style">
+              Tu autorizas mediante el panel de control el cierre de la
+              quiniela, la actualizacion de resultados y lo mas importante quien
+              juega la quiniela en la tabla para que la gestiones de una manera
+              fácil a tus jugadores.
             </p>
 
             <q-stepper-navigation>
@@ -106,7 +111,7 @@
             <p class="text-style">
               Mantente actualizado con las posiciones y vive la emoción de ver
               cómo avanzas en la clasificación. ¡La competencia nunca fue tan
-              sencilla y emocionante!"
+              sencilla y emocionante!
             </p>
           </q-step>
           <q-step :name="5" title="Y a ¡JUGAR!" icon="fas fa-futbol ">
@@ -117,7 +122,7 @@
             </p>
             <p class="text-style">
               Haz clic para empezar la diversión y vive la emoción de competir
-              con tus seres queridos. ¡Que empiece el juego!"
+              con tus seres queridos. ¡Que empiece el juego!
             </p>
             <q-stepper-navigation>
               <q-btn color="secondary" label="Adquiere tu organizador" />
@@ -132,9 +137,9 @@
           </p>
           <q-btn
             unelevated
-            class="q-ml-md"
+            class="q-ml-md btn-organizer"
             color="negative"
-            label="Jugar ahora"
+            label="Solicitar acceso como organizador"
             square
             @click="$router.push('/login')"
           />
@@ -160,10 +165,15 @@
             </p>
             <p class="text-style q-mt-md">
               ¡Sumérgete en la emoción de las apuestas y compite por grandes
-              premios con amigos y seguidores!"
+              premios con amigos y seguidores!
             </p>
           </q-step>
-          <q-step :name="2" title="QR" icon="fas fa-qrcode" :done="step2 > 2">
+          <q-step
+            :name="2"
+            title="Comparte el link o QR con Tus amigos."
+            icon="fas fa-qrcode"
+            :done="step2 > 2"
+          >
             <p class="text-style">
               <strong>¡Actualización emocionante!</strong> En
               <span class="text-primary">Starquiniela 2.0,</span>
@@ -174,28 +184,32 @@
             </p>
             <p class="text-style">
               Simplificamos el proceso para que disfrutes de la quiniela sin
-              complicaciones.
+              complicaciones. Solo los que obtengan el link son los que puedes
+              solicitar jugar en tu quinela.
             </p>
           </q-step>
           <q-step
             :name="3"
-            title="Notificaciones Automáticas"
+            title="Juega Fácil y seguro"
             icon="fas fa-running"
             :done="step2 > 3"
           >
             <p class="text-style">
-              <strong>¡Tú tienes el control!</strong> Con nuestra última
-              versión, eres el maestro de los tickets que formarán parte de la
-              tabla de clasificación de tu quiniela. Cada vez que actives un
-              ticket, nuestro sistema enviará automáticamente una notificación
-              directamente a su número telefónico con toda la información
-              necesaria.
+              ¡Olvida las preocupaciones sobre la captura de datos! Tus
+              jugadores simplemente deben ingresar al link o QR. Cada
+              participante anota sus pronósticos y ¡nuestra aplicación se
+              encarga del resto!
             </p>
-
             <p class="text-style">
-              Gestiona tus participantes de manera sencilla y mantén a todos
-              actualizados con un toque personal. ¡La emoción está a solo un
-              clic de distancia!"
+              Facilitamos el proceso para que te enfoques en la emoción del
+              juego. ¡Disfruta de una experiencia sin complicaciones y juega con
+              confianza!
+            </p>
+            <p class="text-style">
+              Tu autorizas mediante el panel de control el cierre de la
+              quiniela, la actualizacion de resultados y lo mas importante quien
+              juega la quiniela en la tabla para que la gestiones de una manera
+              fácil a tus jugadores.
             </p>
           </q-step>
           <q-step
@@ -213,7 +227,7 @@
             <p class="text-style">
               Mantente actualizado con las posiciones y vive la emoción de ver
               cómo avanzas en la clasificación. ¡La competencia nunca fue tan
-              sencilla y emocionante!"
+              sencilla y emocionante!
             </p>
           </q-step>
           <q-step :name="5" title="Y a ¡JUGAR!" icon="fas fa-futbol ">
@@ -224,7 +238,7 @@
             </p>
             <p class="text-style">
               Haz clic para empezar la diversión y vive la emoción de competir
-              con tus seres queridos. ¡Que empiece el juego!"
+              con tus seres queridos. ¡Que empiece el juego!
             </p>
             <q-stepper-navigation>
               <q-btn color="negative" label="Adquiere tu organizador" />
@@ -248,6 +262,10 @@ const goToV1 = () => {
 </script>
 
 <style lang="scss" scoped>
+.btn-organizer {
+  width: 100%;
+  max-width: 180px;
+}
 .q-stepper {
   border-radius: 4px;
   background: #fff;

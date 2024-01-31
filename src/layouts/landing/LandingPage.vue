@@ -13,6 +13,8 @@ import StepsSection from 'src/components/landing/Steps-Section.vue';
 import FooterSection from 'src/components/landing/Footer-Section.vue';
 import ArrowUp from 'src/components/landing/Arrow-Up.vue';
 import FormSection from 'src/components/landing/Form-Section.vue';
+import Plans from 'src/components/landing/Plans-Section.vue';
+import PlansWeb from 'src/components/landing/Plans-Section-Web.vue';
 
 // import { scroll } from 'quasar';
 
@@ -127,6 +129,14 @@ const onScroll = (position: number) => {
 
     <section id="rules" class="">
       <Vip />
+    </section>
+
+    <section id="rules" class="">
+      <Plans />
+    </section>
+
+    <section id="rules" class="">
+      <PlansWeb />
     </section>
 
     <section id="seccion2" class="q-my-md">

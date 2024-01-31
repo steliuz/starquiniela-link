@@ -8,8 +8,9 @@
             Gana ingresos extras
           </h1>
           <p class="font-size mb-0">
-            Crea tu propia quiniela rápido y totalmente exclusiva para que
-            invites a tus amigos.
+            Crea tu propia quinela rápido y totalmente exclusiva, administra en
+            su totalidad la recaudacion de la bolsa de dinero y tu decides
+            cuanto ganar por organizar
           </p>
         </div>
         <div

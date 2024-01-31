@@ -208,19 +208,20 @@ p.label-input {
 
 .q-stepper__dot {
   width: 3rem !important;
-  height: 3rem !important;
+  height: 2.9rem !important;
+  border-radius: 50%;
 
   span > i {
     font-size: 1rem;
   }
 }
-.q-focus-helper,
-.q-focusable,
-.q-manual-focusable,
-.q-hoverable {
-  outline: 0;
-  border-radius: 8px;
-}
+// .q-focus-helper,
+// .q-focusable,
+// .q-manual-focusable,
+// .q-hoverable {
+//   outline: 0;
+//   border-radius: 8px;
+// }
 
 .q-stepper--vertical .q-stepper__step-inner {
   padding: 0 24px 32px 18%;

@@ -44,12 +44,13 @@ const arrayAdvantages = [
     title: 'Ranking',
     icon: 'fa-ranking-star',
     description:
-      'Ya no te preocupes más por la suma con nuestra tabla tabla de ranking',
+      'Ya no te preocupes mas por la suma de puntos de los competidores, con nuestra tabla se calcula automáticamente',
   },
   {
     title: 'Ahorra dinero',
     icon: 'fa-vault',
-    description: 'Evita los costos adicionales de impresión',
+    description:
+      'Evita los costos adicionales de impresión y juega desde la comodidad de tus dispositivos',
   },
 ];
 </script>
@@ -203,7 +204,7 @@ const arrayAdvantages = [
 
 /*------ Entre a 600px y 1023px ------*/
 
-@media screen and (min-width: 601px) and (max-width: 1023px) {
+@media screen and (min-width: 601px) and (max-width: 1124px) {
   .bg-box {
     padding: 20px 15px;
     color: #fff;
@@ -226,6 +227,10 @@ const arrayAdvantages = [
     width: 80%;
     border: 5px solid $grey-11;
     border-radius: 10px;
+  }
+
+  .container-cards {
+    margin-top: 90px;
   }
 }
 

@@ -2,7 +2,7 @@
   <div>
     <section class="bg">
       <div class="column position-title absolute">
-        <div class="lt-sm">
+        <div class="lt-sm zoom">
           <div class="flex justify-center mb-5">
             <a
               href="https://private.starquiniela.com/pages/login"
@@ -46,7 +46,7 @@
             </q-btn>
           </div> -->
         </div>
-        <div class="gt-sm text-white">
+        <div class="gt-sm text-white scale">
           <h2 class="h3-banner text-right text-warning">
             JUEGA
             <br />
@@ -55,25 +55,36 @@
             Y DIVIÉRTETE
           </h2>
           <p class="pb-2 lt-sm text-right q-mt-xs text-subtitle1">
-            Descubre la emoción de participar en quinielas online con tus
-            amigos, <strong class="">¡nunca fue tan fácil y divertido!</strong>"
+            Descubre la emoción de participar u organizar tus quinielas online
+            con tus amigos,
+            <strong class="">
+              Disfrútala en cualquiera de nuestras 2 versiones disponibles
+              ¡nunca fue tan fácil y divertido!</strong
+            >"
           </p>
           <p class="pb-2 gt-sm text-right q-mt-xs text-subtitle1">
-            Descubre la emoción de participar en quinielas online con tus
-            amigos, <strong class="">¡nunca fue tan fácil y divertido!</strong>"
+            Descubre la emoción de participar u organizar tus quinielas online
+            con tus amigos,
+            <strong class="">
+              Disfrútala en cualquiera de nuestras 2 versiones
+              disponibles</strong
+            >
           </p>
-          <div class="mt-3 gt-xs flex justify-end">
+          <p class="pb-2 gt-sm text-right q-mt-xs text-subtitle1">
+            <strong> ¡nunca fue tan fácil y divertido!</strong>"
+          </p>
+          <div class="mt-3 gt-xs flex justify-end btn-space">
             <a
               class="btn-in q-mr-xs"
               href="https://private.starquiniela.com/pages/login"
             >
-              ¡StarQuiniela!
+              Starquiniela 1.0
               <div class="icon">
                 <img class="balon-icon" src="balon.png" alt="" />
               </div>
             </a>
             <button class="btn-in-2" @click="$router.push('/login')">
-              Jugar 2.0!
+              Starquiniela 2.0
               <div class="icon">
                 <img class="balon-icon" src="balon.png" alt="" />
               </div>
@@ -373,15 +384,36 @@
       justify-content: left;
     }
   }
+
+  .h3-banner {
+    margin-top: 0;
+    margin-bottom: 0px;
+  }
 }
 
 /*------ Entre a 1025px y 1300px ------*/
 
-@media screen and (min-width: 1024px) and (max-width: 1200px) {
+@media screen and (min-width: 1024px) and (max-width: 1100px) {
   .position-title {
     text-align: left;
     top: 15%;
     max-width: 380px;
+  }
+  .scale {
+    transform: scale(0.8);
+  }
+
+  .btn-space {
+    flex-wrap: nowrap;
+  }
+
+  .btn-in {
+    white-space: nowrap;
+    flex-wrap: nowrap;
+  }
+  .btn-in-2 {
+    white-space: nowrap;
+    flex-wrap: nowrap;
   }
 }
 
