@@ -106,7 +106,7 @@ const arrayBack = [
   },
   {
     avatar: '/src/assets/icons/avatar.png',
-    name: 'Alirio Guerra',
+    name: 'Alirio Ramos',
     rating: 5,
     comment:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas veritatis sunt nisi error quaerat voluptas dolorum quod labore.',
@@ -127,7 +127,7 @@ const arrayBack = [
   },
   {
     avatar: '/src/assets/icons/avatar.png',
-    name: 'Alirio Guerra',
+    name: 'Alirio Ramos',
     rating: 5,
     comment:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas veritatis sunt nisi error quaerat voluptas dolorum quod labore.',
@@ -148,7 +148,7 @@ const arrayBack = [
   },
   {
     avatar: '/src/assets/icons/avatar.png',
-    name: 'Alirio Guerra',
+    name: 'Alirio Ramos',
     rating: 5,
     comment:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim iste nisi qui dignissimos! Sint aperiam ipsum odio minima, nostrum dolores quas veritatis sunt nisi error quaerat voluptas dolorum quod labore.',

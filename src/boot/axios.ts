@@ -48,9 +48,9 @@ const file_url = development
   : process.env.FILE_URL;
 
 const vue_url = development
-  ? 'https://starquiniela.com'
-  : production
   ? 'https://dev.starquiniela.com'
+  : production
+  ? 'https://starquiniela.com'
   : 'http://localhost:9000';
 
 export default boot(({ app }) => {
