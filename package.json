@@ -24,7 +24,7 @@
     "secure-ls": "^1.2.6",
     "vue": "^3.0.0",
     "vue-advanced-cropper": "^2.8.8",
-    "vue-router": "^4.0.0"
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.0.0",

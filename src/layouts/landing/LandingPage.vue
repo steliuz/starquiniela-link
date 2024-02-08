@@ -45,6 +45,18 @@ const arrayButtons = [
     class: 'btn-flat',
     idSection: 'rules',
   },
+  {
+    icon: 'monetization_on',
+    label: 'PLANES',
+    class: 'btn-flat',
+    idSection: 'planes',
+  },
+  {
+    icon: 'monetization_on',
+    label: 'CONTACTO',
+    class: 'btn-flat',
+    idSection: 'contacto',
+  },
 ];
 
 const router = useRouter();
@@ -131,7 +143,7 @@ const onScroll = (position: number) => {
       <Vip />
     </section>
 
-    <section id="rules" class="">
+    <section id="planes" class="">
       <Plans />
     </section>
 
@@ -139,9 +151,9 @@ const onScroll = (position: number) => {
       <PlansWeb />
     </section>
 
-    <section id="seccion2" class="q-my-md">
+    <!-- <section id="seccion2" class="q-my-md">
       <CarouselSection />
-    </section>
+    </section> -->
 
     <section id="seccion3" class="q-my-lg q-pb-lg">
       <CardOrganizer />
@@ -151,7 +163,7 @@ const onScroll = (position: number) => {
       <FormSection />
     </section>
 
-    <section id="seccion5" class="">
+    <section id="contacto" class="">
       <FooterSection />
     </section>
 

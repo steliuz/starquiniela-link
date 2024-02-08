@@ -21,7 +21,7 @@ const dataPlans = [
     title: 'bronce',
     checks: [1, 2, 3, 4],
     tickets: 50,
-    priceMXN: 40,
+    priceMXN: 80,
     coins: 2,
   },
   {
@@ -29,7 +29,7 @@ const dataPlans = [
     title: 'plata',
     checks: [1, 2, 3, 4],
     tickets: 100,
-    priceMXN: 40,
+    priceMXN: 120,
     coins: 3,
   },
   {
@@ -37,16 +37,16 @@ const dataPlans = [
     title: 'oro',
     checks: [1, 2, 3, 4],
     tickets: 300,
-    priceMXN: 40,
-    coins: 4,
+    priceMXN: 280,
+    coins: 7,
   },
   {
     id: 1,
     title: 'platino',
     checks: [1, 2, 3, 4],
     tickets: 500,
-    priceMXN: 40,
-    coins: 5,
+    priceMXN: 400,
+    coins: 10,
   },
 ];
 

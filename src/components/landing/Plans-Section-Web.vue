@@ -2,7 +2,7 @@
   <section class="q-mt-xl q-mx-md gt-sm">
     <div class="text-h4 text-center text-primary text-bold q-mb-lg">Planes</div>
     <div class="q-pa-md flex justify-center">
-      <q-markup-table class="table-price">
+      <q-markup-table class="table-price" q-tr--no-hover>
         <thead>
           <tr>
             <th></th>
@@ -20,7 +20,11 @@
             <td>
               <p class="q-mb-none text-subtitle1">{{ description }}</p>
             </td>
-            <td v-for="(plan, indexPlan) in dataPlans" :key="indexPlan">
+            <td
+              v-for="(plan, indexPlan) in dataPlans"
+              :key="indexPlan"
+              q-td--no-hover
+            >
               <div class="flex flex-center">
                 <i
                   v-if="plan.checks.includes(index + 1)"
@@ -29,17 +33,19 @@
                 </i>
                 <p v-else-if="index < 5">{{ plan.tickets }}</p>
                 <div class="text-center" v-else>
-                  <p class="q-mb-none text-bold">${{ plan.priceMXN }} MXN</p>
+                  <p class="q-mb-none text-bold">${{ plan.priceMXN }} MXN /</p>
                   <p class="text-bold">
                     {{ plan.coins }}
                     {{ plan.coins == 1 ? 'Moneda' : 'Monedas' }}
                   </p>
                   <q-btn
+                    class="cursor-pointer full-width"
                     :outline="indexPlan != 2"
                     :color="indexPlan == 2 ? 'secondary' : 'grey'"
                     square
                     label="Comprar"
                     unelevated
+                    @click="sendPlans(plan)"
                   />
                 </div>
               </div>
@@ -54,6 +60,23 @@
 <script setup>
 import { ref } from 'vue';
 import { descriptionPlans, dataPlans } from 'src/helpers/infoPlans';
+
+const sendPlans = (plan) => {
+  console.log('sendPlans: ', sendPlans);
+
+  const { coins, priceMXN, title } = plan;
+
+  const whatsappMessage = `Saludos, quiero comprar el plan ${title} con un precio de $${priceMXN} MXN y ${coins} ${
+    coins === 1 ? 'Moneda' : 'Monedas'
+  }.`;
+  console.log('whatsappMessage: ', whatsappMessage);
+
+  const whatsappURL = `https://api.whatsapp.com/send?phone=+528184624203&text=${encodeURIComponent(
+    whatsappMessage
+  )}`;
+
+  window.open(whatsappURL, '_blank');
+};
 </script>
 
 <style lang="scss" scoped>
@@ -65,9 +88,6 @@ import { descriptionPlans, dataPlans } from 'src/helpers/infoPlans';
   width: 1200px;
   box-shadow: 0px 0px transparent !important;
 
-  tr {
-    pointer-events: none;
-  }
   th,
   td {
     border: 1px solid transparent !important;

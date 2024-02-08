@@ -40,7 +40,11 @@
                 </a>
               </li>
               <li>
-                <a href="#" class="footer-link flex items-center">
+                <a
+                  href="https://www.facebook.com/starquiniela2022?mibextid=ZbWKwL"
+                  target="_blank"
+                  class="footer-link flex items-center"
+                >
                   <img
                     src="~assets/icons/facebook.png"
                     class="icon-footer q-mr-sm"
@@ -50,7 +54,11 @@
               </li>
 
               <li>
-                <a href="#" class="footer-link flex items-center">
+                <a
+                  href="https://www.instagram.com/starquiniela?igsh=ZnFvMWRoYnRsbWw="
+                  target="_blank"
+                  class="footer-link flex items-center"
+                >
                   <img
                     src="~assets/icons/instagram.png"
                     class="icon-footer q-mr-sm"
@@ -82,12 +90,15 @@
                 </a>
               </li>
               <li>
-                <a href="#" class="footer-link flex items-center">
+                <a
+                  href="mailto:Starquiniela@gmail.com"
+                  class="footer-link flex items-center"
+                >
                   <img
                     src="~assets/icons/gmail.png"
                     class="icon-footer q-mr-sm"
                   />
-                  CorreoElectronico@gmail.com
+                  Starquiniela@gmail.com
                 </a>
               </li>
             </ul>
