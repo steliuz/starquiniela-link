@@ -6,17 +6,19 @@
           Contáctanos
         </div>
         <div class="q-pa-lg q-mt-md">
-          <div class="text-subtitle1 q-pb-md">
-            <span class="material-icons text-yellow q-mb-sm q-mr-sm">star</span
-            >Solicite una cuenta de Organizador ó Rezeller
+          <div class="text-subtitle1 q-pb-md text-dark">
+            <span class="material-icons text-yellow q-mb-sm q-mr-sm">
+              star
+            </span>
+            Solicite una cuenta de Organizador ó Rezeller
           </div>
-          <div class="text-subtitle1 q-pb-md">
-            <span class="material-icons text-yellow q-mb-sm q-mr-sm">star</span
-            >Puede indicarnos cualquier inconveniente con la herramienta
+          <div class="text-subtitle1 q-pb-md text-dark">
+            <span class="material-icons text-yellow q-mb-sm q-mr-sm">star</span>
+            Puede indicarnos cualquier inconveniente con la herramienta
           </div>
-          <div class="text-subtitle1 q-pb-md">
-            <span class="material-icons text-yellow q-mb-sm q-mr-sm">star</span
-            >Solicite más Coins
+          <div class="text-subtitle1 q-pb-md text-dark">
+            <span class="material-icons text-yellow q-mb-sm q-mr-sm">star</span>
+            Solicite más Coins
           </div>
         </div>
         <div
@@ -34,6 +36,7 @@
         <div class="q-pa-md">
           <q-form @submit="onSubmit" class="q-gutter-md">
             <q-input
+              :dark="false"
               filled
               type="text"
               v-model="contact.name"
@@ -45,6 +48,7 @@
             </q-input>
 
             <q-input
+              :dark="false"
               filled
               type="email"
               v-model="contact.email"
@@ -55,6 +59,7 @@
               </template>
             </q-input>
             <q-input
+              :dark="false"
               placeholder="Mensaje"
               v-model="contact.message"
               filled

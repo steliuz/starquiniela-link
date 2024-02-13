@@ -36,12 +36,12 @@
             icon="fas fa-pencil"
             :done="step > 1"
           >
-            <p class="text-style q-mt-md">
+            <p class="text-inside-step q-mt-md">
               Con tu usuario organizador, accede a una lista actualizada de
               quinielas disponibles en diversos formatos de reglas. Selecciona y
               adquiere la quiniela que más te apasione.
             </p>
-            <p class="text-style q-mt-md">
+            <p class="text-inside-step q-mt-md">
               ¡Sumérgete en la emoción de las apuestas y compite por grandes
               premios con amigos y seguidores!
             </p>
@@ -52,12 +52,12 @@
             icon="fas fa-plus"
             :done="step > 2"
           >
-            <p class="text-style">
+            <p class="text-inside-step">
               <strong>¡Hazlo social! </strong> Crea usuarios personalizados para
               tus amigos, familiares o compañeros de tu grupo social. Tú eres el
               encargado de proporcionarles acceso.
             </p>
-            <p class="text-style">
+            <p class="text-inside-step">
               Comparte la emoción del juego y compite junto a tus seres
               queridos. ¡La diversión es aún mejor cuando se comparte!
             </p>
@@ -73,18 +73,18 @@
             icon="fa fa-lock"
             :done="step > 3"
           >
-            <p class="text-style">
+            <p class="text-inside-step">
               ¡Olvida las preocupaciones sobre la captura de datos! Tus
               jugadores simplemente deben ingresar a la aplicación con su
               usuario. Cada participante anota sus pronósticos y ¡nuestra
               aplicación se encarga del resto!
             </p>
-            <p class="text-style">
+            <p class="text-inside-step">
               Facilitamos el proceso para que te enfoques en la emoción del
               juego. ¡Disfruta de una experiencia sin complicaciones y juega con
               confianza!
             </p>
-            <p class="text-style">
+            <p class="text-inside-step">
               Tu autorizas mediante el panel de control el cierre de la
               quiniela, la actualizacion de resultados y lo mas importante quien
               juega la quiniela en la tabla para que la gestiones de una manera
@@ -102,25 +102,25 @@
             icon="fas fa-table"
             :done="step > 4"
           >
-            <p class="text-style">
+            <p class="text-inside-step">
               En cada quiniela, disfruta de una Tabla de Ranking individual
               organizada y automatizada. ¡Simplemente anota los resultados de
               cada partido y listo! No te preocupes por cálculos complicados,
               nuestra aplicación se encarga de todo.
             </p>
-            <p class="text-style">
+            <p class="text-inside-step">
               Mantente actualizado con las posiciones y vive la emoción de ver
               cómo avanzas en la clasificación. ¡La competencia nunca fue tan
               sencilla y emocionante!
             </p>
           </q-step>
           <q-step :name="5" title="Y a ¡JUGAR!" icon="fas fa-futbol ">
-            <p class="text-style">
+            <p class="text-inside-step">
               Con estos simples pasos, es hora de disfrutar y divertirte junto a
               tus amigos. ¡La emoción está a punto de comenzar! ¿Listo para
               armar tu propia quiniela?
             </p>
-            <p class="text-style">
+            <p class="text-inside-step">
               Haz clic para empezar la diversión y vive la emoción de competir
               con tus seres queridos. ¡Que empiece el juego!
             </p>
@@ -146,6 +146,7 @@
         </div>
         <q-stepper
           v-model="step2"
+          dark
           vertical
           animated
           inactive-color="grey-5"
@@ -158,12 +159,12 @@
             icon="fas fa-pencil"
             :done="step > 1"
           >
-            <p class="text-style q-mt-md">
+            <p class="text-inside-step q-mt-md">
               Con tu usuario organizador, accede a una lista actualizada de
               quinielas disponibles en diversos formatos de reglas. Selecciona y
               adquiere la quiniela que más te apasione.
             </p>
-            <p class="text-style q-mt-md">
+            <p class="text-inside-step q-mt-md">
               ¡Sumérgete en la emoción de las apuestas y compite por grandes
               premios con amigos y seguidores!
             </p>
@@ -174,7 +175,7 @@
             icon="fas fa-qrcode"
             :done="step2 > 2"
           >
-            <p class="text-style">
+            <p class="text-inside-step">
               <strong>¡Actualización emocionante!</strong> En
               <span class="text-primary">Starquiniela 2.0,</span>
               compartir tu quiniela es aún más fácil. Utiliza tu código QR
@@ -182,7 +183,7 @@
               necesario crear usuarios; ellos pueden acceder directamente y
               sumarse a la diversión.
             </p>
-            <p class="text-style">
+            <p class="text-inside-step">
               Simplificamos el proceso para que disfrutes de la quiniela sin
               complicaciones. Solo los que obtengan el link son los que puedes
               solicitar jugar en tu quinela.
@@ -194,18 +195,18 @@
             icon="fas fa-running"
             :done="step2 > 3"
           >
-            <p class="text-style">
+            <p class="text-inside-step">
               ¡Olvida las preocupaciones sobre la captura de datos! Tus
               jugadores simplemente deben ingresar al link o QR. Cada
               participante anota sus pronósticos y ¡nuestra aplicación se
               encarga del resto!
             </p>
-            <p class="text-style">
+            <p class="text-inside-step">
               Facilitamos el proceso para que te enfoques en la emoción del
               juego. ¡Disfruta de una experiencia sin complicaciones y juega con
               confianza!
             </p>
-            <p class="text-style">
+            <p class="text-inside-step">
               Tu autorizas mediante el panel de control el cierre de la
               quiniela, la actualizacion de resultados y lo mas importante quien
               juega la quiniela en la tabla para que la gestiones de una manera
@@ -218,25 +219,25 @@
             icon="fas fa-table"
             :done="step > 4"
           >
-            <p class="text-style">
+            <p class="text-inside-step">
               En cada quiniela, disfruta de una Tabla de Ranking individual
               organizada y automatizada. ¡Simplemente anota los resultados de
               cada partido y listo! No te preocupes por cálculos complicados,
               nuestra aplicación se encarga de todo.
             </p>
-            <p class="text-style">
+            <p class="text-inside-step">
               Mantente actualizado con las posiciones y vive la emoción de ver
               cómo avanzas en la clasificación. ¡La competencia nunca fue tan
               sencilla y emocionante!
             </p>
           </q-step>
           <q-step :name="5" title="Y a ¡JUGAR!" icon="fas fa-futbol ">
-            <p class="text-style">
+            <p class="text-inside-step">
               Con estos simples pasos, es hora de disfrutar y divertirte junto a
               tus amigos. ¡La emoción está a punto de comenzar! ¿Listo para
               armar tu propia quiniela?
             </p>
-            <p class="text-style">
+            <p class="text-inside-step">
               Haz clic para empezar la diversión y vive la emoción de competir
               con tus seres queridos. ¡Que empiece el juego!
             </p>
@@ -272,7 +273,8 @@ const goToV1 = () => {
   box-shadow: none;
 }
 
-.text-style {
+.text-inside-step {
   font-size: 16px;
+  color: #121212 !important;
 }
 </style>

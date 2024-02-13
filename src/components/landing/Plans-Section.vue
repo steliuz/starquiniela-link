@@ -8,6 +8,7 @@
         class="col-12 col-md-2 col-sm-6 q-mb-lg flex justify-center"
       >
         <q-card
+          :dark="false"
           class="my-card"
           :class="{ 'plata-card': plan.nombre === 'Plata' }"
         >

@@ -58,7 +58,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { descriptionPlans, dataPlans } from 'src/helpers/infoPlans';
 
 const sendPlans = (plan) => {
@@ -85,6 +84,8 @@ const sendPlans = (plan) => {
   color: rgb(25, 97, 31);
 }
 .table-price {
+  background-color: #fff;
+  color: #121212;
   width: 1200px;
   box-shadow: 0px 0px transparent !important;
 
