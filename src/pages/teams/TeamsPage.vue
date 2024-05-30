@@ -45,6 +45,7 @@ const columns = [nameColumn, optColumn];
           :respData="teams"
           :columns="columns"
           @paginateData="getTeam"
+          placeholder="Filtar por equipo"
           :loading="loading"
           @editData="editTeam"
           title="Equipos"

@@ -47,6 +47,7 @@ const columns = [nameColumn, optColumn];
           @editData="editAdvertise"
           title="Publicidad registrada"
           @deleteData="deleteAdvertise"
+          placeholder="Filtrar por nombre"
         >
         </UniversalTable>
       </div>

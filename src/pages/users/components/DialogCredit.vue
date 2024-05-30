@@ -1,20 +1,43 @@
 <template>
   <q-dialog persistent>
-    <q-card>
-      <q-form @submit="onSubmit" class="q-gutter-md">
-        <q-card-section class="row items-center">
+    <q-card style="width: 100%; max-width: 400px">
+      <q-form @submit="onSubmit" class="q-px-md">
+        <q-card-section class="">
+          <h6 class="text-h5 text-center q-mb-none q-mt-md">
+            Asignar Créditos
+          </h6>
+          <h5 class="text-h5 text-center q-mt-md">{{ props.userData.name }}</h5>
+          <p class="label-input q-mb-none">Cantidad de créditos</p>
           <q-input
             v-model="credit"
+            class="hide-number-arrows"
+            filled
             type="number"
-            label="Creditos"
+            placeholder="0"
             min="1"
             required
           />
+          <div class="row q-mt-lg">
+            <div class="col-6">
+              <q-btn
+                class="full-width"
+                flat
+                label="Cancel"
+                color="negative"
+                @click="reset"
+                v-close-popup
+              />
+            </div>
+            <div class="col-6">
+              <q-btn
+                class="full-width"
+                label="Agregar"
+                type="submit"
+                color="primary"
+              />
+            </div>
+          </div>
         </q-card-section>
-        <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn flat label="Agregar" type="submit" color="primary" />
-        </q-card-actions>
       </q-form>
     </q-card>
   </q-dialog>
@@ -23,9 +46,15 @@
 import { ref } from 'vue';
 
 const credit = ref();
+const props = defineProps(['userData']);
 const emit = defineEmits(['addCredits']);
+
+const reset = () => {
+  credit.value = '';
+};
 
 const onSubmit = () => {
   emit('addCredits', credit.value);
+  reset();
 };
 </script>

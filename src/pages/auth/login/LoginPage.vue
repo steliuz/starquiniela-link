@@ -49,8 +49,22 @@ const saveData = (formLogin: loginAuth) => {
     ls.remove('user-quiniela');
   }
 };
+
+const onBack = () => {
+  window.location.href = 'https://starquiniela.com/';
+  return;
+};
 </script>
 <template>
+  <q-btn
+    unelevated
+    color="white"
+    style="position: absolute; top: 20px; right: 40px"
+    @click="onBack()"
+  >
+    <q-icon color="primary" name="arrow_back" />
+    <span class="text-primary q-px-sm">Regresar</span>
+  </q-btn>
   <div class="video-background">
     <videoComponent />
     <div class="overlay"></div>

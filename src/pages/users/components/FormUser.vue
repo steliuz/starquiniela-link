@@ -47,7 +47,7 @@ watch(
     <q-card
       square
       class="bg-header-dark relative-position bg-new-dark"
-      style="width: 80%; max-width: 900px; height: 85%"
+      style="width: 100%; max-width: 900px; height: 90%"
     >
       <q-card-section class=" ">
         <q-form
@@ -60,7 +60,7 @@ watch(
               class="text-h5"
               :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
             >
-              Crear nuevo usuario
+              {{ formUser.id ? 'Actualizar usuario' : 'Crear nuevo usuario' }}
             </p>
           </div>
           <div class="title q-pl-sm">
@@ -163,7 +163,7 @@ watch(
           />
           <q-btn
             class="q-mx-xs"
-            :label="formUser.id ? 'Editar' : 'Registrar'"
+            :label="formUser.id ? 'Actualizar' : 'Registrar'"
             color="secondary"
             type="submit"
           />

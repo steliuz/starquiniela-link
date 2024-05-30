@@ -95,7 +95,7 @@ const resetMatch = (id: number) => {
           <div class="box-block flex flex-center q-px-sm">
             <i
               class="fa-solid fa-md"
-              :class="match.status ? 'hidden ' : 'fa-lock text-orange-5'"
+              :class="match.status ? 'hidden ' : 'fa-lock text-negative'"
             ></i>
           </div>
         </div>

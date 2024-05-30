@@ -13,8 +13,8 @@ const production = 1;
 const baseURL = development
   ? process.env.API_URL_DEV
   : production
-  ? process.env.API_URL_PROD
-  : process.env.API_URL;
+    ? process.env.API_URL_PROD
+    : process.env.API_URL;
 const token = LocalStorage.getItem('access_token');
 
 const api = axios.create({
@@ -44,14 +44,14 @@ const api = axios.create({
 const file_url = development
   ? process.env.FILE_URL_DEV
   : production
-  ? process.env.FILE_URL_PROD
-  : process.env.FILE_URL;
+    ? process.env.FILE_URL_PROD
+    : process.env.FILE_URL;
 
 const vue_url = development
   ? 'https://dev.starquiniela.com'
   : production
-  ? 'https://starquiniela.com'
-  : 'http://localhost:9000';
+    ? 'https://starquiniela.com'
+    : 'http://localhost:9000';
 
 export default boot(({ app }) => {
   app.config.globalProperties.$axios = axios;

@@ -42,7 +42,7 @@
           dense
           v-model="filter"
           filled
-          placeholder="Filtrar por código..."
+          :placeholder="placeholder || 'Filtrar por código...'"
           debounce="1000"
         >
           <template v-slot:append>
@@ -181,6 +181,9 @@ const props = defineProps({
     type: Object,
   },
   title: {
+    type: String,
+  },
+  placeholder: {
     type: String,
   },
   loading: {

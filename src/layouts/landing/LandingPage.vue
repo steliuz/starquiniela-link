@@ -6,7 +6,6 @@ import { useRouter } from 'vue-router';
 import Vip from 'src/components/landing/Vip-Section.vue';
 import Whatsapp from 'src/components/landing/Whatsapp-Buttom.vue';
 import CardBanner from 'src/components/landing/Card-Banner.vue';
-import CarouselSection from 'src/components/landing/Carousel-Section.vue';
 import CardOrganizer from 'src/components/landing/Card-Banner-2.vue';
 import GenerateSection from 'src/components/landing/Generate-section.vue';
 import StepsSection from 'src/components/landing/Steps-Section.vue';

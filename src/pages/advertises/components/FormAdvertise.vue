@@ -67,7 +67,7 @@ watch(
     <q-card
       square
       class="bg-header-dark relative-position bg-new-dark"
-      style="width: 80%; max-width: 900px; height: 65%"
+      style="width: 100%; max-width: 900px; height: 95%"
     >
       <q-card-section class=" ">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">

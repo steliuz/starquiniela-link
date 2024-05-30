@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-6 flex justify-center" style="position: relative">
+    <div class="col-12 col-md-6 flex justify-center" style="position: relative">
       <Cropper
         v-if="circle"
         ref="cropper"
@@ -38,7 +38,10 @@
         <!-- <button class="button" @click="cropImage()">Crop image</button> -->
       </div>
     </div>
-    <div class="col-6 q-px-md">
+    <div
+      class="col-12 col-md-6 q-px-md"
+      :class="$q.screen.lt.md ? 'q-mt-md' : ''"
+    >
       <div class="title"></div>
       <div class="flex justify-center">
         <Preview

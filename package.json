@@ -12,12 +12,14 @@
     "dev": "quasar dev",
     "dev:pwa": "quasar dev -m pwa",
     "build": "quasar build",
-    "build:pwa": "quasar build -m pwa"
+    "build:pwa": "quasar build -m pwa",
+    "icons": "icongenie generate -i AppIcon.png --skip-trim --theme-color 222222"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^1.2.1",
     "dotenv": "^16.1.0",
+    "firebase": "9.9.3",
     "pinia": "^2.0.11",
     "pinia-plugin-persistedstate": "^3.1.0",
     "quasar": "^2.12.6",

@@ -16,8 +16,17 @@ import DialogCredit from './components/DialogCredit.vue';
 import { useAuthStore } from 'src/stores/auth';
 import { useCredit } from 'src/composables/useCredit';
 import { Credit } from 'src/interfaces/credit';
+import { ref } from 'vue';
 
 const { auth } = useAuthStore();
+
+const userData = ref({
+  name: '',
+  email: '',
+  role_id: 0,
+  phone: '',
+  status: 0,
+});
 const {
   postAdminCredit,
   postCredit,
@@ -69,6 +78,11 @@ const addCredits = async (credit: number) => {
   }
   getUser();
 };
+
+const handleCredit = (item: any) => {
+  userData.value = item;
+  openCredit(item.id);
+};
 </script>
 <template>
   <section class="q-ma-sm">
@@ -97,8 +111,9 @@ const addCredits = async (credit: number) => {
           :columns="columns"
           @paginateData="getUser"
           :loading="loading"
+          placeholder="Filtrar por nombre"
           @editData="editUser"
-          title="Usuarios Registrados"
+          title="Usuarios"
           @deleteData="deleteUser"
           @statusData="statusUser"
         >
@@ -106,7 +121,7 @@ const addCredits = async (credit: number) => {
             <q-item
               clickable
               v-close-popup
-              @click="openCredit(scope.props.row.id)"
+              @click="handleCredit(scope.props.row)"
             >
               <q-item-section>
                 <div class="flex">
@@ -121,6 +136,7 @@ const addCredits = async (credit: number) => {
     </div>
     <DialogCredit
       v-model="dialogCredit"
+      :userData="userData"
       @addCredits="addCredits"
     ></DialogCredit>
   </section>

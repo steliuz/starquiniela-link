@@ -11,7 +11,7 @@
           />
         </q-toolbar-title>
         <div class="q-mr-md flex flex-center">
-          <p class="q-mb-none q-mr-sm">Modo Oscuro</p>
+          <p class="q-mb-none q-mr-sm">Modo Oscuro asdasd</p>
           <ToggleComponent />
         </div>
       </q-toolbar>

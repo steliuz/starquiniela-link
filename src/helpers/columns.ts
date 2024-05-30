@@ -101,7 +101,7 @@ const phoneColumn = {
 const statusColumn = {
   name: 'status',
   required: true,
-  label: 'Estado',
+  label: 'Estatus',
   style: 'width: 50px',
   align: 'left',
   field: (row: Row) => row.status,

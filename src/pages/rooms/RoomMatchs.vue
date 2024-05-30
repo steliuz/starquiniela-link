@@ -319,8 +319,8 @@ const showPDF = (id: string) => {
                 class="fa-solid fa-xl"
                 :class="
                   statusAll
-                    ? 'fa-lock text-orange-5'
-                    : ' fa-unlock text-primary'
+                    ? 'fa-lock text-negative'
+                    : ' fa-unlock text-positive'
                 "
               >
               </i>

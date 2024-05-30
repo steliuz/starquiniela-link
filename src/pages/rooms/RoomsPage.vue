@@ -57,7 +57,8 @@ const goToMatch = (roomID: number) => {
           @paginateData="getRoom"
           :loading="loading"
           @editData="editRoom"
-          title="Quinielas registradas"
+          title="Quinielas"
+          placeholder="Filtrar por nombre"
           @deleteData="deleteRoom"
           @statusData="statusRoom"
         >

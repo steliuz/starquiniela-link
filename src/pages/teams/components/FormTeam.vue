@@ -1,4 +1,4 @@
- <script setup lang="ts">
+<script setup lang="ts">
 import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import { Team } from 'src/interfaces/team';
@@ -63,7 +63,7 @@ watch(
     <q-card
       square
       class="bg-header-dark relative-position bg-new-dark"
-      style="width: 80%; max-width: 900px; height: 65%"
+      style="width: 100%; max-width: 900px; height: 85%"
     >
       <q-card-section class=" ">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">

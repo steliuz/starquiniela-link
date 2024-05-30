@@ -12,8 +12,16 @@
         />
 
         <q-toolbar-title class="flex items-center">
-          <div>
-            <p class="q-mb-none">{{ auth.name }}</p>
+          <div class="flex">
+            <q-btn
+              v-if="auth.role_id == 1"
+              class="q-mx-sm"
+              text-color="grey-9"
+              icon="cloud_upload"
+              color="warning"
+              unelevated
+              @click="uploadDrive"
+            />
             <!-- <p
               class="text-caption q-mb-none"
               :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'"
@@ -25,7 +33,6 @@
 
         <div class="flex flex-center">
           <div class="q-mr-md flex flex-center">
-            <p class="q-mb-none q-mr-sm">Modo Oscuro</p>
             <ToggleComponent />
           </div>
           <div>
@@ -57,11 +64,14 @@
                       </q-badge>
                     </div>
 
-                    <!-- <div class="text-subtitle2 q-mt-xs">
-                  <p class="ellipsis q-mt-sm q-mb-xs" style="max-width: 150px">
-                    {{ store.$state.user.name }}
-                  </p>
-                </div> -->
+                    <div class="text-subtitle2 q-mt-xs">
+                      <p
+                        class="ellipsis q-mt-sm q-mb-none"
+                        style="max-width: 100px"
+                      >
+                        {{ auth.name }}
+                      </p>
+                    </div>
                     <div class="column items-center q-mt-xs">
                       <div class="flex flex-center">
                         <div
@@ -109,8 +119,6 @@
       </q-toolbar>
     </q-header>
 
-    
-
     <q-drawer
       class="bg-menu"
       v-model="leftDrawerOpen"
@@ -149,7 +157,6 @@
       <router-view />
     </q-page-container>
   </q-layout>
-  
 </template>
 
 <script setup lang="ts">
@@ -160,12 +167,12 @@ import EssentialLink, {
   EssentialLinkProps,
 } from 'components/EssentialLink.vue';
 
-
 import ToggleComponent from 'src/components/ToggleDarkComponent.vue';
 import { useAuthStore } from 'src/stores/auth';
 import { useMatch } from 'src/composables/useMatch';
 import { storeToRefs } from 'pinia';
 import { useQuasar } from 'quasar';
+import { useBackUp } from 'src/composables/useBackup';
 
 const $q = useQuasar();
 const router = useRouter();
@@ -175,6 +182,8 @@ const leftDrawerOpen = ref(false);
 
 const { room_id: roomID, auth } = storeToRefs(useAuthStore());
 const {} = useMatch(roomID);
+
+const { backUp } = useBackUp();
 
 const essentialLinks: EssentialLinkProps[] = [
   {
@@ -201,28 +210,28 @@ const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'Publicidad',
     caption: '',
-    icon: 'record_voice_over',
+    icon: 'campaign',
     link: '/admin/advertises',
     roles: [1],
   },
   {
     title: 'Quiniela',
     caption: '',
-    icon: 'rss_feed',
+    icon: 'sports_soccer',
     link: '/admin/rooms',
     roles: [1],
   },
   {
     title: 'Quiniela',
     caption: '',
-    icon: 'rss_feed',
+    icon: 'sports_soccer',
     link: '/admin/organizer/rooms',
     roles: [3],
   },
   {
     title: 'Categorías',
     caption: '',
-    icon: 'public',
+    icon: 'category',
     link: '/admin/categories',
     roles: [1],
   },
@@ -253,6 +262,11 @@ function toggleLeftDrawer() {
 
 //   localStorage.setItem('mode-dark', modeDark.value.toString());
 // };
+
+const uploadDrive = () => {
+  console.log('click');
+  backUp();
+};
 
 onMounted(() => {
   setTimeout(() => {

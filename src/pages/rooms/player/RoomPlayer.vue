@@ -10,6 +10,7 @@ import { useRooms } from 'src/composables/useRooms';
 import { useAuthStore } from 'src/stores/auth';
 import { useQuasar } from 'quasar';
 import ToggleDarkComponent from 'src/components/ToggleDarkComponent.vue';
+import { registerWorker } from 'src/composables/useRegisterServiceWorker';
 
 const $q = useQuasar();
 const openDialog = () => {
@@ -41,6 +42,8 @@ const playerForm = ref({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSave = async (player: any) => {
   let check = false;
+  let token_device = localStorage.getItem('token_device') || '';
+
   room.value.matches?.map((match) => {
     if (
       (match.predictTeam1 == null || match.predictTeam2 == null) &&
@@ -59,10 +62,6 @@ const onSave = async (player: any) => {
     }
   });
 
-  console.log(
-    '🚀 ~ file: RoomPlayer.vue:61 ~ room.value.matches?.map ~ check:',
-    check
-  );
   if (check) {
     handleMessages({
       message: 'Debes llenar todas las predicciones',
@@ -120,6 +119,7 @@ const onSave = async (player: any) => {
               goalsTeam2: match.predictTeam2,
             };
           }),
+          token_notification_device: token_device,
         };
 
         tempPlayer.value = data;
@@ -202,6 +202,14 @@ onMounted(async () => {
     localStorage.getItem('user_tickets_' + room.value.id) || '[]'
   );
 });
+
+const onRegisterWorker = () => {
+  registerWorker();
+};
+
+onMounted(() => {
+  onRegisterWorker();
+});
 </script>
 
 <template>
@@ -228,7 +236,7 @@ onMounted(async () => {
           />
         </q-toolbar-title>
         <div class="q-mr-md flex flex-center">
-          <p class="q-mb-none q-mr-sm">Modo Oscuro</p>
+          <p class="q-mb-none q-mr-sm">Modo Oscuro qwe</p>
           <ToggleDarkComponent />
         </div>
       </q-toolbar>

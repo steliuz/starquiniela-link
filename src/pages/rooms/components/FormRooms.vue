@@ -42,7 +42,7 @@ watch(
     <q-card
       square
       class="bg-header-dark relative-position bg-new-dark"
-      style="width: 80%; max-width: 900px; height: auto"
+      style="width: 100%; max-width: 900px; height: auto"
     >
       <q-card-section class=" ">
         <q-form class="room_dialog_form full-width" @submit="onSubmit">
@@ -89,14 +89,14 @@ watch(
             ></OptionGroup>
           </div>
           <q-btn
-            class="q-mx-xs"
+            class="q-mx-xs q-mt-md"
             outline
             label="cancelar"
             color="negative"
             v-close-popup
           />
           <q-btn
-            class="q-mx-xs"
+            class="q-mx-xs q-mt-md"
             :label="formRooms.id ? 'Editar' : 'Registrar'"
             color="secondary"
             type="submit"
@@ -152,10 +152,11 @@ watch(
 @media screen and (max-width: 700px) {
   .room_dialog_form {
     display: grid;
-    grid-template-columns: 100%;
-    grid-auto-flow: row dense;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row;
     grid-gap: 15px;
     justify-content: center;
+    align-items: start;
 
     & > .title {
       grid-column: 1 / -1;
