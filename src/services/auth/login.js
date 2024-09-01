@@ -3,28 +3,47 @@ import { handleMessages } from '../notifys';
 
 export const login = async (value) => {
   let user = value;
-  try {
-    const { data } = await api.post('login', user);
-    localStorage.setItem('access_token', data.access_token);
-    handleMessages({
-      message: `<b>Bienvenido</b> ${data.user_data.name}`,
-      color: 'positive',
-      icon: 'mood',
-    });
 
-    return data;
-  } catch (error) {
-    localStorage.removeItem('access_token');
-    let msg = 'Oops :( , Los datos no son correctos';
-    if (error.status == 402)
-      msg = 'Usuario Inactivo, por favor comuniquese con el administrador';
-    handleMessages({
-      message: msg,
-      color: 'negative',
-      icon: 'cancel',
-    });
-    throw error;
-  }
+  return new Promise(async (resolve, rejeted) => {
+    try {
+      const { data } = await api.post('login', user);
+      localStorage.setItem('access_token', data.access_token);
+      handleMessages({
+        message: `<b>Bienvenido</b> ${data.user_data.name}`,
+        color: 'positive',
+        icon: 'mood',
+      });
+      resolve(data);
+    } catch (error) {
+      localStorage.removeItem('access_token');
+      let msg = error.response?.data?.message;
+      if (!msg) {
+        msg = 'Oops :( , Los datos no son correctos';
+      }
+      const resp = error?.response?.data?.requires_2fa;
+
+      if (resp) {
+        rejeted({ active2fa: resp });
+        return;
+      }
+
+      if (error.status == 402) {
+        msg = 'Usuario Inactivo, por favor comuniquese con el administrador';
+        handleMessages({
+          message: msg,
+          color: 'negative',
+          icon: 'cancel',
+        });
+      }
+
+      handleMessages({
+        message: msg,
+        color: 'negative',
+        icon: 'cancel',
+      });
+      rejeted(msg);
+    }
+  });
 };
 
 export const logout = async () => {
@@ -36,6 +55,7 @@ export const logout = async () => {
       icon: 'check',
     });
   } catch (error) {
+    console.log('error: ', error);
     handleMessages({
       message: 'Oops, Algo ha fallado intenta de nuevo',
       color: 'negative',

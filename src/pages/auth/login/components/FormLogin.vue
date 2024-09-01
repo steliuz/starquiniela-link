@@ -11,8 +11,8 @@ const emit = defineEmits(['loginData']);
 const isPwd = ref(false);
 
 const formLogin: Ref<loginAuth> = ref({
-  email: 'admin@admin.com',
-  password: 'asdasd',
+  email: '',
+  password: '',
   remember: false,
 });
 
@@ -126,10 +126,10 @@ onMounted(() => {
 
 <style scoped>
 .form_login_card_glass {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(5px);
 }
 

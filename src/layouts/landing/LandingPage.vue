@@ -7,7 +7,7 @@ import Vip from 'src/components/landing/Vip-Section.vue';
 import Whatsapp from 'src/components/landing/Whatsapp-Buttom.vue';
 import CardBanner from 'src/components/landing/Card-Banner.vue';
 import CardOrganizer from 'src/components/landing/Card-Banner-2.vue';
-import GenerateSection from 'src/components/landing/Generate-section.vue';
+import GenerateSection from 'src/components/landing/Generate-Section.vue';
 import StepsSection from 'src/components/landing/Steps-Section.vue';
 import FooterSection from 'src/components/landing/Footer-Section.vue';
 import ArrowUp from 'src/components/landing/Arrow-Up.vue';

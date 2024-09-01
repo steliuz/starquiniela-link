@@ -1,9 +1,10 @@
 export interface dataLogin {
-  access_token: string;
-  expires_at: string;
-  token_type: string;
-  userRole: string;
+  access_token?: string;
+  expires_at?: string;
+  token_type?: string;
+  userRole?: string;
   user_data: dataUser;
+  active2fa?: boolean
 }
 export interface dataUser {
   contact_email: string;
@@ -21,4 +22,5 @@ export interface dataUser {
   subscribe_id: number;
   update_at: string;
   emailUser?: string;
+  enabled_2fa?: number
 }

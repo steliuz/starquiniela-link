@@ -3,10 +3,10 @@
     <section class="bg">
       <div class="column position-title absolute">
         <div class="lt-sm zoom">
-          <div class="flex justify-center mb-5">
+          <div class="flex justify-center mb-5 q-gutter-sm">
             <a
               href="https://private.starquiniela.com/pages/login"
-              class="btn-in q-mr-xs"
+              class="btn-in"
             >
               ¡StarQuiniela!
               <div class="icon">
@@ -21,30 +21,10 @@
             </button>
           </div>
           <h3 class="text-white h3-banner">JUEGA , COMPITE Y DIVIÉRTETE</h3>
-          <h4 class="text-white pb-2 lt-sm">
+          <h5 class="text-white pb-2 lt-sm">
             Descubre la emoción de participar en quinielas online con tus
             amigos, <strong>¡nunca fue tan fácil y divertido!</strong>"
-          </h4>
-          <!-- <div class="text-center">
-            <q-btn
-              class="bg-contact mx-2 my-1 p-0"
-              color="dark"
-              label="Descargar"
-              @click="$router.push('/redirect')"
-            >
-              <q-icon class="text-dark" size="md">
-                <img class="play-store-icon" src="playstore.png" />
-              </q-icon>
-            </q-btn>
-            <q-btn
-              class="bg-contact mx-2 my-1 p-0"
-              color="dark"
-              icon-right="email"
-              label="Contáctanos"
-              @click="$router.push('/pages/register')"
-            >
-            </q-btn>
-          </div> -->
+          </h5>
         </div>
         <div class="gt-sm text-white scale">
           <h2 class="h3-banner text-right text-warning">
@@ -473,9 +453,9 @@
 @media screen and (max-width: 600px) {
   .position-title {
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     right: 0;
-    top: 15%;
+    top: 12%;
     left: 0px;
     margin: auto;
   }

@@ -254,3 +254,29 @@ p.label-input {
     opacity: 1;
   }
 }
+
+.otp-input {
+  width: 65px;
+  height: 65px;
+  padding: 1vw;
+  margin: 1vw;
+  font-size: 2rem;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  text-align: center;
+
+  @media screen and (max-width: 600px) {
+    width: 10vw;
+    height: 12vw;
+    padding: 1.5vw;
+    margin: 0 1.5vw;
+  }
+}
+.otp-input.is-complete {
+  background-color: #e4e4e4;
+}
+.otp-input::-webkit-inner-spin-button,
+.otp-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

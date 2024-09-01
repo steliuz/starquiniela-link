@@ -1,15 +1,21 @@
 <script setup>
-import videoIngreso from 'src/assets/videos/video-ingresos.mp4';
+// import videoIngreso from 'src/assets/videos/video-ingresos.mp4';
 </script>
 <template>
   <div class="q-">
     <q-parallax>
       <template v-slot:media>
         <div>
-          <video autoplay muted loop>
+          <!-- <video autoplay muted loop>
             <source :src="videoIngreso" type="video/mp4" />
             Tu navegador no admite la reproducción de videos.
-          </video>
+          </video> -->
+          <q-img
+            class="parallax-img"
+            src="~assets/parallax5.jpg"
+            spinner-color="primary"
+            spinner-size="82px"
+          />
 
           <div class="overlay"></div>
         </div>
@@ -20,7 +26,6 @@ import videoIngreso from 'src/assets/videos/video-ingresos.mp4';
           class="absolute items-center box-parallax"
           :style="{
             opacity: 0.75 + (1 - scope.percentScrolled) * 0.55,
-            top: scope.percentScrolled * 60 + '%',
             left: 0,
             right: 0,
           }"
@@ -45,7 +50,7 @@ import videoIngreso from 'src/assets/videos/video-ingresos.mp4';
 </template>
 
 <style lang="scss" scoped>
-video {
+.parallax-img {
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -89,7 +94,6 @@ video {
 
     .parallax-text-content {
       font-size: 1rem;
-      margin-bottom: 1rem;
     }
   }
 }

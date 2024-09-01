@@ -10,15 +10,15 @@
         <div class="col-12 col-md-3 mt-2">
           <div class="flex justify-center items-center">
             <ul class="footer-list text-rigth text-lg-right">
-              <li>
-                <a href="#" class="footer-link text-bold text-h6"
-                  >Descargalo Pronto</a
-                >
+              <li class="text-center">
+                <a href="#" class="footer-link text-bold text-h6">
+                  Descargalo Pronto
+                </a>
               </li>
               <q-btn
                 color="grey-5"
                 disable
-                class="footer-link text-bold text-h6"
+                class="footer-link text-bold text-h6 text-white"
                 label="Google Play"
                 outline
                 @click="redirectToGooglePlay"
@@ -31,8 +31,8 @@
             </ul>
           </div>
         </div>
-        <div class="col-12 col-md-3 mt-2">
-          <div class="flex justify-center items-center">
+        <div class="col-12 col-sm-6 mt-2">
+          <div class="box-ul">
             <ul class="footer-list">
               <li>
                 <a href="#" class="footer-link text-bold text-h6">
@@ -45,10 +45,7 @@
                   target="_blank"
                   class="footer-link flex items-center"
                 >
-                  <img
-                    src="~assets/icons/facebook.png"
-                    class="icon-footer q-mr-sm"
-                  />
+                  <i class="fa-brands fa-facebook fa-lg q-pr-sm"></i>
                   Facebook
                 </a>
               </li>
@@ -59,22 +56,16 @@
                   target="_blank"
                   class="footer-link flex items-center"
                 >
-                  <img
-                    src="~assets/icons/instagram.png"
-                    class="icon-footer q-mr-sm"
-                  />
+                  <i class="fa-brands fa-instagram fa-lg q-pr-sm"></i>
                   Instagram
                 </a>
               </li>
             </ul>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-3">
-          <div class="flex justify-center items-center">
             <ul class="footer-list">
               <li>
-                <a href="#" class="footer-link text-bold text-h6"> Contacto </a>
+                <a href="#" class="footer-link text-bold text-h6">
+                  Contáctanos
+                </a>
               </li>
               <li>
                 <a
@@ -82,10 +73,10 @@
                   target="_blank"
                   class="footer-link flex items-center"
                 >
-                  <img
-                    src="~assets/icons/whatsapp.png"
-                    class="icon-footer q-mr-sm"
-                  />
+                  <i
+                    class="fa-brands fa-whatsapp fa-xl q-pr-sm text-positive"
+                  ></i>
+
                   +52 81 8462 4203
                 </a>
               </li>
@@ -94,10 +85,7 @@
                   href="mailto:Starquiniela@gmail.com"
                   class="footer-link flex items-center"
                 >
-                  <img
-                    src="~assets/icons/gmail.png"
-                    class="icon-footer q-mr-sm"
-                  />
+                  <q-icon name="mail" color="white" size="sm" class="q-pr-sm" />
                   Starquiniela@gmail.com
                 </a>
               </li>
@@ -108,12 +96,12 @@
     </section>
   </div>
   <div class="row q-py-md bg-dark border-footer-top">
-    <div class="col-4">
-      <p class="text-center q-mb-none text-white text-h7">
+    <div class="col-12 col-md-4">
+      <p class="text-center q-mb-none text-white q-px-sm">
         ©2022 StarQuiniela Todos los derechos reservados
       </p>
     </div>
-    <div class="col-7">
+    <div class="col-12 col-md-7">
       <div class="flex justify-center items-center">
         <div
           class="d-inline"
@@ -164,6 +152,19 @@ const redirectToGooglePlay = () => {
 <style lang="scss" scoped>
 .padding-container-footer {
   padding: 2% 10%;
+  @media screen and (max-width: 600px) {
+    padding: 0%;
+  }
+}
+
+.box-ul {
+  display: flex;
+  gap: 2rem;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    gap: 0rem;
+  }
 }
 
 .google-play-icon {

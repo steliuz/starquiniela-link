@@ -86,6 +86,11 @@ const routes: RouteRecordRaw[] = [
         path: 'rooms/ranking',
         component: () => import('pages/rooms/RoomRanking.vue'),
       },
+      {
+        name: 'config',
+        path: 'config',
+        component: () => import('pages/config/ConfigPage.vue'),
+      },
     ],
   },
   {

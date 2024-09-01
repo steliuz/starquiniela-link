@@ -259,9 +259,9 @@ const getPoint = (
     return bet.match_id == matchID && bet.index == index;
   }, {});
 
-  console.log('bet:', bet);
   return bet?.points ? bet.points : 0;
 };
+
 const getBet = (
   matchID: number | undefined | null,
   playerID: number | undefined,
@@ -277,6 +277,7 @@ const getBet = (
 
   return bet?.goalsTeam1 != null ? bet.goalsTeam1 : '';
 };
+
 const getBet2 = (
   matchID: number | undefined | null,
   playerID: number | undefined,

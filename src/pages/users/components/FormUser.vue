@@ -4,7 +4,7 @@ import { User } from 'src/interfaces/user';
 import BaseInput from 'src/components/BaseInput.vue';
 import OptionGroup from 'src/components/OptionGroup.vue';
 
-const emit = defineEmits(['postUser', 'editUser', 'putUser', 'onReset']);
+const emit = defineEmits(['postUser', 'editUser', 'putUser', 'resetAll']);
 const props = defineProps(['user', 'admin']);
 const isPwd = ref(false);
 const optionsData = [
@@ -34,11 +34,6 @@ watch(
   () => props.user,
   (val) => {
     formUser.value = val;
-    // if (val.email) {
-    //   let email = val.email.split('@');
-    //   formUser.value.emailUser = email[0];
-    //   formUser.value.prefix = '@' + email[1];
-    // }
   }
 );
 </script>
@@ -160,6 +155,7 @@ watch(
             color="negative"
             type="button"
             v-close-popup
+            @click="emit('resetAll')"
           />
           <q-btn
             class="q-mx-xs"

@@ -1,29 +1,50 @@
 <script setup lang="ts">
 import formLogin from 'pages/auth/login/components/FormLogin.vue';
-import videoComponent from 'pages/auth/login/components/VideoComponent.vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth';
 import { login } from 'src/services/auth/login';
 import { dataLogin } from 'src/interfaces/DataLogin';
 import { loginAuth } from 'src/interfaces/auth';
 import SecureLS from 'secure-ls';
+import Dialog2fa from 'src/components/Dialog-2fa.vue';
+import { use2fa } from 'src/composables/use2fa';
+import { handleMessages } from 'src/services/notifys';
 
 let ls = new SecureLS({ isCompression: false, encodingType: 'aes' });
 const router = useRouter();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let dataFormLogin: any = {};
 
 const store = useAuthStore();
 
+const {
+  dialog2fa,
+  secret,
+  qrCodeUrl,
+  handleOnComplete,
+  closeDialog,
+  showDialog,
+} = use2fa();
+
 const postLogin = async (value: loginAuth) => {
+  dataFormLogin = value;
   store.handlebarLoading(true);
 
   try {
-    await login(value).then((data: dataLogin) => {
-      store.userAuth(data);
-      saveData(value);
-      setTimeout(() => {
-        router.push('/admin/dashboard');
-      }, 800);
-    });
+    await login(value)
+      .then((data: dataLogin) => {
+        store.userAuth(data);
+        saveData(value);
+        setTimeout(() => {
+          router.push('/admin/dashboard');
+        }, 800);
+      })
+      .catch((err) => {
+        if (err.active2fa) {
+          showDialog();
+          return;
+        }
+      });
   } catch (error) {
     console.log(error);
   } finally {
@@ -34,7 +55,6 @@ const postLogin = async (value: loginAuth) => {
 const saveData = (formLogin: loginAuth) => {
   let rmb = formLogin.remember;
   if (rmb == true) {
-    // let dataUser = JSON.parse(localStorage.getItem('user')) || [];
     ls.set('user-quiniela', {
       email: formLogin.email,
       password: formLogin.password,
@@ -54,6 +74,26 @@ const onBack = () => {
   window.location.href = 'https://starquiniela.com/';
   return;
 };
+
+const submit2faCodeHandler = async (value: string | '') => {
+  dataFormLogin.two_factor_code = value;
+  try {
+    await login(dataFormLogin).then((data: dataLogin) => {
+      store.userAuth(data);
+      saveData(dataFormLogin);
+      setTimeout(() => {
+        router.push('/admin/dashboard');
+      }, 800);
+    });
+    return;
+  } catch (err) {
+    handleMessages({
+      color: 'negative',
+      icon: 'cancel',
+      message: 'Error enviando el código 2FA',
+    });
+  }
+};
 </script>
 <template>
   <q-btn
@@ -66,7 +106,15 @@ const onBack = () => {
     <span class="text-primary q-px-sm">Regresar</span>
   </q-btn>
   <div class="video-background">
-    <videoComponent />
+    <q-img
+      class="parallax-img"
+      src="~assets/parallax5.jpg"
+      spinner-color="primary"
+      spinner-size="82px"
+      fit="cover"
+      style="min-height: 100vh"
+    />
+
     <div class="overlay"></div>
   </div>
   <div class="">
@@ -74,6 +122,14 @@ const onBack = () => {
       <formLogin @loginData="postLogin" />
     </div>
   </div>
+  <Dialog2fa
+    v-model="dialog2fa"
+    :qrCodeUrl="qrCodeUrl"
+    :secret="secret"
+    @update:model-value="closeDialog"
+    @onComplete="handleOnComplete"
+    @submit2faCodeHandler="submit2faCodeHandler"
+  />
 </template>
 
 <style scoped>
@@ -90,11 +146,10 @@ const onBack = () => {
   );
 }
 .video-background {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   position: fixed;
   z-index: -1;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.7);
 }
 </style>

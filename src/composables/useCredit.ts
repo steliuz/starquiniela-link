@@ -25,10 +25,9 @@ export function useCredit() {
   };
 
   const postAdminCredit = async (value: Credit) => {
-    await putData(`credits/${value.user_id}`, value).then(() => {
-      dialog.value = false;
+    return putData(`credits/${value.user_id}`, value).then(() => {
       onReset();
-    });
+    })
   };
   const postCredit = async (value: Credit) => {
     await putData(`credits/${value.user_id}`, value).then(() => {

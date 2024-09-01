@@ -11,21 +11,32 @@ import {
   statusToogleColumn,
 } from 'src/helpers/columns';
 import { useUser } from 'src/composables/useUser';
-// import { ref } from 'vue';
 import DialogCredit from './components/DialogCredit.vue';
 import { useAuthStore } from 'src/stores/auth';
 import { useCredit } from 'src/composables/useCredit';
+import { ref, Ref } from 'vue';
+import { use2fa } from 'src/composables/use2fa';
+import { handleMessages } from 'src/services/notifys';
+import Dialog2fa from 'src/components/Dialog-2fa.vue';
 import { Credit } from 'src/interfaces/credit';
-import { ref } from 'vue';
+import { User } from 'src/interfaces/user';
 
 const { auth } = useAuthStore();
+const dataCredit: Ref<Credit> = ref({
+  credits: 0,
+  user_id: 0,
+});
 
-const userData = ref({
+const handlePost2fa = ref<boolean>(false);
+const idDelete = ref<number | null>(null);
+
+const userData = ref<User>({
   name: '',
   email: '',
   role_id: 0,
   phone: '',
   status: 0,
+  two_factor_code: '',
 });
 const {
   postAdminCredit,
@@ -49,6 +60,15 @@ const {
   statusUser,
 } = useUser();
 
+const {
+  dialog2fa,
+  secret,
+  qrCodeUrl,
+  handleOnComplete,
+  closeDialog,
+  showDialog,
+} = use2fa();
+
 const creditColumn = {
   name: 'credit',
   label: 'Creditos',
@@ -67,21 +87,136 @@ if (auth.role_id != 3)
   columns.splice(columns.length - 2, 0, customColumn(creditColumn));
 
 const addCredits = async (credit: number) => {
-  let data: Credit = {
+  dataCredit.value = {
     user_id: userId.value,
     credits: credit,
   };
   if (auth.role_id == 1) {
-    await postAdminCredit(data);
+    await postAdminCredit(dataCredit.value)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .then((resp) => {
+        console.log('resp: ', resp);
+      })
+      .catch((err) => {
+        if (err.active2fa) {
+          showDialog();
+          return;
+        }
+      });
   } else {
-    await postCredit(data);
+    await postCredit(dataCredit.value);
   }
   getUser();
 };
 
-const handleCredit = (item: any) => {
-  userData.value = item;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const handleEdit = (value: any) => {
+  handlePost2fa.value = true;
+  editUser(value);
+};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const handleCredit = async (item: any) => {
   openCredit(item.id);
+};
+const updateUser = async (item: User) => {
+  userData.value = item;
+  putUser(userData.value)
+    .then((resp) => {
+      console.log('resp: ', resp);
+    })
+    .catch((err) => {
+      if (err.active2fa) {
+        showDialog();
+        return;
+      }
+    });
+};
+
+const resetData = () => {
+  handlePost2fa.value = false;
+  idDelete.value = null;
+  userData.value = {
+    name: '',
+    email: '',
+    role_id: 0,
+    phone: '',
+    status: 0,
+    two_factor_code: '',
+  };
+  onReset();
+};
+
+const handleDelete = (value: number) => {
+  idDelete.value = value;
+  handlePost2fa.value = true;
+  deleteUser(value)
+    .then((resp) => {
+      console.log('resp: ', resp);
+    })
+    .catch((err) => {
+      if (err.active2fa) {
+        showDialog();
+        return;
+      }
+    });
+};
+
+const submit2faCodeHandler = async (value: string | '') => {
+  dataCredit.value.two_factor_code = value;
+
+  if (idDelete.value) {
+    try {
+      deleteUser(idDelete.value, { two_factor_code: value });
+      handlePost2fa.value = false;
+      closeDialog();
+      getUser();
+    } catch (error) {
+      console.log('error: ', error);
+    }
+    return;
+  }
+
+  if (handlePost2fa.value) {
+    userData.value.two_factor_code = value;
+
+    try {
+      putUser(userData.value);
+      handlePost2fa.value = false;
+      closeDialog();
+      getUser();
+    } catch (error) {
+      console.log('error: ', error);
+    }
+    return;
+  }
+
+  try {
+    if (auth.role_id == 1) {
+      await postAdminCredit(dataCredit.value);
+      dataCredit.value = {
+        user_id: 0,
+        credits: 0,
+        two_factor_code: null,
+      };
+      closeDialog();
+      getUser();
+    } else {
+      await postCredit(dataCredit.value);
+      dataCredit.value = {
+        user_id: 0,
+        credits: 0,
+        two_factor_code: null,
+      };
+      closeDialog();
+      getUser();
+    }
+  } catch (err) {
+    handleMessages({
+      color: 'negative',
+      icon: 'cancel',
+      message: 'Error enviando el código 2FA',
+    });
+  }
 };
 </script>
 <template>
@@ -100,9 +235,9 @@ const handleCredit = (item: any) => {
       <FormUser
         v-model="dialog"
         @postUser="postUser"
-        @putUser="putUser"
+        @putUser="updateUser"
         :user="user"
-        @onReset="onReset"
+        @resetAll="resetData"
         :admin="auth.role_id === 1"
       />
       <div class="col-12 flex justify-center q-my-md">
@@ -112,9 +247,9 @@ const handleCredit = (item: any) => {
           @paginateData="getUser"
           :loading="loading"
           placeholder="Filtrar por nombre"
-          @editData="editUser"
+          @editData="handleEdit"
           title="Usuarios"
-          @deleteData="deleteUser"
+          @deleteData="handleDelete"
           @statusData="statusUser"
         >
           <template v-slot:opt="scope" v-if="auth.role_id != 3">
@@ -138,7 +273,15 @@ const handleCredit = (item: any) => {
       v-model="dialogCredit"
       :userData="userData"
       @addCredits="addCredits"
-    ></DialogCredit>
+    />
+    <Dialog2fa
+      v-model="dialog2fa"
+      :qrCodeUrl="qrCodeUrl"
+      :secret="secret"
+      @update:model-value="closeDialog"
+      @onComplete="handleOnComplete"
+      @submit2faCodeHandler="submit2faCodeHandler"
+    />
   </section>
 </template>
 

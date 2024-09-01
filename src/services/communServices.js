@@ -43,11 +43,12 @@ export const postData = async (
   path,
   payload,
   headers,
-  msg = 'Se ha creado exitosamente!'
+  msg = 'Se ha creado exitosamente!',
+  noMsg
 ) => {
   try {
     const { data } = await api.post(path, payload, headers);
-    if (msg) {
+    if (msg && noMsg) {
       handleMessages({
         message: msg,
         color: 'positive',
@@ -60,42 +61,75 @@ export const postData = async (
   }
 };
 
-export const putData = async (
+export const putData = (
   path,
   payload,
   headers,
   msg = 'Se ha actualizado exitosamente!'
 ) => {
-  try {
-    const { data } = await api.put(path, payload, headers);
-    if (msg) {
+  return new Promise(async (resolve, rejeted) => {
+    try {
+      const { data } = await api.put(path, payload, headers);
+      if (msg) {
+        handleMessages({
+          message: msg,
+          color: 'positive',
+          icon: 'check',
+        });
+      }
+      resolve(data);
+    } catch (error) {
+      const resp = error?.response?.data?.requires_2fa;
+
+      if (resp) {
+        rejeted({ active2fa: resp });
+        return;
+      }
       handleMessages({
-        message: msg,
-        color: 'positive',
-        icon: 'check',
+        message: error.message || 'Ocurrió un error',
+        color: 'negative',
+        icon: 'cancel',
       });
     }
-    return data;
-  } catch (error) {
-    return handleError(error);
-  }
+  });
 };
 
 export const deleteData = async (
   path,
+  code,
   msg = 'Se ha eliminado exitosamente!'
 ) => {
-  try {
-    const { data } = await api.delete(path);
-    if (msg) {
+  return new Promise(async (resolve, rejeted) => {
+    try {
+      let data;
+      if (code) {
+        const newPath = `${path}?two_factor_code=${code.two_factor_code}`;
+        const resp = await api.delete(newPath);
+        data = resp.data;
+      } else {
+        const resp = await api.delete(path);
+        data = resp.data;
+      }
+      if (msg) {
+        handleMessages({
+          message: msg,
+          color: 'positive',
+          icon: 'check',
+        });
+      }
+      resolve(data);
+    } catch (error) {
+      const resp = error?.response?.data?.requires_2fa;
+
+      if (resp) {
+        rejeted({ active2fa: resp });
+        return;
+      }
       handleMessages({
-        message: msg,
-        color: 'positive',
-        icon: 'check',
+        message: error.message || 'Ocurrió un error',
+        color: 'negative',
+        icon: 'cancel',
       });
     }
-    return data;
-  } catch (error) {
-    return handleError(error);
-  }
+  });
 };

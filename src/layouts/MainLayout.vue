@@ -177,12 +177,10 @@ import { useBackUp } from 'src/composables/useBackup';
 const $q = useQuasar();
 const router = useRouter();
 const showGif = ref(true);
-// const modeDark = ref($q.dark.isActive);
 const leftDrawerOpen = ref(false);
 
 const { room_id: roomID, auth } = storeToRefs(useAuthStore());
 const {} = useMatch(roomID);
-
 const { backUp } = useBackUp();
 
 const essentialLinks: EssentialLinkProps[] = [
@@ -235,6 +233,13 @@ const essentialLinks: EssentialLinkProps[] = [
     link: '/admin/categories',
     roles: [1],
   },
+  {
+    title: 'Configuración',
+    caption: 'Seguridad',
+    icon: 'settings',
+    link: '/admin/config',
+    roles: [1],
+  },
 ];
 const role = computed(() => {
   let name = 'Admin';
@@ -257,14 +262,7 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-// const handleDark = () => {
-//   $q.dark.toggle();
-
-//   localStorage.setItem('mode-dark', modeDark.value.toString());
-// };
-
 const uploadDrive = () => {
-  console.log('click');
   backUp();
 };
 
